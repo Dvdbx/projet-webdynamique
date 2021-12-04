@@ -1,0 +1,43 @@
+body { background-color: #003366;
+ background-image: url(primevertical.png);
+ font-family: Arial, Helvetica, sans-serif;
+}
+#wrapper { width: 8px;
+ min-width: 1500px;
+ margin: 0 auto;
+ background-color: #5bd457;
+ color: #000333 ;
+ padding-left: 10px;
+ text-align: center;
+}
+
+div#navigation a { 
+ margin: 0 15px 15px 15px;
+width: 80px;
+border: 3px inset #cccccc;
+text-decoration:none;
+}
+
+#navigation a:link { background-color: #000033;
+ color: #ffffcc;
+}
+#navigation a:visited { background-color: #000033;
+ color: #ffffff;
+}
+#navigation a:focus {background-color: #000000;
+ color: #cccccc;
+ border: 3px outset #cccccc;
+}
+#navigation a:hover { background-color: #000033;
+ color: #ffffcc;
+border: 3px outset #cccccc;
+}
+#navigation a:active {background-color: #000033;
+ color: #cccccc;
+border: 3px outset #cccccc;
+}
+
+#section {
+ padding: 0 20px 20px 40px;
+}
+
