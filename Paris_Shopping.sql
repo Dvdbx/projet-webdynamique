@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : Dim 05 déc. 2021 à 18:10
+-- Généré le : lun. 06 déc. 2021 à 11:27
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -51,7 +51,14 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `pseudoAdmin` varchar(255) NOT NULL,
   `mdpAdmin` varchar(255) NOT NULL,
   PRIMARY KEY (`idAdmin`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `admin`
+--
+
+INSERT INTO `admin` (`idAdmin`, `pseudoAdmin`, `mdpAdmin`) VALUES
+(1, 'admin', 'alcool');
 
 -- --------------------------------------------------------
 
@@ -79,6 +86,7 @@ DROP TABLE IF EXISTS `objet`;
 CREATE TABLE IF NOT EXISTS `objet` (
   `idObjet` int(11) NOT NULL AUTO_INCREMENT,
   `idVendeur` int(11) NOT NULL,
+  `nomObjet` varchar(255) NOT NULL,
   `debutEnchere` date NOT NULL,
   `finEnchere` date NOT NULL,
   `prixObjet` int(11) NOT NULL,
@@ -89,9 +97,18 @@ CREATE TABLE IF NOT EXISTS `objet` (
   `video` varchar(255) NOT NULL,
   `typeAchat` enum('immediat','transaction','meilleurOffre') NOT NULL,
   `rarete` enum('regulier','hautDeGamme','rare') NOT NULL,
+  `categorie` varchar(255) NOT NULL,
   PRIMARY KEY (`idObjet`),
   KEY `idVendeur` (`idVendeur`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `objet`
+--
+
+INSERT INTO `objet` (`idObjet`, `idVendeur`, `nomObjet`, `debutEnchere`, `finEnchere`, `prixObjet`, `volume`, `photo1`, `photo2`, `photo3`, `video`, `typeAchat`, `rarete`, `categorie`) VALUES
+(1, 1, 'Bacardi 151', '2021-12-06', '2021-12-08', 60, 10, '', '', '', '', 'immediat', 'rare', 'Brandy'),
+(2, 1, 'Jim Beam Kentucky', '2021-12-06', '2021-12-08', 80, 15, '', '', '', '', 'transaction', 'hautDeGamme', 'Whisky');
 
 -- --------------------------------------------------------
 
@@ -144,7 +161,14 @@ CREATE TABLE IF NOT EXISTS `vendeur` (
   `idAdmin` int(11) NOT NULL,
   PRIMARY KEY (`idVendeur`),
   KEY `idAdmin` (`idAdmin`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `vendeur`
+--
+
+INSERT INTO `vendeur` (`idVendeur`, `pseudoVendeur`, `emailVendeur`, `nomVendeur`, `photoVendeur`, `fondVendeur`, `idAdmin`) VALUES
+(1, 'producteur1', 'producteur@gmail.com', 'Producteur', 'photo1.jpg', 'fond1.jpg', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
