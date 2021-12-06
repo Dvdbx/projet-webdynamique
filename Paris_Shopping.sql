@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le : lun. 06 déc. 2021 à 15:13
--- Version du serveur : 5.7.34
--- Version de PHP : 7.4.21
+-- Hôte : 127.0.0.1:3306
+-- Généré le : lun. 06 déc. 2021 à 16:08
+-- Version du serveur :  5.7.31
+-- Version de PHP : 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,13 +27,16 @@ SET time_zone = "+00:00";
 -- Structure de la table `acheteur`
 --
 
-CREATE TABLE `acheteur` (
-  `idAcheteur` int(11) NOT NULL,
+DROP TABLE IF EXISTS `acheteur`;
+CREATE TABLE IF NOT EXISTS `acheteur` (
+  `idAcheteur` int(11) NOT NULL AUTO_INCREMENT,
   `idPanier` int(11) NOT NULL,
   `nomAcheteur` varchar(255) NOT NULL,
   `prenomAcheteur` varchar(255) NOT NULL,
   `adresseAcheteur` varchar(255) NOT NULL,
-  `emailAcheteur` varchar(255) NOT NULL
+  `emailAcheteur` varchar(255) NOT NULL,
+  PRIMARY KEY (`idAcheteur`),
+  KEY `idPanier` (`idPanier`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -42,11 +45,13 @@ CREATE TABLE `acheteur` (
 -- Structure de la table `admin`
 --
 
-CREATE TABLE `admin` (
-  `idAdmin` int(11) NOT NULL,
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
   `pseudoAdmin` varchar(255) NOT NULL,
-  `mdpAdmin` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `mdpAdmin` varchar(255) NOT NULL,
+  PRIMARY KEY (`idAdmin`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `admin`
@@ -61,11 +66,14 @@ INSERT INTO `admin` (`idAdmin`, `pseudoAdmin`, `mdpAdmin`) VALUES
 -- Structure de la table `ajoutpanier`
 --
 
-CREATE TABLE `ajoutpanier` (
+DROP TABLE IF EXISTS `ajoutpanier`;
+CREATE TABLE IF NOT EXISTS `ajoutpanier` (
   `idObjet` int(11) NOT NULL,
   `idPanier` int(11) NOT NULL,
   `nombreEnchere` int(11) NOT NULL,
-  `prixEnchere` int(11) NOT NULL
+  `prixEnchere` int(11) NOT NULL,
+  KEY `idObjet` (`idObjet`),
+  KEY `idPanier` (`idPanier`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -74,8 +82,9 @@ CREATE TABLE `ajoutpanier` (
 -- Structure de la table `objet`
 --
 
-CREATE TABLE `objet` (
-  `idObjet` int(11) NOT NULL,
+DROP TABLE IF EXISTS `objet`;
+CREATE TABLE IF NOT EXISTS `objet` (
+  `idObjet` int(11) NOT NULL AUTO_INCREMENT,
   `idVendeur` int(11) NOT NULL,
   `nomObjet` varchar(255) NOT NULL,
   `debutEnchere` date NOT NULL,
@@ -88,8 +97,10 @@ CREATE TABLE `objet` (
   `video` varchar(255) NOT NULL,
   `typeAchat` enum('immediat','transaction','meilleurOffre') NOT NULL,
   `rarete` enum('regulier','hautDeGamme','rare') NOT NULL,
-  `categorie` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `categorie` varchar(255) NOT NULL,
+  PRIMARY KEY (`idObjet`),
+  KEY `idVendeur` (`idVendeur`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `objet`
@@ -115,15 +126,25 @@ INSERT INTO `objet` (`idObjet`, `idVendeur`, `nomObjet`, `debutEnchere`, `finEnc
 -- Structure de la table `paiement`
 --
 
-CREATE TABLE `paiement` (
-  `idPaiement` int(11) NOT NULL,
+DROP TABLE IF EXISTS `paiement`;
+CREATE TABLE IF NOT EXISTS `paiement` (
+  `idPaiement` int(11) NOT NULL AUTO_INCREMENT,
   `typeCarte` varchar(255) NOT NULL,
   `numPaiement` int(11) NOT NULL,
   `nomPaiement` varchar(255) NOT NULL,
   `dateExpiration` date NOT NULL,
   `codeSecurite` int(11) NOT NULL,
-  `idAcheteur` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `idAcheteur` int(11) NOT NULL,
+  PRIMARY KEY (`idPaiement`),
+  KEY `idAcheteur` (`idAcheteur`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `paiement`
+--
+
+INSERT INTO `paiement` (`idPaiement`, `typeCarte`, `numPaiement`, `nomPaiement`, `dateExpiration`, `codeSecurite`, `idAcheteur`) VALUES
+(1, 'MasterCard', 123456, 'moi', '2021-12-06', 123, 1);
 
 -- --------------------------------------------------------
 
@@ -131,10 +152,13 @@ CREATE TABLE `paiement` (
 -- Structure de la table `panier`
 --
 
-CREATE TABLE `panier` (
-  `idPanier` int(11) NOT NULL,
+DROP TABLE IF EXISTS `panier`;
+CREATE TABLE IF NOT EXISTS `panier` (
+  `idPanier` int(11) NOT NULL AUTO_INCREMENT,
   `idAcheteur` int(11) NOT NULL,
-  `prixPanier` int(11) NOT NULL
+  `prixPanier` int(11) NOT NULL,
+  PRIMARY KEY (`idPanier`),
+  KEY `idAcheteur` (`idAcheteur`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -143,15 +167,18 @@ CREATE TABLE `panier` (
 -- Structure de la table `vendeur`
 --
 
-CREATE TABLE `vendeur` (
-  `idVendeur` int(11) NOT NULL,
+DROP TABLE IF EXISTS `vendeur`;
+CREATE TABLE IF NOT EXISTS `vendeur` (
+  `idVendeur` int(11) NOT NULL AUTO_INCREMENT,
   `pseudoVendeur` varchar(255) NOT NULL,
   `emailVendeur` varchar(255) NOT NULL,
   `nomVendeur` varchar(255) NOT NULL,
   `photoVendeur` varchar(255) NOT NULL,
   `fondVendeur` varchar(255) NOT NULL,
-  `idAdmin` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `idAdmin` int(11) NOT NULL,
+  PRIMARY KEY (`idVendeur`),
+  KEY `idAdmin` (`idAdmin`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `vendeur`
@@ -159,98 +186,6 @@ CREATE TABLE `vendeur` (
 
 INSERT INTO `vendeur` (`idVendeur`, `pseudoVendeur`, `emailVendeur`, `nomVendeur`, `photoVendeur`, `fondVendeur`, `idAdmin`) VALUES
 (1, 'producteur1', 'producteur@gmail.com', 'Producteur', 'photo1.jpg', 'fond1.jpg', 1);
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `acheteur`
---
-ALTER TABLE `acheteur`
-  ADD PRIMARY KEY (`idAcheteur`),
-  ADD KEY `idPanier` (`idPanier`);
-
---
--- Index pour la table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`idAdmin`);
-
---
--- Index pour la table `ajoutpanier`
---
-ALTER TABLE `ajoutpanier`
-  ADD KEY `idObjet` (`idObjet`),
-  ADD KEY `idPanier` (`idPanier`);
-
---
--- Index pour la table `objet`
---
-ALTER TABLE `objet`
-  ADD PRIMARY KEY (`idObjet`),
-  ADD KEY `idVendeur` (`idVendeur`);
-
---
--- Index pour la table `paiement`
---
-ALTER TABLE `paiement`
-  ADD PRIMARY KEY (`idPaiement`),
-  ADD KEY `idAcheteur` (`idAcheteur`);
-
---
--- Index pour la table `panier`
---
-ALTER TABLE `panier`
-  ADD PRIMARY KEY (`idPanier`),
-  ADD KEY `idAcheteur` (`idAcheteur`);
-
---
--- Index pour la table `vendeur`
---
-ALTER TABLE `vendeur`
-  ADD PRIMARY KEY (`idVendeur`),
-  ADD KEY `idAdmin` (`idAdmin`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `acheteur`
---
-ALTER TABLE `acheteur`
-  MODIFY `idAcheteur` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `idAdmin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `objet`
---
-ALTER TABLE `objet`
-  MODIFY `idObjet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT pour la table `paiement`
---
-ALTER TABLE `paiement`
-  MODIFY `idPaiement` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `panier`
---
-ALTER TABLE `panier`
-  MODIFY `idPanier` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `vendeur`
---
-ALTER TABLE `vendeur`
-  MODIFY `idVendeur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
