@@ -8,6 +8,7 @@ $db_found = mysqli_select_db($db_handle, $database);
 
 $connecte=0;
 $user="";
+$total=0;
 
 $sql = "SELECT * FROM acheteur WHERE connexion = '1'";
 $result = mysqli_query($db_handle, $sql);
@@ -19,12 +20,14 @@ if(mysqli_num_rows($result) != 0)
 
 $idPanier = $user['idPanier'];
 
+
 if($db_found)
 {
     if (isset($_POST["button1"])) {
 
         $id = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['id'])); 
-        $quantity = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['quantity'])); 
+        $quantity = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['quantity']));
+        
 
         $sql2 = "INSERT INTO ajoutpanier(idObjet, idPanier, quantite, nombreEnchere, prixEnchere) VALUES('$id', '$idPanier', '$quantity', '0', '0')";
         $result2 = mysqli_query($db_handle, $sql2);
@@ -32,23 +35,6 @@ if($db_found)
         $sql3 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete FROM objet O, ajoutpanier A WHERE A.idPanier = $idPanier AND O.idObjet = A.idObjet";
         $result3 = mysqli_query($db_handle, $sql3);
 
-       
-
-/*
-        foreach ($temp as $key => $value) {
-            $temp[$key] = $value;
-         
-        }
-
-/*
-        $sql4 = "SELECT * FROM objet O, ajoutpanier A, panier P WHERE 'P.idAcheteur' = $user['idAcheteur'] AND 'P.idPanier' = 'A.idPanier' AND 'A.idObjet' = 'O.idObjet'";
-
-        $result4 = mysqli_query($db_handle, $sql4);
-    
-while ($product = mysqli_fetch_assoc($result4)) { 
-    $products[] = $product; 
-}         
-*/
 
     }    
 
@@ -59,27 +45,6 @@ while ($product = mysqli_fetch_assoc($result3)) {
 } 
 
 
-   
-//on detecte quel utilisateur est connecte automatiquement
-
-
-/*
-
-$sql4 = "SELECT * FROM objet";
-$result4 = mysqli_query($db_handle, $sql4);
-
-while ($product = mysqli_fetch_assoc($result4)) { 
-$products[] = $product; 
-} 
-
-$sql5 = "SELECT * FROM vendeur";
-$result5 = mysqli_query($db_handle, $sql5);
-
-while ($vendeur = mysqli_fetch_assoc($result5)) { 
-$vendeurs[] = $vendeur; 
-} 
-
-}*/
 
 ?>
 
@@ -190,6 +155,7 @@ $vendeurs[] = $vendeur;
 
                                      <td><?php echo $product['prixObjet']*$quantity . "€" ?></td>  <!-- calcul -->
 
+                                     <?php $total = $total + $product['prixObjet']*$quantity ?>
 
                                 <td>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -204,13 +170,25 @@ $vendeurs[] = $vendeur;
                     </table>
                 </div>
             </div>
+
+            <?php
+
+            $sql4 = "UPDATE panier SET prixPanier = $total WHERE idPanier = $idPanier";
+            $result4 = mysqli_query($db_handle, $sql4);
+
+            $sql0 = "SELECT * FROM panier WHERE idPanier = $idPanier";
+            $res = mysqli_query($db_handle, $sql0);
+            $prix = mysqli_fetch_assoc($res);
+
+            ?>
+
             <div class="row justify-content-end">
-                <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+                <div class="col col-lg-5 col-md-6 mt-5 cart-wrap">
                     <div class="cart-total mb-3">
                         <h3>Total du panier</h3>
                         <p class="d-flex">
                             <span>Sous-total</span>
-                            <span>20.60€</span>
+                            <span><?php echo $prix['prixPanier'] ?>€</span>
                         </p>
                         <p class="d-flex">
                             <span>Livraison</span>
@@ -223,7 +201,7 @@ $vendeurs[] = $vendeur;
                         <hr>
                         <p class="d-flex total-price">
                             <span>Total</span>
-                            <span>17.60€</span>
+                            <span><?php echo $prix['prixPanier'] ?>€</span>
                         </p>
                     </div>
                     <p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Procéder au paiement</a></p>
