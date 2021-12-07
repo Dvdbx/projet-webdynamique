@@ -17,6 +17,19 @@ $emailve = isset($_POST["emailve"])? $_POST["emailve"] : "";
 $photove = isset($_POST["photove"])? $_POST["photove"] : "";
 $fondve = isset($_POST["fondve"])? $_POST["fondve"] : "";
 
+//variables pour objet
+$nomObjet = isset($_POST["nomObjet"])? $_POST["nomObjet"] : "";
+$prixObjet = isset($_POST["prixObjet"])? $_POST["prixObjet"] : "";
+$volume = isset($_POST["volume"])? $_POST["volume"] : "";
+$photo1 = isset($_POST["photo1"])? $_POST["photo1"] : "";
+$photo2 = isset($_POST["photo2"])? $_POST["photo2"] : "";
+$photo3 = isset($_POST["photo3"])? $_POST["photo3"] : "";
+$video = isset($_POST["video"])? $_POST["video"] : "";
+$typeAchat = isset($_POST["typeAchat"])? $_POST["typeAchat"] : "";
+$rarete = isset($_POST["rarete"])? $_POST["rarete"] : "";
+$categorie = isset($_POST["categorie"])? $_POST["categorie"] : "";
+
+
 
 if($db_found)
 {
@@ -47,6 +60,13 @@ if (isset($_POST["button5"])){
 
 if (isset($_POST["button6"])){   
 
+ $sql = "SELECT idVendeur FROM vendeur where connexion like '1' ";
+ $result = mysqli_query($db_handle, $sql);
+ $data = mysqli_fetch_assoc($result);
+ $idVendeur = $data['idVendeur'];
+ $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
+//echo $sql;
+$result = mysqli_query($db_handle, $sql);
 
 }
 
@@ -385,45 +405,45 @@ data-stellar-background-ratio="0.5">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nom">Nom</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="nomObjet">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="prix">Prix</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="number" class="form-control" placeholder="" name="prixObjet">
                                 </div>
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="volume">Volume</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="number" class="form-control" placeholder="" name="volume">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="photo">Fichier photo 1</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="photo1">
                                 </div>
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="photo">Fichier photo 2</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="photo2">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="photo">Fichier photo 3</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="photo3">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="video">Fichier vidéo</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="video">
                                 </div>
                             </div>
 
@@ -432,11 +452,9 @@ data-stellar-background-ratio="0.5">
                                     <label for="firstname">Type d'achat</label>
                                     <div class="form-group mt-2">
                                         <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="optradio">Immédiat
-                                            </label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Transaction</label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Meilleure offre</label>
-
+                                            <label class="mr-3"><input type="radio" name="typeAchat" value="immediat">Immédiat </label>
+                                            <label class="mr-3"><input type="radio" name="typeAchat" value="meilleurOffre">Meilleur Offre </label>
+                                            <label class="mr-3"><input type="radio" name="typeAchat" value="transaction">Transaction</label>
                                         </div>
                                     </div>
                                     
@@ -447,10 +465,10 @@ data-stellar-background-ratio="0.5">
                                     <label for="firstname">Rareté</label>
                                     <div class="form-group mt-2">
                                         <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="optradio">Haut de gamme
+                                            <label class="mr-3"><input type="radio" name="rarete" value="hautDeGamme">Haut de gamme
                                             </label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Rare</label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Régulier</label>
+                                            <label class="mr-3"><input type="radio" name="rarete" value="rare">Rare</label>
+                                            <label class="mr-3"><input type="radio" name="rarete" value="regulier">Régulier</label>
 
                                         </div>
                                     </div>
@@ -549,45 +567,45 @@ data-stellar-background-ratio="0.5">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nom">Nom</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="nomObjet">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="prix">Prix</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="number" class="form-control" placeholder="" name="prixObjet">
                                 </div>
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="volume">Volume</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="number" class="form-control" placeholder="" name="volume">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="photo">Fichier photo 1</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="photo1">
                                 </div>
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="photo">Fichier photo 2</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="photo2">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="photo">Fichier photo 3</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="photo3">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="video">Fichier vidéo</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="video">
                                 </div>
                             </div>
 
@@ -596,10 +614,9 @@ data-stellar-background-ratio="0.5">
                                     <label for="firstname">Type d'achat</label>
                                     <div class="form-group mt-2">
                                         <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="optradio">Immédiat
-                                            </label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Transaction</label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Meilleure offre</label>
+                                            <label class="mr-3"><input type="radio" name="typeAchat" value="immediat">Immédiat </label>
+                                            <label class="mr-3"><input type="radio" name="typeAchat" value="meilleurOffre">Meilleur Offre </label>
+                                            <label class="mr-3"><input type="radio" name="typeAchat" value="transaction">Transaction</label>
 
                                         </div>
                                     </div>
@@ -611,11 +628,9 @@ data-stellar-background-ratio="0.5">
                                     <label for="firstname">Rareté</label>
                                     <div class="form-group mt-2">
                                         <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="optradio">Haut de gamme
-                                            </label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Rare</label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Régulier</label>
-
+                                            <label class="mr-3"><input type="radio" name="rarete" value="hautDeGamme">Haut de gamme</label>
+                                            <label class="mr-3"><input type="radio" name="rarete" value="rare">Rare</label>
+                                            <label class="mr-3"><input type="radio" name="rarete" value="regulier">Régulier</label>
                                         </div>
                                     </div>
                                     
@@ -649,12 +664,8 @@ data-stellar-background-ratio="0.5">
                             <div class="col-md-12">
                                 <p><button type="submit" class="btn btn-primary py-3 px-4 mt-4">Mettre en vente le produit</button></p>
 
-                            </div>
-                            
-                            
+                            </div>    
                         </div>
-                        
-                        
                     </div>
                 </div>
             </div>
