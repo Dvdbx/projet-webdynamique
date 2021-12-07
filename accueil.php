@@ -15,9 +15,18 @@ if($db_found)
                    
 <?php
 
-while ($product = mysqli_fetch_assoc($result)) { 
-    $products[] = $product; 
+while ($temp = mysqli_fetch_assoc($result)) { 
+    $temps[] = $temp; 
 } 
+$nombre=count($temps);
+
+
+
+for ($i=0; $i<4; $i++) {
+    
+     $products[$i]=$temps[rand(0, $nombre-1)];
+    
+}
 
 ?>
 
@@ -195,47 +204,30 @@ while ($product = mysqli_fetch_assoc($result)) {
 
             <?php foreach($products as $product) : ?>
 
-                <div class="col-md-4 d-flex">
-                            <div class="product">
-                                <div class="img d-flex align-items-center justify-content-center"
-                                    style="background-image:url(images/<?php echo $product['photo1']; ?>)">
+                <div class="col-md-3 d-flex">
+                    <div class="product">
+                        <div class="img d-flex align-items-center justify-content-center"
+                            style="background-image:url(images/<?php echo $product['photo1']; ?>)">
+                            <div class="desc">
+                                <p class="meta-prod d-flex">
+                                    <a href="panier.html" class="d-flex align-items-center justify-content-center"><span
+                                            class="fa fa-shopping-bag"></span></a>
 
-                                    <div class="desc">
-                                        <p class="meta-prod d-flex align-items-center justify-content-center">
-
-                                        <form action="product.php" method="post" class="text-align-center">
-
-                                            
-                                            <input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
-                                            <button type="submit" name="button1" class="btn btn-primary py-3 px-3" style="margin-left:40%;"><a class="d-flex align-items-center justify-content-center"><span
-                                                    class="fa fa-eye"></span></a></button>
-
-                                        </form>
-
-                                        <form action="panier.php" method="post" class="text-align-center">
-
-                                        <input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
-
-                                            <button type="submit" name="button2" class="btn btn-primary py-3 px-3" style="margin-left:40%;"><a class="d-flex align-items-center justify-content-center"><span
-                                                    class="fa fa-shopping-bag"></span></a></button>
-                    
-                                        </form>
-
-                                           
-                                        </p>
-
-                                    </div>
-
-                                </div>
-                                <div class="text text-center" >
-                                    <span class="sale" style="background-color:<?php if($product['rarete']=="hautDeGamme"){echo "#b7472a";}if($product['rarete']=="rare"){echo "#fe9801";}if($product['rarete']=="regulier"){echo "#01d28e";} ?>"><?php if($product['rarete']=="hautDeGamme"){echo "Haut de gamme";}if($product['rarete']=="rare"){echo "Rare";}if($product['rarete']=="regulier"){echo "Régulier";}; ?></span>
+                                    <a href="product.html"
+                                        class="d-flex align-items-center justify-content-center"><span
+                                            class="fa fa-eye"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text text-center">
+                            <span class="sale" style="background-color:<?php if($product['rarete']=="hautDeGamme"){echo "#b7472a";}if($product['rarete']=="rare"){echo "#fe9801";}if($product['rarete']=="regulier"){echo "#01d28e";} ?>"><?php if($product['rarete']=="hautDeGamme"){echo "Haut de gamme";}if($product['rarete']=="rare"){echo "Rare";}if($product['rarete']=="regulier"){echo "Régulier";}; ?></span>
                                     <span class="category"><?php echo $product['categorie']; ?></span>
                                     <h2><?php echo $product['nomObjet']; ?></h2>
                                     <p class="mb-0"> <span
                                             class="price"><?php echo $product['prixObjet']; ?>€</span></p>
-                                </div>
-                            </div>
-                        </div>   
+                        </div>
+                    </div>
+                </div>
 
                 <?php endforeach ?>
                
