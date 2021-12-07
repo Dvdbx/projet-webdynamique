@@ -7,16 +7,16 @@
 	$codeSecurite = isset($_POST["codeSecurite"])? $_POST["codeSecurite"] : "";
 
 	//identifier BDD
-    $database = "paris shopping";
+    //$database = "paris shopping";
 
     //connectez-vous dans BDD
-    $db_handle = mysqli_connect('localhost', 'root', '');
-    $db_found = mysqli_select_db($db_handle, $database);
+    //$db_handle = mysqli_connect('localhost', 'root', '');
+   // $db_found = mysqli_select_db($db_handle, $database);
 
 	//si le bouton est cliqué
 if (isset($_POST["button"])) {
 
-	 if ($db_found) 
+	 //if ($db_found) 
      {
 		$erreur = "";
 
@@ -34,39 +34,24 @@ if (isset($_POST["button"])) {
 		}
 
 		if($erreur == ""){
-
-			//echo "tout a été rempli <br>";
+			echo "tout a été rempli <br>";
+		/*
 			 //commencer le sql
             $sql = "SELECT * FROM paiement";
-
-            $sql .= " WHERE nomPaiement LIKE '%$nomCarte%' AND numPaiement LIKE '$numCarte'";
+            $sql .= "WHERE nomPaiement LIKE '%$nomCarte%' AND numCarte LIKE '%$numCarte%'";
+            
 			$result = mysqli_query($db_handle, $sql);
 
-			//regarder s'il y a des resultats
+			  //regarder s'il y a des resultats
             if (mysqli_num_rows($result) == 0) 
             {
-                echo "<p> Numéro de carte ou nom invalide </p>";
-
+                echo "<p> Numéro de carte ou nom invalide</p>";
             } 
             else {
-            	echo "<p> Numéro de carte et nom valide </p>";
 
-            	$sql .= " AND dateExpiration LIKE '$dateExp' AND codeSecurite LIKE '$codeSecurite' AND typeCarte LIKE '$card'";
-				$result = mysqli_query($db_handle, $sql);
+            }*/
 
-				//regarder s'il y a des resultats
-            	if (mysqli_num_rows($result) == 0) 
-           		 {
-                	echo "<p> Informations de la carte invalides </p>";
-
-           		 } 
-            	else {
-            			echo "<p> Paiement validé </p>";
-       	   		 	 }
-       	    	}
-
-			}
-		else {
+		}else {
 			echo "Erreur : <br>" . $erreur;
 		}
 	}
