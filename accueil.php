@@ -20,11 +20,18 @@ while ($temp = mysqli_fetch_assoc($result)) {
 } 
 $nombre=count($temps);
 
-
-
+$products = [];
 for ($i=0; $i<4; $i++) {
-    
-     $products[$i]=$temps[rand(0, $nombre-1)];
+    $r=rand(0, $nombre-1);
+    if(!in_array($temps[$r], $products))
+    {
+     $products[$i]=$temps[$r];
+     
+    }
+    else
+    {
+        $i--;
+    }
     
 }
 
