@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-    <title>Alcool Store - Paiement</title>
+    <title>Alcool Store - Inscription</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link
@@ -49,9 +49,9 @@
             <div class="row no-gutters slider-text align-items-end justify-content-center">
                 <div class="col-md-9 ftco-animate mb-5 text-center">
                     <p class="breadcrumbs mb-0"><span class="mr-2"><a href="accueil.html">Accueil <i
-                                    class="fa fa-chevron-right"></i></a></span> <span>Paiement <i
+                                    class="fa fa-chevron-right"></i></a></span> <span>Inscription <i
                                 class="fa fa-chevron-right"></i></span></p>
-                    <h2 class="mb-0 bread">Paiement</h2>
+                    <h2 class="mb-0 bread">Inscription</h2>
                 </div>
             </div>
         </div>
@@ -60,151 +60,84 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-10 ftco-animate">
-                    <form action="paiement.php" class="billing-form">
-                        <h3 class="mb-4 billing-heading">Vos coordonnées de livraison</h3>
+                    <form action="compte.php" class="billing-form" method="post">
+                        <h3 class="mb-4 billing-heading">Inscription acheteur</h3>
                         <div class="row align-items-end">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="firstname">Prénom</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" name="prenomac" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="lastname">Nom</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="lastname">Adresse (ligne 1)</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="lastname">Adresse (ligne 2)</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" name="nomac" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="streetaddress">Ville</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <label for="lastname">Adresse</label>
+                                    <input type="text" name="adresseac" class="form-control" placeholder="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="streetaddress">Code postal</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <label for="lastname">Email</label>
+                                    <input type="text" name="emailac" class="form-control" placeholder="">
                                 </div>
                             </div>
-                           
-                            <div class="w-100"></div>
                             <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="lastname">Pays</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                            </div>
+                                <p><button type="submit" name="button1" class="btn btn-primary py-3 px-4">S'inscrire</button></p>
 
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="lastname">Téléphone</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-            
-                        </div>
-                        <h3 class="mb-4 billing-heading">Vos informations de paiement</h3>
-                        <div class="row align-items-end">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="firstname">Type de carte</label>
-                                        <div class="form-group mt-2">
-                                            <div class="radio">
-                                                <label class="mr-3"><input type="radio" name="optradio">Visa
-                                                </label>
-                                                <label class="mr-3"><input type="radio" name="optradio">Mastercard</label>
-                                                <label class="mr-3"><input type="radio" name="optradio">American Express</label>
-                                                <label class="mr-3"><input type="radio" name="optradio">Paypal</label>
-
-                                            </div>
-                                        </div>
-                            
-                                </div>
-                            </div>
-                           
-                            <div class="w-100"></div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="lastname">Numéro de carte</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="lastname">Nom</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="streetaddress">Date d'expiration</label>
-                                    <input type="date" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="streetaddress">Code de sécurité</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
                             </div>
                            
                     </form>
-                    <div class="row mt-5 pt-3 d-flex">
-                        <div class="col-md-6 d-flex">
-                            <div class="cart-detail cart-total p-3 p-md-4">
-                                <h3 class="billing-heading mb-4">Total du panier</h3>
-                                <p class="d-flex">
-                                    <span>Sous-total</span>
-                                    <span>20.60€</span>
-                                </p>
-                                <p class="d-flex">
-                                    <span>Livraison</span>
-                                    <span>0.00€</span>
-                                </p>
-                                <p class="d-flex">
-                                    <span>Remise</span>
-                                    <span>3.00€</span>
-                                </p>
-                                <hr>
-                                <p class="d-flex total-price">
-                                    <span>Total</span>
-                                    <span>17.60€</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="cart-detail p-3 p-md-4">
-                                <h3 class="billing-heading mb-4">Confirmation de paiement</h3>
-                                
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value="" class="mr-2"> I have read and accept
-                                                the terms and conditions</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p><a href="#" class="btn btn-primary py-3 px-4">Payer</a></p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
+
+                    <form action="compte.php" class="billing-form" method="post">
+                        <h3 class="mb-4 mt-4 billing-heading">Inscription vendeur</h3>
+                        <div class="row align-items-end">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstname">Pseudo</label>
+                                    <input type="text" name="pseudove" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lastname">Nom</label>
+                                    <input type="text" name="nomve" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lastname">Email</label>
+                                    <input type="text" name="emailve" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lastname">Photo</label>
+                                    <input type="text" name="photove" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lastname">Fond</label>
+                                    <input type="text" name="fondve" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <p><button type="submit" name="button2" class="btn btn-primary py-3 px-4">S'inscrire</button></p>
+
+                            </div>
+                           
+                    </form>
+
             </div>
         </div>
     </section>

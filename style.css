@@ -7100,3 +7100,20 @@ textarea.form-control {
 .categories li.active a span {
     color: #b7472a
 }
+
+div #form_acheteur{
+    visibility:hidden;
+}
+
+div #form_vendeur{
+display: none;
+}
+
+div #form_admin{
+    visibility:hidden;
+}
+
+.hidden{
+    visibility:hidden;
+
+}

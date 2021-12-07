@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 06 déc. 2021 à 16:08
+-- Généré le : mar. 07 déc. 2021 à 10:27
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -35,9 +35,17 @@ CREATE TABLE IF NOT EXISTS `acheteur` (
   `prenomAcheteur` varchar(255) NOT NULL,
   `adresseAcheteur` varchar(255) NOT NULL,
   `emailAcheteur` varchar(255) NOT NULL,
+  `connexion` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idAcheteur`),
   KEY `idPanier` (`idPanier`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `acheteur`
+--
+
+INSERT INTO `acheteur` (`idAcheteur`, `idPanier`, `nomAcheteur`, `prenomAcheteur`, `adresseAcheteur`, `emailAcheteur`, `connexion`) VALUES
+(1, 1, 'ad', '', '', 'ad', 1);
 
 -- --------------------------------------------------------
 
@@ -50,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
   `pseudoAdmin` varchar(255) NOT NULL,
   `mdpAdmin` varchar(255) NOT NULL,
+  `connexion` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idAdmin`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
@@ -57,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
 -- Déchargement des données de la table `admin`
 --
 
-INSERT INTO `admin` (`idAdmin`, `pseudoAdmin`, `mdpAdmin`) VALUES
-(1, 'admin', 'alcool');
+INSERT INTO `admin` (`idAdmin`, `pseudoAdmin`, `mdpAdmin`, `connexion`) VALUES
+(1, 'admin', 'alcool', 0);
 
 -- --------------------------------------------------------
 
@@ -70,6 +79,7 @@ DROP TABLE IF EXISTS `ajoutpanier`;
 CREATE TABLE IF NOT EXISTS `ajoutpanier` (
   `idObjet` int(11) NOT NULL,
   `idPanier` int(11) NOT NULL,
+  `quantite` int(11) NOT NULL,
   `nombreEnchere` int(11) NOT NULL,
   `prixEnchere` int(11) NOT NULL,
   KEY `idObjet` (`idObjet`),
@@ -107,9 +117,8 @@ CREATE TABLE IF NOT EXISTS `objet` (
 --
 
 INSERT INTO `objet` (`idObjet`, `idVendeur`, `nomObjet`, `debutEnchere`, `finEnchere`, `prixObjet`, `volume`, `photo1`, `photo2`, `photo3`, `video`, `typeAchat`, `rarete`, `categorie`) VALUES
-(1, 1, 'Bacardi 151', '2021-12-06', '2021-12-08', 60, 10, 'prod-1.webp', '', '', '', 'immediat', 'rare', 'Brandy'),
 (2, 1, 'Jim Beam Kentucky', '2021-12-06', '2021-12-08', 80, 15, 'prod-2.webp', '', '', '', 'transaction', 'hautDeGamme', 'Whisky'),
-(3, 1, 'Citadelle', '2021-12-06', '2021-12-08', 69, 75, 'prod-3.webp', '', '', '', 'meilleurOffre', 'rare', 'Gin'),
+(1, 1, 'Bacardi 151', '2021-12-06', '2021-12-08', 60, 10, 'prod-1.webp', '', '', '', 'immediat', 'rare', 'Brandy'),
 (4, 1, 'The Glenlivet', '2021-12-06', '2021-12-08', 69, 80, 'prod-4.webp', '', '', '', 'immediat', 'regulier', 'Rhum'),
 (5, 2, 'Black Label', '2021-12-06', '2021-12-08', 45, 75, 'prod-5.webp', '', '', '', 'meilleurOffre', 'regulier', 'Whiskey'),
 (6, 2, 'Macallan', '2021-12-06', '2021-12-08', 115, 100, 'prod-6.webp', '', '', '', 'meilleurOffre', 'rare', 'Tequila'),
@@ -137,14 +146,7 @@ CREATE TABLE IF NOT EXISTS `paiement` (
   `idAcheteur` int(11) NOT NULL,
   PRIMARY KEY (`idPaiement`),
   KEY `idAcheteur` (`idAcheteur`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `paiement`
---
-
-INSERT INTO `paiement` (`idPaiement`, `typeCarte`, `numPaiement`, `nomPaiement`, `dateExpiration`, `codeSecurite`, `idAcheteur`) VALUES
-(1, 'MasterCard', 123456, 'moi', '2021-12-06', 123, 1);
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -159,7 +161,14 @@ CREATE TABLE IF NOT EXISTS `panier` (
   `prixPanier` int(11) NOT NULL,
   PRIMARY KEY (`idPanier`),
   KEY `idAcheteur` (`idAcheteur`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `panier`
+--
+
+INSERT INTO `panier` (`idPanier`, `idAcheteur`, `prixPanier`) VALUES
+(1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -176,16 +185,17 @@ CREATE TABLE IF NOT EXISTS `vendeur` (
   `photoVendeur` varchar(255) NOT NULL,
   `fondVendeur` varchar(255) NOT NULL,
   `idAdmin` int(11) NOT NULL,
+  `connexion` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idVendeur`),
   KEY `idAdmin` (`idAdmin`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `vendeur`
 --
 
-INSERT INTO `vendeur` (`idVendeur`, `pseudoVendeur`, `emailVendeur`, `nomVendeur`, `photoVendeur`, `fondVendeur`, `idAdmin`) VALUES
-(1, 'producteur1', 'producteur@gmail.com', 'Producteur', 'photo1.jpg', 'fond1.jpg', 1);
+INSERT INTO `vendeur` (`idVendeur`, `pseudoVendeur`, `emailVendeur`, `nomVendeur`, `photoVendeur`, `fondVendeur`, `idAdmin`, `connexion`) VALUES
+(1, 'producteur1', 'producteur@gmail.com', 'Producteur', 'person_1.webp', 'image_3.webp', 1, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
