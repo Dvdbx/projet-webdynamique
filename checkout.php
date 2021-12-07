@@ -13,10 +13,13 @@
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="style.css" />
+
 </head>
 
 <body>
-  
+
+ <?php require_once 'paiement1.php'; ?>
+
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
             <a class="navbar-brand" href="accueil.html">Alcool <span>store</span></a>
@@ -60,76 +63,74 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-10 ftco-animate">
-                    <form action="paiement.php" method="post">
-                        <!--<h3 class="mb-4 billing-heading">Vos coordonnées de livraison</h3>
+                    <form method="post">
+                         <h3 class="mb-4 billing-heading">Vos coordonnées de livraison</h3>
                         <div class="row align-items-end">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="firstname">Prénom</label>
-                                    <input type="text" class="form-control" placeholder="" name="prenomAcheteur">
+                                    <label for="firstname">Prénom : <span><?= $prenomAcheteur ?></span></label>
+                                    <!--<input type="text" class="form-control" placeholder="" name="prenomAcheteur">-->
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="lastname">Nom</label>
-                                    <input type="text" class="form-control" placeholder="" name="nomAcheteur">
+                                    <label for="lastname">Nom : <span><?= $nomAcheteur ?></span></label>
+                                    <!--<input type="text" class="form-control" placeholder="" name="nomAcheteur">-->
                                 </div>
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="lastname">Adresse (ligne 1)</label>
-                                    <input type="text" class="form-control" placeholder="" name="adresse1">
+                                    <label for="lastname">Adresse (ligne 1) : <span><?= $adresse1 ?></span></label>
+                                    <!--<input type="text" class="form-control" placeholder="" name="adresse1">-->
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="lastname">Adresse (ligne 2)</label>
-                                    <input type="text" class="form-control" placeholder="" name="adresse2">
+                                    <label for="lastname">Adresse (ligne 2) : <span><?= $adresse2 ?></span></label>
+                                    <!--<input type="text" class="form-control" placeholder="" name="adresse2">-->
                                 </div>
                             </div>
+                            
                             <div class="w-100"></div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="streetaddress">Ville</label>
-                                    <input type="text" class="form-control" placeholder="" name="ville">
+                                    <label for="streetaddress">Code postal : <span><?= $codePostal ?></span></label>
+                                    <!--<input type="text" class="form-control" placeholder="" name="codePostal">-->
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="streetaddress">Code postal</label>
-                                    <input type="text" class="form-control" placeholder="" name="codePostal">
+                                    <label for="streetaddress">Ville : <span><?= $ville ?></span></label>
+                                    <!--<input type="text" class="form-control" placeholder="" name="ville">-->
                                 </div>
                             </div>
                            
                             <div class="w-100"></div>
                             <div class="col-md-12">
                             <div class="form-group">
-                                <label for="lastname">Pays</label>
-                                <input type="text" class="form-control" placeholder="" name="pays">
+                                <label for="lastname">Pays : <span><?= $pays ?></span></label>
+                                <!--<input type="text" class="form-control" placeholder="" name="pays">-->
                             </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="lastname">Téléphone</label>
-                                    <input type="text" class="form-control" placeholder="" name="telephone">
+                                    <label for="lastname">Téléphone : <span><?= $telephone ?></span> </label>
+                                    <!--<input type="text" class="form-control" placeholder="" name="telephone">-->
                                 </div>
                             </div>
             
-                        </div>-->
-                        <h3 class="mb-4 billing-heading">Vos informations de paiement</h3>
+                        </div>
+
+                        <h3 class="mb-4 billing-heading">Vos informations de paiement </h3>
                         <div class="row align-items-end">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="firstname">Type de carte</label>
                                         <div class="form-group mt-2">
                                             <div class="radio">
-                                                <!--<label class="mr-3"><input type="radio" name="optradio">Visa
-                                                </label>
-                                                <label class="mr-3"><input type="radio" name="optradio">Mastercard</label>
-                                                <label class="mr-3"><input type="radio" name="optradio">American Express</label>
-                                                <label class="mr-3"><input type="radio" name="optradio">Paypal</label>-->
                                                 <label class="mr-3"><input type ="radio" name="creditCard" value="MasterCard" checked ="">MasterCard</label>
                                                 <label class="mr-3"><input type ="radio" name="creditCard" value="Visa">Visa</label>
                                                 <label class="mr-3"><input type ="radio" name="creditCard" value="Paypal">Paypal</label>
@@ -144,14 +145,16 @@
                             <div class="w-100"></div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="lastname">Numéro de carte</label>
+                                    <label for="lastname">Numéro de carte </label>
                                     <input type="text" class="form-control" placeholder="" name="numCarte">
+                                     <span><?= $erreurNum ?></span>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="lastname">Nom</label>
                                     <input type="text" class="form-control" placeholder="" name="nomCarte">
+                                    <span><?=$erreurNom?></span>
                                 </div>
                             </div>
                             <div class="w-100"></div>
@@ -159,12 +162,14 @@
                                 <div class="form-group">
                                     <label for="streetaddress">Date d'expiration</label>
                                     <input type="date" class="form-control" placeholder="" name="dateExp">
+                                    <span><?=$erreurExp?></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="streetaddress">Code de sécurité</label>
                                     <input type="password" class="form-control" placeholder="" name="codeSecurite">
+                                    <span><?=$erreurCode?></span>
                                 </div>
                             </div>
                            
@@ -192,6 +197,7 @@
                                 </p>
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="cart-detail p-3 p-md-4">
                                 <h3 class="billing-heading mb-4">Confirmation de paiement</h3>
@@ -199,16 +205,33 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" value="ok" class="mr-2" name="checkbox" >J'ai lu et accepté les termes et les conditions</label>
+                                            <label><input type="checkbox" value=1 class="mr-2" name="checkbox">J'ai lu et accepté les termes et les conditions</label>
                                         </div>
                                     </div>
                                 </div>
                                 <!--<p><a href="#" class="btn btn-primary py-3 px-4">Payer</a></p>-->
                                 <p><input type="submit" name="button" value="Payer" class="btn btn-primary py-3 px-4" /></p>
-                                
+                                <span><?=$erreurCheck?></span>
+                                <span><?=$erreur?></span>
+                                <span><?=$paiement?></span>
                             </div>
                         </div>
+
+                        <!--
+                         <div class="col-md-6 d-flex">
+                            <div class="cart-detail p-3 p-md-4">
+                                <h3 class="billing-heading mb-4">Etat du paiement</h3>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <span><?=$paiement?></span>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    -->
+
                     </div>
+
                   </form>
                 </div>
             </div>
