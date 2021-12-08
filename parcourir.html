@@ -13,9 +13,12 @@
         href="style.css" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+
+
 </head>
 
 <body>
+
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
@@ -63,7 +66,7 @@
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                             <h4 class="product-select">Sélection du type de produits</h4>
-                            <select class="selectpicker" multiple>
+                            <select name="filtre" class="selectpicker" multiple>
                                 <option>Brandy</option>
                                 <option>Gin</option>
                                 <option>Rum</option>
@@ -344,6 +347,22 @@
                                 <li><a href="#">Tequila <span class="fa fa-chevron-right"></span></a></li>
                                 <li><a href="#">Vodka <span class="fa fa-chevron-right"></span></a></li>
                                 <li><a href="#">Whiskey <span class="fa fa-chevron-right"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+                    <div class="sidebar-box ftco-animate">
+                        <div class="categories">
+                            <h3>Type d'achat</h3>
+                            <ul class="p-0">
+                                <li><a href="parcourir-filtre.php?zizi=0">Achat immédiat <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=1">Transaction vendeur-client <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=2">meilleur offre <span class="fa fa-chevron-right"></span></a></li>
+        
                             </ul>
                         </div>
                     </div>
