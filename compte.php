@@ -18,6 +18,7 @@ $photove = isset($_POST["photove"])? $_POST["photove"] : "";
 $fondve = isset($_POST["fondve"])? $_POST["fondve"] : "";
 
 //variables pour objet
+//vendeur
 $nomObjet = isset($_POST["nomObjet"])? $_POST["nomObjet"] : "";
 $prixObjet = isset($_POST["prixObjet"])? $_POST["prixObjet"] : "";
 $volume = isset($_POST["volume"])? $_POST["volume"] : "";
@@ -28,6 +29,9 @@ $video = isset($_POST["video"])? $_POST["video"] : "";
 $typeAchat = isset($_POST["typeAchat"])? $_POST["typeAchat"] : "";
 $rarete = isset($_POST["rarete"])? $_POST["rarete"] : "";
 $categorie = isset($_POST["categorie"])? $_POST["categorie"] : "";
+$erreur = "";
+//admin
+$nomVendeur="";
 
 
 
@@ -55,20 +59,6 @@ if (isset($_POST["button5"])){
     $supression = mysqli_query($db_handle, $supprimer);
 
 } 
-
-//si clic bouton mettre en vente produit
-
-if (isset($_POST["button6"])){   
-
- $sql = "SELECT idVendeur FROM vendeur where connexion like '1' ";
- $result = mysqli_query($db_handle, $sql);
- $data = mysqli_fetch_assoc($result);
- $idVendeur = $data['idVendeur'];
- $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
-//echo $sql;
-$result = mysqli_query($db_handle, $sql);
-
-}
 
 //si passe par formulaire d'inscription
     
@@ -234,18 +224,18 @@ else
 
     if(mysqli_num_rows($result1) != 0)
     {
-     $visiteur.="admin";
+     $visiteur="admin";
      $user = mysqli_fetch_assoc($result1);
  }
  if(mysqli_num_rows($result2) != 0)
  {
-     $visiteur.="acheteur";
+     $visiteur="acheteur";
      $user = mysqli_fetch_assoc($result2);
 
  }
  if(mysqli_num_rows($result3) != 0)
  {
-     $visiteur.="vendeur";
+     $visiteur="vendeur";
      $user = mysqli_fetch_assoc($result3);
 
  }
@@ -267,6 +257,75 @@ while ($vendeur = mysqli_fetch_assoc($result5)) {
    $vendeurs[] = $vendeur; 
 } 
 
+}
+
+//si clic bouton mettre en vente produit
+
+if (isset($_POST["button6"])){   
+
+if($visiteur=="vendeur"){
+
+ if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie))
+ {
+    $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
+    
+ }
+ else{
+    
+    //On cherche l'id du vendeur
+    $sql = "SELECT idVendeur FROM vendeur where connexion like '1' ";
+    $result = mysqli_query($db_handle, $sql);
+    $data = mysqli_fetch_assoc($result);
+    $idVendeur = $data['idVendeur'];
+    
+    //on regarde si l'objet existe deja 
+    $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
+    $result = mysqli_query($db_handle, $sql);
+
+    if (mysqli_num_rows($result) != 0) 
+    {
+        $erreur= "Cet objet est déjà en vente par ce vendeur";
+
+    }else 
+        {
+        $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
+        $result = mysqli_query($db_handle, $sql);
+        $erreur= "nouvel objet crée";
+        }
+  }
+}
+else {
+
+ if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie)||empty($nomVendeur))
+ {
+    $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
+    
+ }
+ else{
+    
+    //On cherche l'id du vendeur
+    $sql = "SELECT idVendeur FROM vendeur where nomVendeur like '$nomVendeur' ";
+    $result = mysqli_query($db_handle, $sql);
+    $data = mysqli_fetch_assoc($result);
+    $idVendeur = $data['idVendeur'];
+    
+    //on regarde si l'objet existe deja 
+    $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
+    $result = mysqli_query($db_handle, $sql);
+
+    if (mysqli_num_rows($result) != 0) 
+    {
+        $erreur= "Cet objet est déjà en vente par ce vendeur";
+
+    }else 
+        {
+        $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
+        $result = mysqli_query($db_handle, $sql);
+        $erreur= "nouvel objet crée";
+        }
+ 
+   }
+}
 }
 ?>
 
@@ -495,7 +554,7 @@ data-stellar-background-ratio="0.5">
 
                             <div class="col-md-12">
                                 <p><button type="submit" name="button6" class="btn btn-primary py-3 px-4 mt-4">Mettre en vente le produit</button></p>
-
+                                <span><?= $erreur ?></span>
                             </div>               
                             
                         </div>
@@ -642,7 +701,7 @@ data-stellar-background-ratio="0.5">
                                     <label for="categorie">Catégorie</label>
                                     <div class="select-wrap">
                                         <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                        <select name="" id="" class="form-control">
+                                        <select name="categorie" id="" class="form-control">
                                             <option value="whisky">Whisky</option>
                                             <option value="brandy">Brandy</option>
                                             <option value="gin">Gin</option>
@@ -657,13 +716,13 @@ data-stellar-background-ratio="0.5">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="vendeur">Vendeur</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" name="nomVendeur">
                                 </div>
                             </div>
 
                             <div class="col-md-12">
-                                <p><button type="submit" class="btn btn-primary py-3 px-4 mt-4">Mettre en vente le produit</button></p>
-
+                                 <p><button type="submit" name="button6" class="btn btn-primary py-3 px-4 mt-4">Mettre en vente le produit</button></p>
+                                <span><?= $erreur ?></span>
                             </div>    
                         </div>
                     </div>
