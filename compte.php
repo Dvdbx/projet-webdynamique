@@ -31,7 +31,7 @@ $rarete = isset($_POST["rarete"])? $_POST["rarete"] : "";
 $categorie = isset($_POST["categorie"])? $_POST["categorie"] : "";
 $erreur = "";
 //admin
-$nomVendeur="";
+$nomVendeur=isset($_POST["nomVendeur"])? $_POST["nomVendeur"] : "";
 
 
 
@@ -259,76 +259,84 @@ while ($vendeur = mysqli_fetch_assoc($result5)) {
 
 }
 
-//si clic bouton mettre en vente produit
+//si clic bouton mettre en vente produit de la page vendeur
 
-if (isset($_POST["button6"])){   
+if (isset($_POST["button6"])){ 
 
-if($visiteur=="vendeur"){
-
- if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie))
- {
-    $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
-    
- }
- else{
-    
-    //On cherche l'id du vendeur
-    $sql = "SELECT idVendeur FROM vendeur where connexion like '1' ";
-    $result = mysqli_query($db_handle, $sql);
-    $data = mysqli_fetch_assoc($result);
-    $idVendeur = $data['idVendeur'];
-    
-    //on regarde si l'objet existe deja 
-    $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
-    $result = mysqli_query($db_handle, $sql);
-
-    if (mysqli_num_rows($result) != 0) 
+    //echo "vendeurrrrr";
+    if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie))
     {
-        $erreur= "Cet objet est déjà en vente par ce vendeur";
-
-    }else 
-        {
-        $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
+        $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
+    
+    }
+    else{
+    
+        //On cherche l'id du vendeur
+        $sql = "SELECT idVendeur FROM vendeur where connexion like '1' ";
         $result = mysqli_query($db_handle, $sql);
-        $erreur= "nouvel objet crée";
+        $data = mysqli_fetch_assoc($result);
+        $idVendeur = $data['idVendeur'];
+    
+         //on regarde si l'objet existe deja 
+         $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
+         $result = mysqli_query($db_handle, $sql);
+
+        if (mysqli_num_rows($result) != 0) 
+         {
+            $erreur= "Cet objet est déjà en vente par ce vendeur";
+
+         }else 
+             {
+                $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
+                $result = mysqli_query($db_handle, $sql);
+                $erreur= "nouvel objet crée";
+              }
         }
-  }
+
 }
-else {
 
- if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie)||empty($nomVendeur))
- {
-    $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
-    
- }
- else{
-    
-    //On cherche l'id du vendeur
-    $sql = "SELECT idVendeur FROM vendeur where nomVendeur like '$nomVendeur' ";
-    $result = mysqli_query($db_handle, $sql);
-    $data = mysqli_fetch_assoc($result);
-    $idVendeur = $data['idVendeur'];
-    
-    //on regarde si l'objet existe deja 
-    $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
-    $result = mysqli_query($db_handle, $sql);
+//si clic bouton mettre en vente produit de la page admin
 
-    if (mysqli_num_rows($result) != 0) 
+if(isset($_POST["button7"])){ 
+
+    //echo "adminnnnnnn";
+    if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie)||empty($nomVendeur))
     {
-        $erreur= "Cet objet est déjà en vente par ce vendeur";
+         $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
+    
+    }
+    else{
+    
+         //On cherche l'id du vendeur
+            $sql = "SELECT idVendeur FROM vendeur where nomVendeur like '$nomVendeur' ";
+            $result = mysqli_query($db_handle, $sql);
+             if (mysqli_num_rows($result) == 0) 
+             {
+                $erreur= "Ce vendeur n'existe pas";
 
-    }else 
-        {
-        $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
-        $result = mysqli_query($db_handle, $sql);
-        $erreur= "nouvel objet crée";
+             }
+             else {
+            $data = mysqli_fetch_assoc($result);
+            $idVendeur = $data['idVendeur'];
+        
+            //on regarde si l'objet existe deja 
+            $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
+            $result = mysqli_query($db_handle, $sql);
+
+            if (mysqli_num_rows($result) != 0) 
+             {
+                $erreur= "Cet objet est déjà en vente par ce vendeur";
+
+             }else {
+                    $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
+                    $result = mysqli_query($db_handle, $sql);
+                    $erreur= "nouvel objet crée";
+                  }
         }
- 
-   }
+      }
 }
-}
+
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -524,8 +532,7 @@ data-stellar-background-ratio="0.5">
                                     <label for="firstname">Rareté</label>
                                     <div class="form-group mt-2">
                                         <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="rarete" value="hautDeGamme">Haut de gamme
-                                            </label>
+                                            <label class="mr-3"><input type="radio" name="rarete" value="hautDeGamme">Haut de gamme</label>
                                             <label class="mr-3"><input type="radio" name="rarete" value="rare">Rare</label>
                                             <label class="mr-3"><input type="radio" name="rarete" value="regulier">Régulier</label>
 
@@ -558,18 +565,16 @@ data-stellar-background-ratio="0.5">
                             </div>               
                             
                         </div>
-                        
-                        
-                    </div>
+                    </form> 
                 </div>
             </div>
         </div>
     </section>
 
-    <?php endif ?>
+<?php endif ?>
 
 
-    <?php if($visiteur == "acheteur") :?>
+<?php if($visiteur == "acheteur") :?>
 
 <section class="ftco-section">
     <div class="container">
@@ -620,7 +625,7 @@ data-stellar-background-ratio="0.5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-10 ftco-animate">
-                    <form action="" class="billing-form">
+                   <form action="compte.php" class="billing-form" method="post">
                         <h3 class="mb-4 billing-heading">Ajouter un produit</h3>
                         <div class="row align-items-end">
                             <div class="col-md-6">
@@ -676,7 +681,6 @@ data-stellar-background-ratio="0.5">
                                             <label class="mr-3"><input type="radio" name="typeAchat" value="immediat">Immédiat </label>
                                             <label class="mr-3"><input type="radio" name="typeAchat" value="meilleurOffre">Meilleur Offre </label>
                                             <label class="mr-3"><input type="radio" name="typeAchat" value="transaction">Transaction</label>
-
                                         </div>
                                     </div>
                                     
@@ -690,6 +694,7 @@ data-stellar-background-ratio="0.5">
                                             <label class="mr-3"><input type="radio" name="rarete" value="hautDeGamme">Haut de gamme</label>
                                             <label class="mr-3"><input type="radio" name="rarete" value="rare">Rare</label>
                                             <label class="mr-3"><input type="radio" name="rarete" value="regulier">Régulier</label>
+
                                         </div>
                                     </div>
                                     
@@ -713,19 +718,20 @@ data-stellar-background-ratio="0.5">
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="vendeur">Vendeur</label>
+                                    <label for="vendeur">Nom du Vendeur</label>
                                     <input type="text" class="form-control" placeholder="" name="nomVendeur">
                                 </div>
                             </div>
 
                             <div class="col-md-12">
-                                 <p><button type="submit" name="button6" class="btn btn-primary py-3 px-4 mt-4">Mettre en vente le produit</button></p>
+                                <p><button type="submit" name="button7" class="btn btn-primary py-3 px-4 mt-4">Mettre en vente le produit</button></p>
                                 <span><?= $erreur ?></span>
-                            </div>    
+                            </div>               
+                            
                         </div>
-                    </div>
+                    </form> 
                 </div>
             </div>
         </div>
@@ -776,7 +782,7 @@ data-stellar-background-ratio="0.5">
         </div>
     </section>
 
-    <?php endif ?>
+ <?php endif ?>
 
 
     <footer class="ftco-footer">    
