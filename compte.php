@@ -121,6 +121,84 @@ else
 {
    
 }
+}
+
+//si clic bouton mettre en vente produit de la page vendeur
+
+if (isset($_POST["button6"])){ 
+
+    //echo "vendeurrrrr";
+    if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie))
+    {
+        $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
+    
+    }
+    else{
+    
+        //On cherche l'id du vendeur
+        $sql = "SELECT idVendeur FROM vendeur where connexion like '1' ";
+        $result = mysqli_query($db_handle, $sql);
+        $data = mysqli_fetch_assoc($result);
+        $idVendeur = $data['idVendeur'];
+    
+         //on regarde si l'objet existe deja 
+         $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
+         $result = mysqli_query($db_handle, $sql);
+
+        if (mysqli_num_rows($result) != 0) 
+         {
+            $erreur= "Cet objet est déjà en vente par ce vendeur";
+
+         }else 
+             {
+                $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
+                $result = mysqli_query($db_handle, $sql);
+                $erreur= "nouvel objet crée";
+              }
+        }
+
+}
+
+//si clic bouton mettre en vente produit de la page admin
+
+if(isset($_POST["button7"])){ 
+
+    //echo "adminnnnnnn";
+    if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie)||empty($nomVendeur))
+    {
+         $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
+    
+    }
+    else{
+    
+         //On cherche l'id du vendeur
+            $sql = "SELECT idVendeur FROM vendeur where nomVendeur like '$nomVendeur' ";
+            $result = mysqli_query($db_handle, $sql);
+             if (mysqli_num_rows($result) == 0) 
+             {
+                $erreur= "Ce vendeur n'existe pas";
+
+             }
+             else {
+            $data = mysqli_fetch_assoc($result);
+            $idVendeur = $data['idVendeur'];
+        
+            //on regarde si l'objet existe deja 
+            $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
+            $result = mysqli_query($db_handle, $sql);
+
+            if (mysqli_num_rows($result) != 0) 
+             {
+                $erreur= "Cet objet est déjà en vente par ce vendeur";
+
+             }else {
+                    $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
+                    $result = mysqli_query($db_handle, $sql);
+                    $erreur= "nouvel objet en vente";
+                  }
+        }
+      }
+}
 
     //vendeur
 
@@ -257,84 +335,6 @@ while ($vendeur = mysqli_fetch_assoc($result5)) {
    $vendeurs[] = $vendeur; 
 } 
 
-}
-
-//si clic bouton mettre en vente produit de la page vendeur
-
-if (isset($_POST["button6"])){ 
-
-    //echo "vendeurrrrr";
-    if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie))
-    {
-        $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
-    
-    }
-    else{
-    
-        //On cherche l'id du vendeur
-        $sql = "SELECT idVendeur FROM vendeur where connexion like '1' ";
-        $result = mysqli_query($db_handle, $sql);
-        $data = mysqli_fetch_assoc($result);
-        $idVendeur = $data['idVendeur'];
-    
-         //on regarde si l'objet existe deja 
-         $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
-         $result = mysqli_query($db_handle, $sql);
-
-        if (mysqli_num_rows($result) != 0) 
-         {
-            $erreur= "Cet objet est déjà en vente par ce vendeur";
-
-         }else 
-             {
-                $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
-                $result = mysqli_query($db_handle, $sql);
-                $erreur= "nouvel objet crée";
-              }
-        }
-
-}
-
-//si clic bouton mettre en vente produit de la page admin
-
-if(isset($_POST["button7"])){ 
-
-    //echo "adminnnnnnn";
-    if(empty($nomObjet)||empty($prixObjet)||empty($volume)||empty($typeAchat)||empty($rarete)||empty($categorie)||empty($nomVendeur))
-    {
-         $erreur= "Un champ ou plusieurs champs obligatoires sont vides";
-    
-    }
-    else{
-    
-         //On cherche l'id du vendeur
-            $sql = "SELECT idVendeur FROM vendeur where nomVendeur like '$nomVendeur' ";
-            $result = mysqli_query($db_handle, $sql);
-             if (mysqli_num_rows($result) == 0) 
-             {
-                $erreur= "Ce vendeur n'existe pas";
-
-             }
-             else {
-            $data = mysqli_fetch_assoc($result);
-            $idVendeur = $data['idVendeur'];
-        
-            //on regarde si l'objet existe deja 
-            $sql="SELECT * FROM  objet where nomObjet like '$nomObjet' AND idVendeur like '$idVendeur'";
-            $result = mysqli_query($db_handle, $sql);
-
-            if (mysqli_num_rows($result) != 0) 
-             {
-                $erreur= "Cet objet est déjà en vente par ce vendeur";
-
-             }else {
-                    $sql = "INSERT INTO objet(idVendeur,nomObjet,prixObjet,volume,photo1,photo2,photo3,video,typeAchat,rarete,categorie,debutEnchere,finEnchere) VALUES('$idVendeur','$nomObjet','$prixObjet','$volume','$photo1','$photo2','$photo3','$video','$typeAchat','$rarete','$categorie',DATE(NOW()), DATE(NOW()))";
-                    $result = mysqli_query($db_handle, $sql);
-                    $erreur= "nouvel objet crée";
-                  }
-        }
-      }
-}
 
 ?>
 
