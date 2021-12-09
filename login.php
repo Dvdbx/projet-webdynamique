@@ -1,3 +1,29 @@
+<?php
+//identifier votre BDD
+$database = "paris shopping";
+//identifier votre serveur (localhost), utlisateur (root), mot de passe ("")
+$db_handle = mysqli_connect('localhost', 'root', '');
+$db_found = mysqli_select_db($db_handle, $database);
+
+if($db_found)
+{
+    
+    if (isset($_POST["button8"])){   
+
+        $sql = "UPDATE acheteur SET connexion = '0'";
+        $sql1 = "UPDATE vendeur SET connexion = '0'";
+        $sql2 = "UPDATE admin SET connexion = '0'";
+
+        $result = mysqli_query($db_handle, $sql);
+        $result1 = mysqli_query($db_handle, $sql1);
+        $result2 = mysqli_query($db_handle, $sql2);
+    
+    } 
+
+}
+?>
+        
+
 <!DOCTYPE html>
 <html lang="fr">
 

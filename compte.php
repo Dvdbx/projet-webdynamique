@@ -785,6 +785,23 @@ data-stellar-background-ratio="0.5">
  <?php endif ?>
 
 
+ <section class="ftco-section">
+    <div class="container">
+        <div class="row">
+        <div class="col md-3">
+            <form action="login.php" method="post" style="margin-left:80%;">
+                
+                <input class="hidden" type="text" value="" name="id">
+                <p><button type="submit" name="button8" class="btn btn-primary py-3 px-4 mt-4">Déconnexion</button></p>
+
+            </form>    
+         </div>   
+
+        </div>
+    </div>
+</section>
+
+
     <footer class="ftco-footer">    
         <div class="container-fluid px-0 py-5">
             <div class="container">
