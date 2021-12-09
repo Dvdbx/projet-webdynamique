@@ -208,7 +208,13 @@ while ($product = mysqli_fetch_assoc($result3)) {
                             <span><?php echo $prix['prixPanier'] ?>€</span>
                         </p>
                     </div>
-                    <p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Procéder au paiement</a></p>
+
+                    <form action="checkout.php" method="post" class="text-align-center">
+                                            
+                      <input class="hidden" type="text" value="<?php echo $prix['prixPanier'] ?>" name="total">
+                      <p class="text-center"><button type="submit" name="paiement" class="btn btn-primary py-3 px-4">Procéder au paiement</button></p>
+
+                    </form>
                 </div>
             </div>
         </div>

@@ -63,7 +63,12 @@
             $emailAcheteur = $data['emailAcheteur'];
             $idAcheteur = $data['idAcheteur'];
             //$telephone = $data['$telephone'];
-	
+
+            if (isset($_POST["paiement"])){   
+
+                $total =isset($_POST["total"])? $_POST["total"] : "";
+            
+            } 
 
 			if(empty($_POST["numCarte"])){
         			$erreur=true;
@@ -276,7 +281,7 @@
                                 <h3 class="billing-heading mb-4">Total du panier</h3>
                                 <p class="d-flex">
                                     <span>Sous-total</span>
-                                    <span>20.60€</span>
+                                    <span><?php echo $total ?>€</span>
                                 </p>
                                 <p class="d-flex">
                                     <span>Livraison</span>
@@ -284,12 +289,12 @@
                                 </p>
                                 <p class="d-flex">
                                     <span>Remise</span>
-                                    <span>3.00€</span>
+                                    <span>0.00€</span>
                                 </p>
                                 <hr>
                                 <p class="d-flex total-price">
                                     <span>Total</span>
-                                    <span>17.60€</span>
+                                    <span><?php echo $total ?>€</span>
                                 </p>
                             </div>
                         </div>
