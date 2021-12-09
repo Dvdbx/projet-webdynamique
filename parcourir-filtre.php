@@ -26,6 +26,64 @@ if($inThePocket==2)
   
    
 }  
+if($inThePocket==3)
+        {
+    $sql = "SELECT * FROM objet WHERE rarete='regulier'";
+  
+   
+}  
+if($inThePocket==4)
+        {
+    $sql = "SELECT * FROM objet WHERE rarete='hautDeGamme'";
+  
+   
+}  
+if($inThePocket==5)
+        {
+    $sql = "SELECT * FROM objet WHERE rarete='rare'";
+  
+   
+} 
+if($inThePocket==6)
+        {
+    $sql = "SELECT * FROM objet WHERE categorie='Brandy'";
+  
+   
+}  
+   
+if($inThePocket==7)
+        {
+    $sql = "SELECT * FROM objet WHERE categorie='Gin'";
+  
+   
+}  
+   
+   if($inThePocket==8)
+        {
+    $sql = "SELECT * FROM objet WHERE categorie='Rhum'";
+  
+   
+}  
+   
+if($inThePocket==9)
+        {
+    $sql = "SELECT * FROM objet WHERE categorie='Tequila'";
+  
+   
+}  
+   if($inThePocket==10)
+        {
+    $sql = "SELECT * FROM objet WHERE categorie='Vodka'";
+  
+   
+}  
+   if($inThePocket==11)
+        {
+    $sql = "SELECT * FROM objet WHERE categorie='Whiskey'";
+  
+   
+}  
+
     
     $result = mysqli_query($db_handle, $sql);
 }
@@ -103,19 +161,7 @@ while ($product = mysqli_fetch_assoc($result)) {
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
-                    <div class="row mb-4">
-                        <div class="col-md-12 d-flex justify-content-between align-items-center">
-                            <h4 class="product-select">Sélection du type de produits</h4>
-                            <select class="selectpicker" multiple>
-                                <option>Brandy</option>
-                                <option>Gin</option>
-                                <option>Rum</option>
-                                <option>Tequila</option>
-                                <option>Vodka</option>
-                                <option>Whiskey</option>
-                            </select>
-                        </div>
-                    </div>
+                    
                     <div class="row">
 
                     <?php foreach($products as $product) : ?>
@@ -171,12 +217,14 @@ while ($product = mysqli_fetch_assoc($result)) {
                         <div class="categories">
                             <h3>Types de produits</h3>
                             <ul class="p-0">
-                                <li><a href="#">Brandy <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Gin <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Rum <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Tequila <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Vodka <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Whiskey <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=6">Brandy <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=7">Gin <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=8">Rhum <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=9">Tequila <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=10">Vodka <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=11">Whiskey <span class="fa fa-chevron-right"></span></a></li>
+        
+        
                             </ul>
                         </div>
                     </div>
@@ -192,6 +240,22 @@ while ($product = mysqli_fetch_assoc($result)) {
                                 <li><a href="parcourir-filtre.php?zizi=0">Achat immédiat <span class="fa fa-chevron-right"></span></a></li>
                                 <li><a href="parcourir-filtre.php?zizi=1">Transaction vendeur-client <span class="fa fa-chevron-right"></span></a></li>
                                 <li><a href="parcourir-filtre.php?zizi=2">meilleur offre <span class="fa fa-chevron-right"></span></a></li>
+        
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+                    <div class="sidebar-box ftco-animate">
+                        <div class="categories">
+                            <h3>Rareté</h3>
+                            <ul class="p-0">
+                                <li><a href="parcourir-filtre.php?zizi=3">Articles réguliers <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=4">Articles hauts de gamme <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=5">Articles rares <span class="fa fa-chevron-right"></span></a></li>
         
                             </ul>
                         </div>
