@@ -62,18 +62,18 @@
             <div class="row justify-content-center">
                 <div class="col-xl-10 ftco-animate">
 
-                <form action="" class="billing-form">
+                <form action="" class="billing-form" method="POST">
                         <h3 class="mb-4 billing-heading">Votre alerte</h3>
                         <div class="row align-items-end">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="firstname">Etat</label>
                                     <div class="form-group mt-2">
-                                        <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="optradio">Active
+                                        <div class="etat">
+                                            <label class="mr-3"><input type="radio" name="state" value="1">Active
                                             </label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Inactive</label>
-
+                                            <label class="mr-3"><input type="radio" name="state" value="0">Inactive</label>
+                                            
                                         </div>
                                     </div>
                                     
@@ -81,39 +81,85 @@
                             </div>
 
                             <div class="col-md-12">
-                                <p><button type="submit" class="btn btn-primary py-3 px-4 mt-3 mb-4">Enregistrer</button></p>
+                                <p><button type="submit" class="btn btn-primary py-3 px-4 mt-3 mb-4" name ="soumissionner1" value="soumissionner1">Enregistrer</button></p>
+
+                                  <?php 
+
+                                
+
+                                $database = "paris shopping";
+                                //identifier votre serveur (localhost), utlisateur (root), mot de passe ("")
+                                $db_handle = mysqli_connect('localhost', 'root', '');
+                                $db_found = mysqli_select_db($db_handle, $database);
+
+                                $etat=$_POST["state"];
+
+                                if(isset($_POST['soumissionner1']))
+                                {
+                                    if($etat == "1")
+                                        {
+                                            $sql="UPDATE acheteur SET etat ='1' WHERE connexion ='1'";
+                                            $result = mysqli_query($db_handle, $sql);
+                                        }
+                                    if($etat == "0")
+                                    {
+                                            $sql="UPDATE acheteur SET etat ='0' WHERE connexion ='1'";
+                                            $result = mysqli_query($db_handle, $sql);
+                                    }                                  
+                                }
+
+
+                            ?>
 
                             </div>
-                            
+                          
                         </div>
 
                         </form>
                     
-                    <form action="" class="billing-form">
+                    <form action="" class="billing-form" method="POST">
                         <h3 class="mt-4 mb-4 billing-heading">Vos critères</h3>
                         <div class="row align-items-end">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nom">Prix minimum (en €)</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="number" class="form-control" placeholder="" name="pmin" value="pmin">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="prix">Prix maximum (en €)</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="number" class="form-control" placeholder="" name="pmax" value="pmax">
                                 </div>
                             </div>
                             
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="firstname">Rareté</label>
+                                    <label for="firstname">Rareté : </label>
                                     <div class="form-group mt-2">
                                         <div class="radio">
-                                            <label class="mr-3"><input type="radio" name="optradio">Haut de gamme
+                                            <label class="mr-3"><input type="radio" name="optradio" value="hautDeGamme">Haut de gamme
                                             </label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Rare</label>
-                                            <label class="mr-3"><input type="radio" name="optradio">Régulier</label>
+                                            <label class="mr-3"><input type="radio" name="optradio" value="rare">Rare</label>
+                                            <label class="mr-3"><input type="radio" name="optradio" value="regulier">Régulier</label>
+
+
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="firstname">Type d'achat : </label>
+                                    <div class="form-group mt-2">
+                                        <div class="radio">
+                                            <label class="mr-3"><input type="radio" name="optradio2" value="immediat">Immédiat
+                                            </label>
+                                            <label class="mr-3"><input type="radio" name="optradio2" value="transaction">Transaction</label>
+                                            <label class="mr-3"><input type="radio" name="optradio2" value="meilleurOffre">Meilleur Offre</label>
+
 
                                         </div>
                                     </div>
@@ -122,9 +168,118 @@
                             </div>
 
                             <div class="col-md-12">
-                                <p><button type="submit" class="btn btn-primary py-3 px-4 mt-3 mb-4">Enregistrer</button></p>
-
+                                <div class="form-group">
+                                    <label for="prix">Type d'alcool : </label>
+                                    <select name="categorie">
+                                        <option  value="tout"  >Tout les types</option>
+                                        <option  value="brandy"  >Brandy</option>
+                                        <option  value="gin"  >Gin</option>
+                                        <option  value="rhum"  >Rhum</option>
+                                        <option  value="tequila"  >Tequila</option>
+                                        <option  value="vodka"  >Vodka</option>
+                                        <option  value="whiskey"  >Whiskey</option>
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <p><button type="submit" class="btn btn-primary py-3 px-4 mt-3 mb-4" name="soumissionner" value="soumissionner">Enregistrer</button></p>
+                                    <?php
+                                $database = "paris shopping";
+                                //identifier votre serveur (localhost), utlisateur (root), mot de passe ("")
+                                $db_handle = mysqli_connect('localhost', 'root', '');
+                                $db_found = mysqli_select_db($db_handle, $database);
+
+                                if(isset($_POST['soumissionner']))
+                                {
+                                    $var=$_POST["optradio"];
+                                    $tach=$_POST["optradio2"];
+                                    $critPrixMin=$_POST["pmin"];
+                                    $critPrixMax=$_POST["pmax"];
+                                    $type=$_POST["categorie"];
+                                   
+                                   if($critPrixMin!="" && $critPrixMax!="")
+                                       {
+                                        if($critPrixMin < $critPrixMax)
+                                            {
+                                                $sql="UPDATE acheteur SET CritPrixInferieur ='$critPrixMin' WHERE connexion ='1'";
+                                                $result = mysqli_query($db_handle, $sql);
+                                                $sql="UPDATE acheteur SET CritPrixSuperieur ='$critPrixMax' WHERE connexion ='1'";
+                                                $result = mysqli_query($db_handle, $sql);
+                                            }
+
+                                       }
+                                    else if($critPrixMin != "" && $critPrixMax == "")
+                                       {
+                                            $sql="UPDATE acheteur SET CritPrixInferieur ='$critPrixMin' WHERE connexion ='1'";
+                                            $result = mysqli_query($db_handle, $sql);
+                                            $sql="UPDATE acheteur SET CritPrixSuperieur = NULL WHERE connexion ='1'";
+                                            $result = mysqli_query($db_handle, $sql);
+                                       }
+                                    else if($critPrixMin == "" && $critPrixMax != "")
+                                       {
+                                            $sql="UPDATE acheteur SET CritPrixInferieur = NULL WHERE connexion ='1'";
+                                            $result = mysqli_query($db_handle, $sql);
+                                            $sql="UPDATE acheteur SET CritPrixSuperieur ='$critPrixMax' WHERE connexion ='1'";
+                                            $result = mysqli_query($db_handle, $sql);
+                                       }
+
+
+                                    if ($type!='tout')
+                                    {
+                                        $sql="UPDATE acheteur SET categorie ='$type' WHERE connexion ='1'";
+                                        $result = mysqli_query($db_handle, $sql);
+                                    }
+
+                                    if($var == 'hautDeGamme')
+                                    {
+                                        
+                                        echo "0";
+                                        $sql="UPDATE acheteur SET rarete ='hautDeGamme' WHERE connexion ='1'";
+                                        $result = mysqli_query($db_handle, $sql);
+                                    }
+                                    
+                                    if($var == 'rare')
+                                    {
+                                        echo "1";
+                                        $sql="UPDATE acheteur SET rarete ='rare' WHERE connexion ='1'";
+                                        $result = mysqli_query($db_handle, $sql);
+                                    }
+                                    
+                                    if($var == 'regulier')
+                                    {
+                                        echo "2";
+                                        $sql="UPDATE acheteur SET rarete ='regulier' WHERE connexion ='1'";
+                                        $result = mysqli_query($db_handle, $sql);
+                                    }
+
+                                     if($tach == 'immediat')
+                                    {
+                                        echo "2";
+                                        $sql="UPDATE acheteur SET typeAchat ='immediat' WHERE connexion ='1'";
+                                        $result = mysqli_query($db_handle, $sql);
+                                    }
+                                    
+                                    if($tach == 'transaction')
+                                    {
+                                        echo "2";
+                                        $sql="UPDATE acheteur SET typeAchat ='transaction' WHERE connexion ='1'";
+                                        $result = mysqli_query($db_handle, $sql);
+                                    }
+                                    
+                                    if($tach == 'meilleurOffre')
+                                    {
+                                        echo "2";
+                                        $sql="UPDATE acheteur SET typeAchat ='meilleurOffre' WHERE connexion ='1'";
+                                        $result = mysqli_query($db_handle, $sql);
+                                    }
+
+
+                                }
+
+                            ?>
+                            </div>
+                            
                             
                             
                         </div>
