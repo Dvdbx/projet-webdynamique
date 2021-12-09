@@ -780,10 +780,60 @@ data-stellar-background-ratio="0.5">
             </div>
             
         </div>
+
+        <!--<section class="ftco-section">-->
+    <div class="container">
+
+        <div class="row justify-content-center pb-5">
+            <div class="col-md-7 heading-section text-center">
+                <h2>Gestion de tous les produits en vente</h2>
+            </div>
+        </div>
+
+        <div class="row">
+         
+            <?php foreach($products as $product) : ?>
+
+
+                    <div class="col-md-4 d-flex">
+                        <div class="product ftco-animate">
+                            <div class="img d-flex align-items-center justify-content-center"
+                            style="background-image:url(images/<?php echo $product['photo1']; ?>)">
+                            <div class="desc">
+                                <p class="meta-prod d-flex">
+                                    
+                                    <form action="compte.php" method="post" class="text-align-center">
+                                           
+<input style="display:none;" type="text" value="<?php echo $product['idObjet']; ?>" name="objetsup">
+<button type="submit" name="button5" class="btn btn-primary py-2 px-2"><a class="d-flex align-items-center justify-content-center"><span
+        class="fa fa-trash"></span></a></button>
+
+</form>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="text text-center" >
+                                <span class="sale" style="background-color:<?php if($product['rarete']=="hautDeGamme"){echo "#b7472a";}if($product['rarete']=="rare"){echo "#fe9801";}if($product['rarete']=="regulier"){echo "#01d28e";} ?>"><?php if($product['rarete']=="hautDeGamme"){echo "Haut de gamme";}if($product['rarete']=="rare"){echo "Rare";}if($product['rarete']=="regulier"){echo "Régulier";}; ?></span>
+                                <span class="category"><?php echo $product['categorie']; ?></span>
+                                <h2><?php echo $product['nomObjet']; ?></h2>
+                                <p class="mb-0"> <span class="price"><?php echo $product['prixObjet']; ?>€</span></p>
+                                </div>
+                            </div>
+                        </div>    
+
+                <?php endforeach ?>
+                
+            </div>
+            
+        </div>
+    <!--</section>-->
+
+
     </section>
 
  <?php endif ?>
 
+ 
 
  <section class="ftco-section">
     <div class="container">
