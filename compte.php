@@ -37,6 +37,14 @@ $nomVendeur=isset($_POST["nomVendeur"])? $_POST["nomVendeur"] : "";
 $reduc = isset($_POST["reduc"])? $_POST["reduc"] : "";
 $infoReduc="";
 
+//données bancaires de l'acheteur
+$card ="";
+$numCarte ="";
+$nomCarte ="";
+$dateExp ="";
+$codeSecurite ="";
+$infoBancaires ="Vous n'avez pas d'informations de paiement enregistrées";
+
 
 
 if($db_found)
@@ -385,6 +393,37 @@ while ($vendeur = mysqli_fetch_assoc($result5)) {
    $vendeurs[] = $vendeur; 
 } 
 
+//on cherche les coordonnées bancaires de l'acheteur connecté
+if($db_found)
+{
+    if($visiteur="acheteur")
+    {   
+
+        $sql = "SELECT * FROM acheteur WHERE connexion like '1'";
+		$result = mysqli_query($db_handle, $sql);
+        $data = mysqli_fetch_assoc($result);
+        $idAcheteur = $data['idAcheteur'];
+
+        $sql = "SELECT * FROM paiement WHERE idAcheteur LIKE '$idAcheteur'";
+	    $result = mysqli_query($db_handle, $sql);
+
+		//regarder s'il y a des resultats
+        if (mysqli_num_rows($result) == 0) 
+        {
+            $infoBancaires = "Vous n'avez pas d'informations de paiement enregistrées";
+        }
+        else
+        {   
+            $data = mysqli_fetch_assoc($result);
+            $card = $data['typeCarte'];
+            $numCarte = $data['numPaiement'];
+            $nomCarte = $data['nomPaiement'];
+            $dateExp = $data['dateExpiration'];
+            $codeSecurite = $data['codeSecurite'];
+        }
+    }
+}
+
 
 ?>
 
@@ -632,15 +671,20 @@ data-stellar-background-ratio="0.5">
             <div class="col-xl-10 ftco-animate">
               <h3 class="mb-4 billing-heading">Vos données personnelles :</h3>
 
-              <p><?php echo $user['nomAcheteur'] ?></p>
-              <p><?php echo $user['prenomAcheteur'] ?></p>
-              <p><?php echo $user['adresseAcheteur'] ?></p>
-              <p><?php echo $user['emailAcheteur'] ?></p>
+              <p><strong>Nom :&emsp;</strong><?php echo $user['nomAcheteur'] ?></p>
+              <p><strong>Prénom :&emsp;</strong><?php echo $user['prenomAcheteur'] ?></p>
+              <p><strong>Adresse :&emsp;</strong><?php echo $user['adresseAcheteur'] ?></p>
+              <p><strong>Email :&emsp;</strong><?php echo $user['emailAcheteur'] ?></p>
 
-              <h3 class="mb-4 mt-4 billing-heading">Vos informations de connexion :</h3>
+              <h3 class="mb-4 mt-4 billing-heading">Vos informations bancaires :</h3>
 
-              <p>A ajouter dans la bdd</p>
+              <p><strong>Type de carte :&emsp;</strong><?php echo$card = $data['typeCarte']?></p>
+              <p><strong>Numéro de la carte :&emsp;</strong><?php echo$numCarte = $data['numPaiement']?></p>
+              <p><strong>Nom sur la carte :&emsp;</strong><?php echo$nomCarte = $data['nomPaiement']?></p>
+              <p><strong>Date d'expiration :&emsp;</strong><?php echo$dateExp = $data['dateExpiration']?></p>
+              <!--<p><strong>Nom :&emsp;</strong><?php echo$codeSecurite = $data['codeSecurite']?></p>-->
 
+              <!--
               <h3 class="mb-4 mt-4 billing-heading">Avez-vous accepté notre clause ?</h3>
 
               <form action="check.php" class="billing-form">
@@ -658,8 +702,8 @@ data-stellar-background-ratio="0.5">
                                 <p><button type="submit" class="btn btn-primary py-3 px-4">Enregistrer</button></p>
 
                             </div>
-
                </form>
+            -->
 
           </div>
       </div>
