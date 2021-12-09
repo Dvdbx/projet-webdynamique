@@ -163,12 +163,7 @@ while ($product = mysqli_fetch_assoc($result)) {
                             </ul>
                         </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-                    <div class="sidebar-box ftco-animate">
+ <div class="sidebar-box ftco-animate">
                         <div class="categories">
                             <h3>Type d'achat</h3>
                             <ul class="p-0">
@@ -179,12 +174,7 @@ while ($product = mysqli_fetch_assoc($result)) {
                             </ul>
                         </div>
                     </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-                    <div class="sidebar-box ftco-animate">
+                     <div class="sidebar-box ftco-animate">
                         <div class="categories">
                             <h3>Rareté</h3>
                             <ul class="p-0">
@@ -195,6 +185,17 @@ while ($product = mysqli_fetch_assoc($result)) {
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+                   
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+                   
 
                 </div>
             </div>
