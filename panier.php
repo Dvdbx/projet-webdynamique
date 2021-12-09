@@ -32,18 +32,16 @@ if($db_found)
         $sql2 = "INSERT INTO ajoutpanier(idObjet, idPanier, quantite, nombreEnchere, prixEnchere) VALUES('$id', '$idPanier', '$quantity', '0', '0')";
         $result2 = mysqli_query($db_handle, $sql2);
 
-        $sql3 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete FROM objet O, ajoutpanier A WHERE A.idPanier = $idPanier AND O.idObjet = A.idObjet";
-        $result3 = mysqli_query($db_handle, $sql3);
-
-
     }    
 
 }
 
+$sql3 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete FROM objet O, ajoutpanier A WHERE A.idPanier = $idPanier AND O.idObjet = A.idObjet";
+$result3 = mysqli_query($db_handle, $sql3);
+
 while ($product = mysqli_fetch_assoc($result3)) { 
     $products[] = $product; 
 } 
-
 
 
 ?>
@@ -127,6 +125,13 @@ while ($product = mysqli_fetch_assoc($result3)) {
 
                         <?php foreach($products as $product) : ?>
 
+                            <?php                          
+                               $id = $product['idObjet'];
+                               $sql4 = "SELECT quantite FROM ajoutpanier WHERE idObjet LIKE $id AND idPanier LIKE $idPanier";
+                               $qte = mysqli_query($db_handle, $sql4);
+                               $qteact = mysqli_fetch_array($qte);                               
+                            ?>
+
                             <tr class="alert" role="alert">
                                 <td>
                                     <label class="checkbox-wrap checkbox-primary">
@@ -148,14 +153,13 @@ while ($product = mysqli_fetch_assoc($result3)) {
                                 <td><?php echo $product['prixObjet'] ?>€</td>
                                 <td>
                                     <div class="quantity">
-                                        <span><?php echo $quantity ?></span>
-
+                                        <span><?php echo $qteact[0] ?></span>
                                     </div>
                                 </td>
 
-                                     <td><?php echo $product['prixObjet']*$quantity . "€" ?></td>  <!-- calcul -->
+                                     <td><?php echo $product['prixObjet']*$qteact[0] . "€" ?></td>  <!-- calcul -->
 
-                                     <?php $total = $total + $product['prixObjet']*$quantity ?>
+                                     <?php $total = $total + $product['prixObjet']*$qteact[0] ?>
 
                                 <td>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
