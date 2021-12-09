@@ -306,7 +306,7 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" value=1 class="mr-2" name="checkbox">J'ai lu et accepté les termes et les conditions</label>
+                                            <label><input type="checkbox" value=1 class="mr-2" name="checkbox">I have read and accept the terms and conditions</label>
                                         </div>
                                     </div>
                                 </div>
