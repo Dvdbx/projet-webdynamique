@@ -71,7 +71,7 @@ for ($i=0; $i<4; $i++) {
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a href="accueil.html" class="nav-link">Accueil</a></li>
-                    <li class="nav-item"><a href="parcourir.html" class="nav-link">Tout parcourir</a></li>
+                    <li class="nav-item"><a href="parcourir.php" class="nav-link">Tout parcourir</a></li>
                     <li class="nav-item	"><a href="notifications.html" class="nav-link">Notifications</a></li>
                     <li class="nav-item"><a href="login.html" class="nav-link">Votre compte</a></li>
                 </ul>
@@ -86,7 +86,7 @@ for ($i=0; $i<4; $i++) {
                 <div class="col-md-8 d-flex align-items-end">
                     <div class="text w-100 text-center">
                         <h1 class="mb-4">La <span>Taverne</span> française en <span>ligne</span>.</h1>
-                        <p><a href="parcourir.html" class="btn btn-primary py-2 px-4">Voir les produits</a> </p>
+                        <p><a href="parcourir.php" class="btn btn-primary py-2 px-4">Voir les produits</a> </p>
                     </div>
                 </div>
             </div>

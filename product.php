@@ -71,7 +71,7 @@ else{echo"db not found";}
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a href="accueil.html" class="nav-link">Accueil</a></li>
-                    <li class="nav-item"><a href="parcourir.html" class="nav-link">Tout parcourir</a></li>
+                    <li class="nav-item"><a href="parcourir.php" class="nav-link">Tout parcourir</a></li>
                     <li class="nav-item	"><a href="notifications.html" class="nav-link">Notifications</a></li>
                     <li class="nav-item"><a href="login.html" class="nav-link">Votre compte</a></li>
                 </ul>
@@ -86,7 +86,7 @@ else{echo"db not found";}
             <div class="row no-gutters slider-text align-items-end justify-content-center">
                 <div class="col-md-9 ftco-animate mb-5 text-center">
                     <p class="breadcrumbs mb-0"><span class="mr-2"><a href="accueil.html">Accueil <i
-                                    class="fa fa-chevron-right"></i></a></span> <span><a href="parcourir.html">Parcourir <i
+                                    class="fa fa-chevron-right"></i></a></span> <span><a href="parcourir.php">Parcourir <i
                                     class="fa fa-chevron-right"></i></a></span> <span>Produits <i
                                 class="fa fa-chevron-right"></i></span></p>
                     <h2 class="mb-0 bread">Produit</h2>
