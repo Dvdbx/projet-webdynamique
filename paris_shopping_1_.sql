@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 09 déc. 2021 à 17:12
+-- Généré le : jeu. 09 déc. 2021 à 17:34
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `acheteur` (
 --
 
 INSERT INTO `acheteur` (`idAcheteur`, `idPanier`, `nomAcheteur`, `prenomAcheteur`, `adresseAcheteur`, `emailAcheteur`, `connexion`, `CritPrixInferieur`, `CritPrixSuperieur`, `typeAchat`, `rarete`, `categorie`) VALUES
-(1, 1, 'ad', 'ad prenom', '37 qaui de grenelle 75015 Paris France', 'ad', 0, NULL, NULL, NULL, NULL, NULL);
+(1, 1, 'ad', 'ad prenom', '37 quai de grenelle 75015 Paris France', 'ad', 0, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`idAdmin`, `pseudoAdmin`, `mdpAdmin`, `connexion`, `reduc`) VALUES
-(1, 'admin', 'alcool', 0, 0);
+(1, 'admin', 'alcool', 1, 1);
 
 -- --------------------------------------------------------
 

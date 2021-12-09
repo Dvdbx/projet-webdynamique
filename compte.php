@@ -33,6 +33,10 @@ $erreur = "";
 //admin
 $nomVendeur=isset($_POST["nomVendeur"])? $_POST["nomVendeur"] : "";
 
+//variable réduction
+$reduc = isset($_POST["reduc"])? $_POST["reduc"] : "";
+$infoReduc="";
+
 
 
 if($db_found)
@@ -198,6 +202,52 @@ if(isset($_POST["button7"])){
                   }
         }
       }
+}
+
+//si clic bouton appliquer réduction page admin
+
+if (isset($_POST["button8"])){ 
+
+        //On cherche la reduction appliquée
+        $sql = "SELECT reduc FROM admin where connexion like '1' ";
+        $result = mysqli_query($db_handle, $sql);
+        $data = mysqli_fetch_assoc($result);
+        $reducInitial = $data['reduc'];
+
+    if($reduc == $reducInitial)
+    {
+        $infoReduc= "Cette réduction est déjà appliquée";
+    
+    }
+    else{
+        
+        //On applique la réduction
+        
+        $sql = "UPDATE objet SET prixObjet = (prixObjet/'$reducInitial')*$reduc";
+        mysqli_query($db_handle, $sql);
+
+        if($reduc == '0.9')
+        {
+            $infoReduc= "Réduction de -10% appliquée";
+        }
+
+        if($reduc == '0.8')
+        {
+            $infoReduc= "Réduction de -20% appliquée";
+        
+        }
+
+         if($reduc == '1')
+        {
+            $infoReduc= "Pas de réduction appliquée";
+        }
+        
+        $sql = "UPDATE admin SET reduc = '$reduc'";
+        mysqli_query($db_handle, $sql);
+
+        }
+
+
 }
 
     //vendeur
@@ -826,14 +876,39 @@ data-stellar-background-ratio="0.5">
             </div>
             
         </div>
-    <!--</section>-->
-
-
     </section>
 
- <?php endif ?>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 ftco-animate">
+                   <form action="compte.php" class="billing-form" method="post">
+                        <h3 class="mb-4 billing-heading">Choisir la réduction à appliquer</h3>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-group mt-2">
+                                        <div class="radio">
+                                            <label class="mr-3"><input type="radio" name="reduc" value="1">Pas de réduction</label>
+                                            <label class="mr-3"><input type="radio" name="reduc" value="0.9">10%</label>
+                                            <label class="mr-3"><input type="radio" name="reduc" value="0.8">20%</label>
+                                        </div>
+                                    </div>
+
+                            <div class="col-md-12">
+                                <p><button type="submit" name="button8" class="btn btn-primary py-3 px-4 mt-4">Appliquer la réduction</button></p>
+                                <span><?= $infoReduc ?></span>
+                            </div>               
+                            
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </section>
  
+
+ <?php endif ?>
 
  <section class="ftco-section">
     <div class="container">
