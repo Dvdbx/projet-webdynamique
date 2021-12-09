@@ -84,19 +84,7 @@ while ($product = mysqli_fetch_assoc($result)) {
         <div class="container">
             <div class="row">
                 <div class="col-md-9">
-                    <div class="row mb-4">
-                        <div class="col-md-12 d-flex justify-content-between align-items-center">
-                            <h4 class="product-select">Sélection du type de produits</h4>
-                            <select class="selectpicker" multiple>
-                                <option>Brandy</option>
-                                <option>Gin</option>
-                                <option>Rum</option>
-                                <option>Tequila</option>
-                                <option>Vodka</option>
-                                <option>Whiskey</option>
-                            </select>
-                        </div>
-                    </div>
+               
                     <div class="row">
 
                     <?php foreach($products as $product) : ?>
