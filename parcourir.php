@@ -58,7 +58,7 @@ while ($product = mysqli_fetch_assoc($result)) {
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a href="accueil.html" class="nav-link">Accueil</a></li>
-                    <li class="nav-item"><a href="parcourir.html" class="nav-link">Tout parcourir</a></li>
+                    <li class="nav-item"><a href="parcourir.php" class="nav-link">Tout parcourir</a></li>
                     <li class="nav-item	"><a href="notifications.html" class="nav-link">Notifications</a></li>
                     <li class="nav-item"><a href="login.html" class="nav-link">Votre compte</a></li>
                 </ul>
