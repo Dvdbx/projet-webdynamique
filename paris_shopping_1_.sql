@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 08 déc. 2021 à 20:49
+-- Généré le : jeu. 09 déc. 2021 à 17:12
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `paris shopping(1)`
+-- Base de données : `paris shopping`
 --
 
 -- --------------------------------------------------------
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `acheteur` (
 --
 
 INSERT INTO `acheteur` (`idAcheteur`, `idPanier`, `nomAcheteur`, `prenomAcheteur`, `adresseAcheteur`, `emailAcheteur`, `connexion`, `CritPrixInferieur`, `CritPrixSuperieur`, `typeAchat`, `rarete`, `categorie`) VALUES
-(1, 1, 'ad', '', '', 'ad', 1, NULL, NULL, NULL, NULL, NULL);
+(1, 1, 'ad', 'ad prenom', '37 qaui de grenelle 75015 Paris France', 'ad', 0, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `pseudoAdmin` varchar(255) NOT NULL,
   `mdpAdmin` varchar(255) NOT NULL,
   `connexion` tinyint(1) DEFAULT NULL,
+  `reduc` float DEFAULT NULL,
   PRIMARY KEY (`idAdmin`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -71,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
 -- Déchargement des données de la table `admin`
 --
 
-INSERT INTO `admin` (`idAdmin`, `pseudoAdmin`, `mdpAdmin`, `connexion`) VALUES
-(1, 'admin', 'alcool', 0);
+INSERT INTO `admin` (`idAdmin`, `pseudoAdmin`, `mdpAdmin`, `connexion`, `reduc`) VALUES
+(1, 'admin', 'alcool', 0, 0);
 
 -- --------------------------------------------------------
 
