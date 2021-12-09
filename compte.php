@@ -43,7 +43,7 @@ $numCarte ="";
 $nomCarte ="";
 $dateExp ="";
 $codeSecurite ="";
-$infoBancaires ="Vous n'avez pas d'informations de paiement enregistrées";
+$infoBancaires ="";
 
 
 
@@ -448,9 +448,9 @@ if($db_found)
   
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="accueil.html">Alcool <span>store</span></a>
+            <a class="navbar-brand" href="accueil.php">Alcool <span>store</span></a>
             <div class="order-lg-last btn-group">
-                <a href="panier.html" class="btn-cart dropdown-toggle dropdown-toggle-split">
+                <a href="panier.php" class="btn-cart dropdown-toggle dropdown-toggle-split">
                     <span class="fa fa-shopping-bag"></span>
                     <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
                 </a>
@@ -462,10 +462,10 @@ if($db_found)
         </button>
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a href="accueil.html" class="nav-link">Accueil</a></li>
+                <li class="nav-item"><a href="accueil.php" class="nav-link">Accueil</a></li>
                 <li class="nav-item"><a href="parcourir.php" class="nav-link">Tout parcourir</a></li>
-                <li class="nav-item	"><a href="notifications.html" class="nav-link">Notifications</a></li>
-                <li class="nav-item"><a href="login.html" class="nav-link">Votre compte</a></li>
+                <li class="nav-item	"><a href="notifications.php" class="nav-link">Notifications</a></li>
+                <li class="nav-item"><a href="compte.php" class="nav-link">Votre compte</a></li>
             </ul>
         </div>
     </div>
@@ -477,7 +477,7 @@ data-stellar-background-ratio="0.5">
 <div class="container">
     <div class="row no-gutters slider-text align-items-end justify-content-center">
         <div class="col-md-9 ftco-animate mb-5 text-center">
-            <p class="breadcrumbs mb-0"><span class="mr-2"><a href="accueil.html">Accueil <i
+            <p class="breadcrumbs mb-0"><span class="mr-2"><a href="accueil.php">Accueil <i
                 class="fa fa-chevron-right"></i></a></span> <span>Votre compte <i
                     class="fa fa-chevron-right"></i></span></p>
                     <h2 class="mb-0 bread">Bonjour <?php if($visiteur=="admin"){echo $user['pseudoAdmin'];}if($visiteur=="acheteur"){echo $user['nomAcheteur'];}if($visiteur=="vendeur"){echo $user['nomVendeur'];} ?></h2>
@@ -676,13 +676,23 @@ data-stellar-background-ratio="0.5">
               <p><strong>Adresse :&emsp;</strong><?php echo $user['adresseAcheteur'] ?></p>
               <p><strong>Email :&emsp;</strong><?php echo $user['emailAcheteur'] ?></p>
 
-              <h3 class="mb-4 mt-4 billing-heading">Vos informations bancaires :</h3>
-
-              <p><strong>Type de carte :&emsp;</strong><?php echo$card = $data['typeCarte']?></p>
-              <p><strong>Numéro de la carte :&emsp;</strong><?php echo$numCarte = $data['numPaiement']?></p>
-              <p><strong>Nom sur la carte :&emsp;</strong><?php echo$nomCarte = $data['nomPaiement']?></p>
-              <p><strong>Date d'expiration :&emsp;</strong><?php echo$dateExp = $data['dateExpiration']?></p>
-              <!--<p><strong>Nom :&emsp;</strong><?php echo$codeSecurite = $data['codeSecurite']?></p>-->
+              <h3 class="mb-4 mt-4 billing-heading">Vos informations bancaires :<br></h3>
+              <?php echo $infoBancaires?></p>
+              <p><strong>Type de carte :&emsp;</strong><?php echo$card ?></p>
+              <p><strong>Numéro de la carte :&emsp;</strong>
+              <?php 
+                for ($i = 0; $i<= strlen($numCarte)-3 ; $i++)
+                {
+                    echo " * ";
+                }
+                echo $numCarte[strlen($numCarte)-2];
+                echo " ";
+                echo $numCarte[strlen($numCarte)-1];
+              
+              ?></p>
+              <p><strong>Nom sur la carte :&emsp;</strong><?php echo$nomCarte ?></p>
+              <p><strong>Date d'expiration :&emsp;</strong><?php echo$dateExp ?></p>
+              <!--<p><strong>Nom :&emsp;</strong><?php echo$codeSecurite ?></p>-->
 
               <!--
               <h3 class="mb-4 mt-4 billing-heading">Avez-vous accepté notre clause ?</h3>
