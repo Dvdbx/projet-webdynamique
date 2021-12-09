@@ -18,7 +18,130 @@
 
 <body>
 
- <?php require_once 'paiement1.php'; ?>
+<?php
+
+	//declaration variables
+	$card = isset($_POST["creditCard"])? $_POST["creditCard"] :"";
+	$numCarte = isset($_POST["numCarte"])? $_POST["numCarte"] : "";
+	$nomCarte = isset($_POST["nomCarte"])? $_POST["nomCarte"] : "";
+	$dateExp = isset($_POST["dateExp"])? $_POST["dateExp"] : "";
+	$codeSecurite = isset($_POST["codeSecurite"])? $_POST["codeSecurite"] : "";
+	$checkbox =isset($_POST["checkbox"])? $_POST["checkbox"] : "";
+
+	$erreurNum = "";
+	$erreurNom = "";
+	$erreurExp = "";
+	$erreurCode = "";
+	$erreurCheck = "";
+	$paiement = "";
+	$boolpaiement = false;
+	$erreur = false;
+
+	$prenomAcheteur = "";
+	$nomAcheteur = "";
+	$adresse1 = "";
+    $emailAcheteur = "";
+	//$telephone ="";
+
+	//identifier BDD
+    $database = "paris shopping";
+
+    //connectez-vous dans BDD
+    $db_handle = mysqli_connect('localhost', 'root', '');
+    $db_found = mysqli_select_db($db_handle, $database);
+
+
+		if ($db_found) 
+     		{
+     			//remplir le formulaire de livraison
+            $sql = "SELECT * FROM acheteur WHERE connexion like '1'";
+			$result = mysqli_query($db_handle, $sql);
+            $data = mysqli_fetch_assoc($result);
+            $prenomAcheteur = $data['prenomAcheteur'];
+            $nomAcheteur = $data['nomAcheteur'];
+            $adresse1 = $data['adresseAcheteur'];
+            $emailAcheteur = $data['emailAcheteur'];
+            $idAcheteur = $data['idAcheteur'];
+            //$telephone = $data['$telephone'];
+	
+
+			if(empty($_POST["numCarte"])){
+        			$erreur=true;
+        			$erreurNum="Le champ Numéro de carte est vide";
+				}
+			if(empty($_POST["nomCarte"])){
+        			$erreur=true;
+        			$erreurNom="Le champ Nom est vide";
+				}
+			if(empty($_POST["dateExp"])){
+        			$erreur=true;
+        			$erreurExp="Le champ Date d'expiration est vide";
+			}
+
+			if(empty($_POST["codeSecurite"])){
+        			$erreur=true;
+        			$erreurCode="Le champ Code de sécurité est vide";
+			}
+			
+			if (empty($_POST["checkbox"])) {
+				$erreur=true;
+				$erreurCheck="Les conditions et les termes ne sont pas validés <br>";
+			}
+
+			if($erreur == true){
+				$erreur = "Erreur dans le formulaire";
+			}
+			else{	
+                
+                //echo "tout a été rempli <br>";
+                //commencer le sql
+                $sql = "SELECT * FROM paiement WHERE idAcheteur LIKE '$idAcheteur'";
+				$result = mysqli_query($db_handle, $sql);
+
+                
+				//regarder s'il y a des resultats
+            	if (mysqli_num_rows($result) == 0) 
+           		{
+                    $sql = "INSERT INTO paiement(typeCarte,numPaiement,nomPaiement,dateExpiration,codeSecurite,idAcheteur) VALUES('$card','$numCarte','$nomCarte','$dateExp','$codeSecurite','$idAcheteur')";
+                    //echo $sql;
+                    $result = mysqli_query($db_handle, $sql);
+                    $paiement= "Nouveau moyen de paiement crée et paiement validé";
+     			}
+                else{
+				
+            	$sql .= " AND nomPaiement LIKE '%$nomCarte%' AND numPaiement LIKE '$numCarte'";
+				$result = mysqli_query($db_handle, $sql);
+
+				//regarder s'il y a des resultats
+            	if (mysqli_num_rows($result) == 0) 
+           		{
+                	$paiement = " Numéro de carte ou nom invalide <br>";
+                	//echo "<p> Numéro de carte ou nom invalide </p>";
+
+            	} 
+            	else {
+            		//echo "<p> Numéro de carte et nom valide </p>";
+            		//$paiement .=" Numéro de carte et nom valide <br>";
+            		$sql .=" AND dateExpiration LIKE '$dateExp' AND codeSecurite LIKE '$codeSecurite' AND typeCarte LIKE '$card'";
+					$result = mysqli_query($db_handle, $sql);
+
+					//regarder s'il y a des resultats
+            		if (mysqli_num_rows($result) == 0) 
+           			{	
+           				$paiement =" Informations de la carte invalides <br>";
+                		//echo "<p> Informations de la carte invalides </p>";
+           		 	} 
+            		else {
+            			$paiement =" Paiement validé ! <br>";
+            			$boolpaiement = true;
+            			//echo "<p> Informations de la carte valides </p>";
+       	   		 		}
+       	    		}
+				}
+			}
+        }
+?>
+
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
@@ -63,64 +186,37 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-10 ftco-animate">
-                    <form method="post">
+                    <form method="post" action="checkout.php">
                          <h3 class="mb-4 billing-heading">Vos coordonnées de livraison</h3>
                         <div class="row align-items-end">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="firstname">Prénom : <span><?= $prenomAcheteur ?></span></label>
-                                    <!--<input type="text" class="form-control" placeholder="" name="prenomAcheteur">-->
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="lastname">Nom : <span><?= $nomAcheteur ?></span></label>
-                                    <!--<input type="text" class="form-control" placeholder="" name="nomAcheteur">-->
                                 </div>
                             </div>
                             <div class="w-100"></div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="lastname">Adresse (ligne 1) : <span><?= $adresse1 ?></span></label>
-                                    <!--<input type="text" class="form-control" placeholder="" name="adresse1">-->
+                                    <label for="adresse">Adresse : <span><?= $adresse1 ?></span></label>
                                 </div>
                             </div>
+                            <div class="w-100"></div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="lastname">Adresse (ligne 2) : <span><?= $adresse2 ?></span></label>
-                                    <!--<input type="text" class="form-control" placeholder="" name="adresse2">-->
-                                </div>
-                            </div>
-                            
-                            <div class="w-100"></div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="streetaddress">Code postal : <span><?= $codePostal ?></span></label>
-                                    <!--<input type="text" class="form-control" placeholder="" name="codePostal">-->
-                                </div>
-                            </div>
-
-                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="streetaddress">Ville : <span><?= $ville ?></span></label>
-                                    <!--<input type="text" class="form-control" placeholder="" name="ville">-->
+                                    <label for="email">Email : <span><?= $emailAcheteur ?></span></label>
                                 </div>
                             </div>
                            
-                            <div class="w-100"></div>
-                            <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="lastname">Pays : <span><?= $pays ?></span></label>
-                                <!--<input type="text" class="form-control" placeholder="" name="pays">-->
-                            </div>
-                            </div>
-
-                            <div class="col-md-12">
+                            <!--<div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="lastname">Téléphone : <span><?= $telephone ?></span> </label>
-                                    <!--<input type="text" class="form-control" placeholder="" name="telephone">-->
+                                    <label for="phone">Téléphone : <span><?= $telephone ?></span> </label>
                                 </div>
-                            </div>
+                            </div>-->
             
                         </div>
 
@@ -223,7 +319,7 @@
                                 <h3 class="billing-heading mb-4">Etat du paiement</h3>
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <span><?=$paiement?></span>
+                                        <span><!<?=$paiement?></span>
                                     </div>
                                  </div>
                             </div>
