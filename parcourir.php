@@ -2,7 +2,7 @@
 //identifier votre BDD
 $database = "paris shopping";
 //identifier votre serveur (localhost), utlisateur (root), mot de passe ("")
-$db_handle = mysqli_connect('localhost', 'root', '');
+$db_handle = mysqli_connect('localhost', 'root', 'root');
 $db_found = mysqli_select_db($db_handle, $database);
 
 if($db_found)
@@ -147,17 +147,51 @@ while ($product = mysqli_fetch_assoc($result)) {
                     </div>
                    
                 </div>
-                <div class="col-md-3">
+               <div class="col-md-3">
                     <div class="sidebar-box ftco-animate">
                         <div class="categories">
                             <h3>Types de produits</h3>
                             <ul class="p-0">
-                                <li><a href="#">Brandy <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Gin <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Rum <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Tequila <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Vodka <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Whiskey <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=6">Brandy <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=7">Gin <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=8">Rhum <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=9">Tequila <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=10">Vodka <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=11">Whiskey <span class="fa fa-chevron-right"></span></a></li>
+        
+        
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+                    <div class="sidebar-box ftco-animate">
+                        <div class="categories">
+                            <h3>Type d'achat</h3>
+                            <ul class="p-0">
+                                <li><a href="parcourir-filtre.php?zizi=0">Achat immédiat <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=1">Transaction vendeur-client <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=2">meilleur offre <span class="fa fa-chevron-right"></span></a></li>
+        
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+                    <div class="sidebar-box ftco-animate">
+                        <div class="categories">
+                            <h3>Rareté</h3>
+                            <ul class="p-0">
+                                <li><a href="parcourir-filtre.php?zizi=3">Articles réguliers <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=4">Articles hauts de gamme <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?zizi=5">Articles rares <span class="fa fa-chevron-right"></span></a></li>
+        
                             </ul>
                         </div>
                     </div>
