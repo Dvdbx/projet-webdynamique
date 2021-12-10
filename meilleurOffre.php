@@ -2,67 +2,149 @@
 //identifier votre BDD
 $database = "paris shopping";
 //identifier votre serveur (localhost), utlisateur (root), mot de passe ("")
-$db_handle = mysqli_connect('localhost', 'root', 'root');
+$db_handle = mysqli_connect('localhost', 'root', '');
 $db_found = mysqli_select_db($db_handle, $database);
 $today = date("Y-m-d");
-$prixmax = isset($_POST["Prix-max"])? $_POST["Prix-max"] : "";
-$idObjet="";
+/*
 $expire = $row->expireDate; //from database
-$idAcheteur="";
 $today_time = strtotime($today);
 $expire_time = strtotime($expire);
+*/
+
+$prixmax = isset($_POST["Prix-max"])? $_POST["Prix-max"] : "";
+
+$idObjet="";
+$idAcheteur="";
+$dateExpEnchere="";
+$prixObjet="";
+
+$prix1="";
+$prix2="";
+$idMeilleurOffre="";
+
+$user="";
+$informations="";
+
+//On cherche l'id de l'acheteur connecté
+ $sql = "SELECT * FROM acheteur WHERE connexion = '1'";
+ $result = mysqli_query($db_handle, $sql);
+
+ if(mysqli_num_rows($result) != 0)
+ {
+     $user = mysqli_fetch_assoc($result);
+ }
+ $idAcheteur = $user['idAcheteur'];
 
 
 if($db_found)
-{
+{   
+    //on sauvegarde l'id de l'objet
+    if (isset($_POST["button"]))
+    {
+        $idObjet = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['id'])); 
+        //echo $id;
+        $sql = "SELECT * FROM objet WHERE idObjet = '$idObjet'";
+        $result = mysqli_query($db_handle, $sql);
+        $user = mysqli_fetch_assoc($result);
+        $dateExpEnchere = $user['finEnchere'];
+        $prixObjet= $user['prixObjet'];
+    }
+
     if (isset($_POST["button1"]))
     {
-     $sql = "SELECT idAcheteur FROM acheteur WHERE connexion='1'";
-     $result = mysqli_query($db_handle, $sql);
-     $user = mysqli_fetch_assoc($result);
-     $idAcheteur=$user['idAcheteur'];
-     echo $idAcheteur;
 
-     $sql = "SELECT idObjet FROM objet WHERE connexion='1'";
-     $result = mysqli_query($db_handle, $sql);
-     $user = mysqli_fetch_assoc($result);
-     $idAcheteur=$user['idAcheteur'];
-     echo $idAcheteur;
+    $sql = "SELECT *FROM meilleuroffre WHERE idObjet = '$id' AND idAcheteur LIKE $idAcheteur";
+    $result = mysqli_query($db_handle, $sql);
 
-
-     $sql = "SELECT DateExp FROM MeilleurOffre";
-     $result = mysqli_query($db_handle, $sql);
-      $user = mysqli_fetch_assoc($result);
-
-      $dateExp=$user['DateExp'];
-      if ($dateExp < $today_time)
-  {        
-    echo "slash" ;
-    echo $prixmax;
-  }
-else
- {
-    $sql = "INSERT INTO MeilleurOffre(nomAcheteur, prenomAcheteur, adresseAcheteur, emailAcheteur) VALUES('$name', '$prenom', '$motdepasse', '$email')";
-     
-     
+    if(mysqli_num_rows($result) != 0)
+    {   
+         $informations="Vous avez actuellement l'enchère la plus élevée";     
     }
-   }
+    else{   
+            $sql = "SELECT *FROM meilleuroffre WHERE idObjet = '$id'";
+            $result = mysqli_query($db_handle, $sql);
+
+            if(mysqli_num_rows($result) != 0)
+            {   
+                $user = mysqli_fetch_assoc($result);
+                $prix1= $user['prix1'];
+                $prix2= $user['prix2'];
+                $idMeilleurOffre=$user['idMeilleurOffre'];
+
+                if($prix1 > $prixmax)
+                {
+                    $informations="Votre prix n'est pas assez élevé";
+                }
+                else{
+
+                      $informations="Votre prix d'enchère a été sauvegardée";
+                      $sql = "UPDATE meilleuroffre SET prix2 ='$prix1', prix1 = 'prixmax', idAcheteur = '$idAcheteur' WHERE idMeilleurOffre='$idMeilleurOffre'";
+                      $result = mysqli_query($db_handle, $sql);
+                    }
+            } 
+            else{
+                   if(($prixObjet/2) > $prixmax)
+                     {
+                         $informations="Votre prix n'est pas assez élevé";
+                     }
+                     else{
+
+                            $informations="Votre prix d'enchère a été sauvegardée";
+                            $sql = "INSERT INTO meilleurOffre(dateExpEnchere, prix1, prix2, idObjet, idAcheteur) VALUES('$dateExpEnchere', '($prixObjet/2)', '$idObjet', '$idAcheteur')";
+                         }
+                }
+        }
+    }
+
+        /*$sql2 = "INSERT INTO meilleurOffre(idObjet, idAcheteur, prixEnchere, nombreTransaction, validation) VALUES('$id', '$idUser', '0', '0', '0')";
+        $result2 = mysqli_query($db_handle, $sql2);
+
+        $sql = "SELECT idAcheteur FROM acheteur WHERE connexion='1'";
+         $result = mysqli_query($db_handle, $sql);
+        $user = mysqli_fetch_assoc($result);
+        $idAcheteur=$user['idAcheteur'];
+         echo $idAcheteur;
+
+        $sql = "SELECT idObjet FROM objet WHERE connexion='1'";
+         $result = mysqli_query($db_handle, $sql);
+         $user = mysqli_fetch_assoc($result);
+         $idAcheteur=$user['idAcheteur'];
+         echo $idAcheteur;
+
+
+         $sql = "SELECT DateExp FROM MeilleurOffre";
+         $result = mysqli_query($db_handle, $sql);
+         $user = mysqli_fetch_assoc($result);
+
+         $dateExp=$user['DateExp'];
+         if ($dateExp < $today_time)
+         {        
+            echo "slash" ;
+             echo $prixmax;
+         }
+        else
+        {
+                $sql = "INSERT INTO MeilleurOffre(nomAcheteur, prenomAcheteur, adresseAcheteur, emailAcheteur) VALUES('$name', '$prenom', '$motdepasse', '$email')";
+     
+     
+         }*/
 }
 
 ?>
+<!--
 <?php
 
 while ($product = mysqli_fetch_assoc($result)) { 
     $products[] = $product; 
 } 
 
-?> 
+?> -->
 
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-    <title>Alcool Store - Connexion</title>
+    <title>Alcool Store - Meilleur Offre</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link
@@ -78,16 +160,6 @@ while ($product = mysqli_fetch_assoc($result)) {
 </head>
 
 <body>
-    <form action="<?php if($product['typeAchat']=="immediat"){echo "checkout.php";}if($product['typeAchat']=="transaction"){echo "transaction.php";}if($product['typeAchat']=="meilleurOffre"){echo "Meilleure offre";} ?>" method="post" class="text-align-center">
-
-                         <input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
-
-                             <p>
-
-                             <button type="submit" name="button" class="btn btn-primary py-4 px-5" ><a class="d-flex align-items-center justify-content-center" style="top:-100px;"><p><?php if($product['typeAchat']=="immediat"){echo "Achat immédiat";}if($product['typeAchat']=="transaction"){echo "Transaction";}if($product['typeAchat']=="meilleurOffre"){echo "Meilleure offre";} ?></p></a></button>
-
-                             </p>
-                     </form>
   
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
