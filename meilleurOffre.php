@@ -8,6 +8,7 @@ $database = "paris shopping";
 $db_handle = mysqli_connect('localhost', 'root', '');
 $db_found = mysqli_select_db($db_handle, $database);
 $today = date("Y-m-d");
+
 /*
 $expire = $row->expireDate; //from database
 $today_time = strtotime($today);
@@ -27,6 +28,7 @@ $idMeilleurOffre="";
 
 $user="";
 $informations="";
+$gagne=false;
 
 //On cherche l'id de l'acheteur connecté
  $sql = "SELECT * FROM acheteur WHERE connexion = '1'";
@@ -55,11 +57,13 @@ if($db_found)
             $result = mysqli_query($db_handle, $sql);
             $user = mysqli_fetch_assoc($result);
             $prixObjet = $user['prixObjet']/2;
+            $dateExpEnchere = $user['finEnchere'];
         }
         else{
             //sinon on affiche le prix d'enchere actuel
             $user = mysqli_fetch_assoc($result);
             $prixObjet = $user['prix1'];
+            $dateExpEnchere = $user['dateExpEnchere'];
         }
 
         $_SESSION['idObjet'] = $idObjet;
@@ -76,7 +80,7 @@ if($db_found)
        //on regarde si l'acheteur a deja encheri sur l'objet
        if(mysqli_num_rows($result) != 0)
        {   
-            $informations="Vous avez actuellement l'enchère la plus élevée";     
+            $informations="Vous avez actuellement l'enchère la plus élevée";  
        }
             else{  //on regarde si l'enchere existe ou pas 
                     $sql = "SELECT *FROM meilleuroffre WHERE idObjet = '$idObjet'";
@@ -89,6 +93,7 @@ if($db_found)
                         $prix1= $user['prix1'];
                         $prix2= $user['prix2'];
                         $idMeilleurOffre=$user['idMeilleurOffre'];
+                        $dateExpEnchere = $user['dateExpEnchere'];
 
                         //on compare les prix
                         if($prix1 > $prixmax)
@@ -110,9 +115,15 @@ if($db_found)
                             else{
 
                                  $informations="Votre prix d'enchère a été sauvegardée";
+                                 $sql = "SELECT * FROM objet WHERE idObjet = '$idObjet'";
+                                 $result = mysqli_query($db_handle, $sql);
+                                 $user = mysqli_fetch_assoc($result);
+                                 $dateExpEnchere=$user['finEnchere'];
+                                 $prixObjet = $user['prixObjet']/2;
+
                                  $sql = "INSERT INTO meilleurOffre(dateExpEnchere, prix1, prix2, idObjet, idAcheteur) VALUES('$dateExpEnchere','$prixmax','$prixObjet', '$idObjet', '$idAcheteur')";
                                  $result = mysqli_query($db_handle, $sql);
-                                 //echo $sql;
+                                 echo $sql;
                                  //echo $prixmax;
                                  //echo $prixObjet;
                                 }
@@ -123,7 +134,7 @@ if($db_found)
             //on regarde si l'objet possède une enchere
         $sql = "SELECT * FROM meilleuroffre WHERE idObjet = '$idObjet'";
         $result = mysqli_query($db_handle, $sql);
-
+        
         // si cet objet n'a pas d'enchere, on commence par la moitié du prix initial
         if(mysqli_num_rows($result) == 0)
         {      
@@ -137,6 +148,7 @@ if($db_found)
             //sinon on affiche le prix d'enchere actuel
             $user = mysqli_fetch_assoc($result);
             $prixObjet = $user['prix1'];
+            $dateExpEnchere = $user['dateExpEnchere'];
         }
 
     }
@@ -222,27 +234,66 @@ while ($product = mysqli_fetch_assoc($result)) {
                                     <label for="price">Prix d'enchère minimum : <span><?=$prixObjet?> euros</span></label>                          
                                 </div>
                             </div>
-                        <div class="row align-items-end">
+                         <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="price"> Date d'aujourd'hui : <span><?=$today?></span></label>                          
+                                </div>
+                            </div>
+                          <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="price"> Date de fin d'enchère : <span><?=$dateExpEnchere?></span></label> </label>                          
+                                </div>
+                            </div>
 
+                      <?php if(($dateExpEnchere > $today)||($dateExpEnchere == $today)):?>
+                        <div class="row align-items-end">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="price">Prix</label>
                                     <input type="number" name="Prix-max" class="form-control" placeholder="">
                                 </div>
                             </div>
-                            </div>
+                          </div>
                         
                              <div class="col-md-12">
                                 <p><button type="submit" name="button1" class="btn btn-primary py-3 px-4">Envoyez votre offre</button></p>
                                 <span><?=$informations?></span>
                             </div>
-                               
+                       <?php endif ?>
+
+                       <?php if($dateExpEnchere < $today):?>
+                        <div class="row align-items-end">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="price">L'enchère est terminée</label>
+                                    <?php
+                                         $sql = "SELECT * FROM meilleuroffre WHERE idObjet = '$idObjet' AND idAcheteur LIKE $idAcheteur";
+                                         $result = mysqli_query($db_handle, $sql);
+
+                                          //on regarde si l'acheteur a acquis l'objet
+                                         if(mysqli_num_rows($result) != 0)
+                                         {   
+                                         ?>
+                                          <label for="price">Félicitations vous avez acquis ce produit</label>
+                                         
+                                          <?php 
+                                         }
+                                         ?>
+                                </div>
+                            </div>
+                          </div>
+                           <div class="col-md-12">
+                            </div>
+                       <?php endif ?>
+
                             </div>
                         </div>
                     </form>
-
-                   
-
+                    <?php if($dateExpEnchere < $today):?>
+                    <form method="get" action="compte.php">
+                                <p><button type="submit"class="btn btn-primary py-3 px-4">Retour à mon compte</button></p>
+                    </form>
+                     <?php endif ?>
                 </div>
             </div>
         </div>

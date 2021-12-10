@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 10 déc. 2021 à 18:04
+-- Généré le : ven. 10 déc. 2021 à 21:03
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -60,13 +60,13 @@ INSERT INTO `acheteur` (`idAcheteur`, `idPanier`, `nomAcheteur`, `prenomAcheteur
 
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin` (
-  `idAdmin` int(11) NOT NULL,
+  `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
   `pseudoAdmin` varchar(255) NOT NULL,
   `mdpAdmin` varchar(255) NOT NULL,
   `connexion` tinyint(1) DEFAULT NULL,
   `reduc` float DEFAULT NULL,
   PRIMARY KEY (`idAdmin`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `admin`
@@ -116,14 +116,14 @@ CREATE TABLE IF NOT EXISTS `meilleuroffre` (
   PRIMARY KEY (`idMeilleurOffre`),
   KEY `idObjet` (`idObjet`),
   KEY `idAcheteur` (`idAcheteur`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `meilleuroffre`
 --
 
 INSERT INTO `meilleuroffre` (`idMeilleurOffre`, `dateExpEnchere`, `prix1`, `prix2`, `idObjet`, `idAcheteur`) VALUES
-(2, '2021-12-08', 32, 30, 5, 1);
+(8, '2021-12-08', 60, 40, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ INSERT INTO `meilleuroffre` (`idMeilleurOffre`, `dateExpEnchere`, `prix1`, `prix
 
 DROP TABLE IF EXISTS `objet`;
 CREATE TABLE IF NOT EXISTS `objet` (
-  `idObjet` int(11) NOT NULL,
+  `idObjet` int(11) NOT NULL AUTO_INCREMENT,
   `idVendeur` int(11) NOT NULL,
   `nomObjet` varchar(255) NOT NULL,
   `debutEnchere` date NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `objet` (
   `categorie` varchar(255) NOT NULL,
   PRIMARY KEY (`idObjet`),
   KEY `idVendeur` (`idVendeur`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `objet`
@@ -166,7 +166,7 @@ INSERT INTO `objet` (`idObjet`, `idVendeur`, `nomObjet`, `debutEnchere`, `finEnc
 (9, 6, 'Screwball', '2021-12-08', '2021-12-23', 90, 55, 'prod-9.webp', '', '', '', 'immediat', 'hautDeGamme', 'Whiskey'),
 (10, 7, 'Jack Daniel\'s', '2021-12-08', '2021-12-10', 40, 30, 'prod-10.webp', '', '', '', 'immediat', 'regulier', 'Whiskey'),
 (11, 8, 'McClelland\'s', '2021-12-08', '2021-12-16', 78, 60, 'prod-11.webp', '', '', '', 'transaction', 'hautDeGamme', 'Whiskey'),
-(12, 10, 'Plantation', '2021-12-08', '2021-12-15', 80, 60, 'prod-12.webp', '', '', '', 'meilleurOffre', 'hautDeGamme', 'Whiskey');
+(12, 10, 'Plantation', '2021-12-08', '2021-12-01', 80, 60, 'prod-12.webp', '', '', '', 'meilleurOffre', 'hautDeGamme', 'Whiskey');
 
 -- --------------------------------------------------------
 
@@ -202,19 +202,19 @@ INSERT INTO `paiement` (`idPaiement`, `typeCarte`, `nomPaiement`, `dateExpiratio
 
 DROP TABLE IF EXISTS `panier`;
 CREATE TABLE IF NOT EXISTS `panier` (
-  `idPanier` int(11) NOT NULL,
+  `idPanier` int(11) NOT NULL AUTO_INCREMENT,
   `idAcheteur` int(11) NOT NULL,
   `prixPanier` int(11) NOT NULL,
   PRIMARY KEY (`idPanier`),
   KEY `idAcheteur` (`idAcheteur`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `panier`
 --
 
 INSERT INTO `panier` (`idPanier`, `idAcheteur`, `prixPanier`) VALUES
-(1, 1, 0);
+(1, 1, 60);
 
 -- --------------------------------------------------------
 
@@ -224,7 +224,7 @@ INSERT INTO `panier` (`idPanier`, `idAcheteur`, `prixPanier`) VALUES
 
 DROP TABLE IF EXISTS `vendeur`;
 CREATE TABLE IF NOT EXISTS `vendeur` (
-  `idVendeur` int(11) NOT NULL,
+  `idVendeur` int(11) NOT NULL AUTO_INCREMENT,
   `pseudoVendeur` varchar(255) NOT NULL,
   `emailVendeur` varchar(255) NOT NULL,
   `nomVendeur` varchar(255) NOT NULL,
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `vendeur` (
   `connexion` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idVendeur`),
   KEY `idAdmin` (`idAdmin`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `vendeur`
