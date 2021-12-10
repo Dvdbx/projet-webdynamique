@@ -422,13 +422,28 @@ else
 
 
 
+if(isset($_POST['accepter']))
+{
+    $sql3 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete FROM objet O, ajoutpanier A WHERE A.idPanier = $idPanier AND O.idObjet = A.idObjet";
+
+
+}
+
+
+if(isset($_POST['refuser']))
+{
+
+
+}
+
+
 } 
     
 
 //on cherche les coordonnées bancaires de l'acheteur connecté
 if($db_found)
 {
-    if($visiteur="acheteur")
+    if($visiteur=="acheteur")
     {   
 
         $sql = "SELECT * FROM acheteur WHERE connexion like '1'";
@@ -687,6 +702,93 @@ data-stellar-background-ratio="0.5">
                             
                         </div>
                     </form> 
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 ftco-animate">
+                        <h3 class="mb-4 billing-heading">Nouvelles offres</h3>
+
+                        <?php
+                        $vendeur = $user['idVendeur'];
+                        $sql6 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete, O.categorie FROM transaction T, objet O WHERE T.validation = '1' AND O.idVendeur = '$vendeur' AND T.idObjet = O.idObjet";
+                        $result6 = mysqli_query($db_handle, $sql6);
+                        while ($notif = mysqli_fetch_assoc($result6)) { 
+                            $notifs[] = $notif; 
+                        } 
+
+                        ?>
+                        <?php foreach($notifs as $notif) : ?>
+
+                        <div class="row mt-5 pt-3 d-flex">
+                        <div class="col-md-5 d-flex">
+                            <div class="cart-detail cart-total p-3 p-md-4">
+                            <div class="product ftco-animate">
+                                <div class="img d-flex align-items-center justify-content-center"
+                                    style="background-image:url(images/<?php echo $notif['photo1']; ?>)">
+
+                                </div>
+                                <div class="text text-center" >
+                                    <span class="sale" style="background-color:<?php if($notif['rarete']=="hautDeGamme"){echo "#b7472a";}if($notif['rarete']=="rare"){echo "#fe9801";}if($notif['rarete']=="regulier"){echo "#01d28e";} ?>"><?php if($notif['rarete']=="hautDeGamme"){echo "Haut de gamme";}if($notif['rarete']=="rare"){echo "Rare";}if($notif['rarete']=="regulier"){echo "Régulier";}; ?></span>
+                                    <span class="category"><?php echo $notif['categorie']; ?></span>
+                                    <h2><?php echo $notif['nomObjet']; ?></h2>
+                                    <p class="mb-0"> <span
+                                            class="price"><?php echo $notif['prixObjet']; ?>€</span></p>
+                                </div>
+                            </div>
+                                <hr>
+                                <p class="d-flex total-price">
+                                    <?php
+                                    $idm = $notif['idObjet'];
+                                    $sql7 = "SELECT DISTINCT A.nomAcheteur FROM acheteur A, transaction T WHERE T.idObjet = '$idm' AND A.idAcheteur = T.idAcheteur";
+                                    $result7 = mysqli_query($db_handle, $sql7);
+                                    $ach_nom = mysqli_fetch_array($result7);
+                                    $sql8 = "SELECT DISTINCT T.prixEnchere FROM transaction T, acheteur A WHERE T.idObjet = '$idm' AND A.idAcheteur = T.idAcheteur";
+                                    $result8 = mysqli_query($db_handle, $sql8);
+                                    $propo = mysqli_fetch_array($result8);
+
+                                    ?>
+
+                                    <span>Acheteur</span>
+                                    <span><?php echo $ach_nom[0]; ?></span>
+                                </p>
+                                <p class="d-flex total-price">
+                                    <span>Proposition</span>
+                                    <span><?php echo $propo[0]; ?>€</span>
+                                </p>
+                            </div>
+                        </div>
+                      </div>
+
+                      <?php endforeach ?>
+
+                      <div class="row md-4 d-flex">
+                      <div class="col-md-2">
+
+                      <form action="compte.php" method="post" class="text-align-center">
+
+<input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
+
+<p><button type="submit" name="button6" class="btn btn-primary ml-3 py-3 px-4 mt-4">Accepter</button></p>
+
+</form>
+
+                            </div>  
+                            <div class="col-md-2">
+
+                            <form action="compte.php" method="post" class="text-align-center">
+
+<input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
+
+<p><button type="submit" name="button6" class="btn btn-primary ml-3 py-3 px-4 mt-4">Refuser</button></p>
+
+</form>
+                                
+                            </div>  
+                      </div>  
                 </div>
             </div>
         </div>
