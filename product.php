@@ -180,9 +180,17 @@ else{echo"db not found";}
                                     
                         </p>
                     </form>
-                    <p>
-                    <a href="panier.html"
-                            class="btn btn-primary py-3 px-5"><?php if($product['typeAchat']=="immediat"){echo "Achat immédiat";}if($product['typeAchat']=="transaction"){echo "Transaction";}if($product['typeAchat']=="meilleurOffre"){echo "Meilleure offre";} ?></a></p>
+                    <form action="<?php if($product['typeAchat']=="immediat"){echo "checkout.php";}if($product['typeAchat']=="transaction"){echo "transaction.php";}if($product['typeAchat']=="meilleurOffre"){echo "Meilleure offre";} ?>" method="post" class="text-align-center">
+                                            
+                         <input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
+                                                          
+                             <p>
+                      
+                             <button type="submit" name="button" class="btn btn-primary py-4 px-5" ><a class="d-flex align-items-center justify-content-center" style="top:-100px;"><p><?php if($product['typeAchat']=="immediat"){echo "Achat immédiat";}if($product['typeAchat']=="transaction"){echo "Transaction";}if($product['typeAchat']=="meilleurOffre"){echo "Meilleure offre";} ?></p></a></button>                
+                                                          
+                             </p>
+                     </form>
+                    
                 </div>
             </div>
             <div class="row mt-5">

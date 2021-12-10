@@ -46,6 +46,56 @@ $codeSecurite ="";
 $infoBancaires ="";
 
 
+//on detecte quel utilisateur est connecte automatiquement
+
+$connecte=0;
+$visiteur="";
+$user="";
+
+$sql1 = "SELECT * FROM admin WHERE connexion = '1'";
+$sql2 = "SELECT * FROM acheteur WHERE connexion = '1'";
+$sql3 = "SELECT * FROM vendeur WHERE connexion = '1'";
+$result1 = mysqli_query($db_handle, $sql1);
+$result2 = mysqli_query($db_handle, $sql2);
+$result3 = mysqli_query($db_handle, $sql3);
+
+if(mysqli_num_rows($result1) != 0)
+{
+ $visiteur="admin";
+ $user = mysqli_fetch_assoc($result1);
+}
+if(mysqli_num_rows($result2) != 0)
+{
+ $visiteur="acheteur";
+ $user = mysqli_fetch_assoc($result2);
+
+}
+if(mysqli_num_rows($result3) != 0)
+{
+ $visiteur="vendeur";
+ $user = mysqli_fetch_assoc($result3);
+
+}
+else{
+
+}
+
+$sql4 = "SELECT * FROM objet";
+$result4 = mysqli_query($db_handle, $sql4);
+
+while ($product = mysqli_fetch_assoc($result4)) { 
+$products[] = $product; 
+} 
+
+$sql5 = "SELECT * FROM vendeur";
+$result5 = mysqli_query($db_handle, $sql5);
+
+while ($vendeur = mysqli_fetch_assoc($result5)) { 
+$vendeurs[] = $vendeur; 
+} 
+
+
+
 
 if($db_found)
 {
@@ -258,6 +308,35 @@ if (isset($_POST["button8"])){
 
 }
 
+
+//si clic sur soumettre une transaction
+
+if (isset($_POST["button9"])){ 
+
+    $prix = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['prix'])); 
+    $id = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['id'])); 
+    $iduser = $user['idAcheteur'];
+    echo $prix;
+    echo $id;
+    echo $iduser;
+
+    $sql0 = "SELECT DISTINCT nombreTransaction FROM transaction WHERE idObjet = '$id' AND idAcheteur = '$iduser'";
+    $result0 = mysqli_query($db_handle, $sql0);
+    $res = mysqli_fetch_array($result0);                               
+    $nb = $res[0]+1;
+
+    //On cherche la reduction appliquée
+    $sql = "UPDATE transaction SET prixEnchere = '$prix' WHERE idObjet = '$id' AND idAcheteur = '$iduser'";
+    $sql1 = "UPDATE transaction SET nombreTransaction = '$nb' WHERE idObjet = '$id' AND idAcheteur = '$iduser'";
+    $sql2 = "UPDATE transaction SET validation = '1' WHERE idObjet = '$id' AND idAcheteur = '$iduser'";
+
+    $result = mysqli_query($db_handle, $sql);
+    $result1 = mysqli_query($db_handle, $sql1);
+    $result2 = mysqli_query($db_handle, $sql2);
+
+}
+
+
     //vendeur
 
     
@@ -345,53 +424,6 @@ else
 
 } 
     
-//on detecte quel utilisateur est connecte automatiquement
-
-    $connecte=0;
-    $visiteur="";
-    $user="";
-
-    $sql1 = "SELECT * FROM admin WHERE connexion = '1'";
-    $sql2 = "SELECT * FROM acheteur WHERE connexion = '1'";
-    $sql3 = "SELECT * FROM vendeur WHERE connexion = '1'";
-    $result1 = mysqli_query($db_handle, $sql1);
-    $result2 = mysqli_query($db_handle, $sql2);
-    $result3 = mysqli_query($db_handle, $sql3);
-
-    if(mysqli_num_rows($result1) != 0)
-    {
-     $visiteur="admin";
-     $user = mysqli_fetch_assoc($result1);
- }
- if(mysqli_num_rows($result2) != 0)
- {
-     $visiteur="acheteur";
-     $user = mysqli_fetch_assoc($result2);
-
- }
- if(mysqli_num_rows($result3) != 0)
- {
-     $visiteur="vendeur";
-     $user = mysqli_fetch_assoc($result3);
-
- }
- else{
-
- }
-
- $sql4 = "SELECT * FROM objet";
- $result4 = mysqli_query($db_handle, $sql4);
-
- while ($product = mysqli_fetch_assoc($result4)) { 
-    $products[] = $product; 
-} 
-
-$sql5 = "SELECT * FROM vendeur";
-$result5 = mysqli_query($db_handle, $sql5);
-
-while ($vendeur = mysqli_fetch_assoc($result5)) { 
-   $vendeurs[] = $vendeur; 
-} 
 
 //on cherche les coordonnées bancaires de l'acheteur connecté
 if($db_found)
