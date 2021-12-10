@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 //identifier votre BDD
 $database = "paris shopping";
 //identifier votre serveur (localhost), utlisateur (root), mot de passe ("")
@@ -41,96 +44,106 @@ if($db_found)
     //on sauvegarde l'id de l'objet
     if (isset($_POST["button"]))
     {
+       
         $idObjet = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['id'])); 
-        //echo $id;
-        $sql = "SELECT * FROM objet WHERE idObjet = '$idObjet'";
+        $sql = "SELECT * FROM meilleuroffre WHERE idObjet = '$idObjet'";
         $result = mysqli_query($db_handle, $sql);
-        $user = mysqli_fetch_assoc($result);
-        $dateExpEnchere = $user['finEnchere'];
-        $prixObjet= $user['prixObjet'];
+
+        if(mysqli_num_rows($result) == 0)
+        {   // si cet objet n'a pas d'enchere, on commence par la moitié du prix initial
+            $sql = "SELECT * FROM objet WHERE idObjet = '$idObjet'";
+            $result = mysqli_query($db_handle, $sql);
+            $user = mysqli_fetch_assoc($result);
+            $prixObjet = $user['prixObjet']/2;
+        }
+        else{
+            //sinon on affiche le prix d'enchere actuel
+            $user = mysqli_fetch_assoc($result);
+            $prixObjet = $user['prix1'];
+        }
+
+        $_SESSION['idObjet'] = $idObjet;
+
     }
 
     if (isset($_POST["button1"]))
     {
+       $idObjet = $_SESSION['idObjet']; 
+        
+       $sql = "SELECT * FROM meilleuroffre WHERE idObjet = '$idObjet' AND idAcheteur LIKE $idAcheteur";
+       $result = mysqli_query($db_handle, $sql);
 
-    $sql = "SELECT *FROM meilleuroffre WHERE idObjet = '$id' AND idAcheteur LIKE $idAcheteur";
-    $result = mysqli_query($db_handle, $sql);
+       //on regarde si l'acheteur a deja encheri sur l'objet
+       if(mysqli_num_rows($result) != 0)
+       {   
+            $informations="Vous avez actuellement l'enchère la plus élevée";     
+       }
+            else{  //on regarde si l'enchere existe ou pas 
+                    $sql = "SELECT *FROM meilleuroffre WHERE idObjet = '$idObjet'";
+                    $result = mysqli_query($db_handle, $sql);
 
-    if(mysqli_num_rows($result) != 0)
-    {   
-         $informations="Vous avez actuellement l'enchère la plus élevée";     
-    }
-    else{   
-            $sql = "SELECT *FROM meilleuroffre WHERE idObjet = '$id'";
-            $result = mysqli_query($db_handle, $sql);
+                    //si l'enchere existe
+                    if(mysqli_num_rows($result) != 0)
+                    {   
+                        $user = mysqli_fetch_assoc($result);
+                        $prix1= $user['prix1'];
+                        $prix2= $user['prix2'];
+                        $idMeilleurOffre=$user['idMeilleurOffre'];
 
-            if(mysqli_num_rows($result) != 0)
-            {   
-                $user = mysqli_fetch_assoc($result);
-                $prix1= $user['prix1'];
-                $prix2= $user['prix2'];
-                $idMeilleurOffre=$user['idMeilleurOffre'];
-
-                if($prix1 > $prixmax)
-                {
-                    $informations="Votre prix n'est pas assez élevé";
-                }
-                else{
-
-                      $informations="Votre prix d'enchère a été sauvegardée";
-                      $sql = "UPDATE meilleuroffre SET prix2 ='$prix1', prix1 = 'prixmax', idAcheteur = '$idAcheteur' WHERE idMeilleurOffre='$idMeilleurOffre'";
-                      $result = mysqli_query($db_handle, $sql);
+                        //on compare les prix
+                        if($prix1 > $prixmax)
+                        {
+                             $informations="Votre prix n'est pas assez élevé";
+                        }
+                        else{
+                                $informations="Votre prix d'enchère a été sauvegardée 1";
+                                $sql = "UPDATE meilleuroffre SET prix2 ='$prix1', prix1 = '$prixmax', idAcheteur = '$idAcheteur' WHERE idMeilleurOffre='$idMeilleurOffre'";
+                                $result = mysqli_query($db_handle, $sql);
+                                //echo $sql;
+                            }
                     }
-            } 
-            else{
-                   if(($prixObjet/2) > $prixmax)
-                     {
-                         $informations="Votre prix n'est pas assez élevé";
-                     }
-                     else{
+                    else{   //si l'enchere n'existe pas
+                            if($prixObjet > $prixmax)
+                            {
+                                $informations="Votre prix n'est pas assez élevé";
+                            }
+                            else{
 
-                            $informations="Votre prix d'enchère a été sauvegardée";
-                            $sql = "INSERT INTO meilleurOffre(dateExpEnchere, prix1, prix2, idObjet, idAcheteur) VALUES('$dateExpEnchere', '($prixObjet/2)', '$idObjet', '$idAcheteur')";
-                         }
-                }
+                                 $informations="Votre prix d'enchère a été sauvegardée";
+                                 $sql = "INSERT INTO meilleurOffre(dateExpEnchere, prix1, prix2, idObjet, idAcheteur) VALUES('$dateExpEnchere','$prixmax','$prixObjet', '$idObjet', '$idAcheteur')";
+                                 $result = mysqli_query($db_handle, $sql);
+                                 //echo $sql;
+                                 //echo $prixmax;
+                                 //echo $prixObjet;
+                                }
+                     }
+
+                
+            }
+            //on regarde si l'objet possède une enchere
+        $sql = "SELECT * FROM meilleuroffre WHERE idObjet = '$idObjet'";
+        $result = mysqli_query($db_handle, $sql);
+
+        // si cet objet n'a pas d'enchere, on commence par la moitié du prix initial
+        if(mysqli_num_rows($result) == 0)
+        {      
+            $sql = "SELECT * FROM objet WHERE idObjet = '$idObjet'";
+            $result = mysqli_query($db_handle, $sql);
+            $user = mysqli_fetch_assoc($result);
+            $prixObjet = $user['prixObjet']/2;
+            $dateExpEnchere=$user['finEnchere'];
         }
+        else{
+            //sinon on affiche le prix d'enchere actuel
+            $user = mysqli_fetch_assoc($result);
+            $prixObjet = $user['prix1'];
+        }
+
     }
 
-        /*$sql2 = "INSERT INTO meilleurOffre(idObjet, idAcheteur, prixEnchere, nombreTransaction, validation) VALUES('$id', '$idUser', '0', '0', '0')";
-        $result2 = mysqli_query($db_handle, $sql2);
-
-        $sql = "SELECT idAcheteur FROM acheteur WHERE connexion='1'";
-         $result = mysqli_query($db_handle, $sql);
-        $user = mysqli_fetch_assoc($result);
-        $idAcheteur=$user['idAcheteur'];
-         echo $idAcheteur;
-
-        $sql = "SELECT idObjet FROM objet WHERE connexion='1'";
-         $result = mysqli_query($db_handle, $sql);
-         $user = mysqli_fetch_assoc($result);
-         $idAcheteur=$user['idAcheteur'];
-         echo $idAcheteur;
-
-
-         $sql = "SELECT DateExp FROM MeilleurOffre";
-         $result = mysqli_query($db_handle, $sql);
-         $user = mysqli_fetch_assoc($result);
-
-         $dateExp=$user['DateExp'];
-         if ($dateExp < $today_time)
-         {        
-            echo "slash" ;
-             echo $prixmax;
-         }
-        else
-        {
-                $sql = "INSERT INTO MeilleurOffre(nomAcheteur, prenomAcheteur, adresseAcheteur, emailAcheteur) VALUES('$name', '$prenom', '$motdepasse', '$email')";
-     
-     
-         }*/
 }
-
 ?>
+
 <!--
 <?php
 
@@ -202,13 +215,18 @@ while ($product = mysqli_fetch_assoc($result)) {
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-10 ftco-animate">
-                    <form action="transaction.php" class="billing-form" method="post">
+                    <form action="meilleurOffre.php" class="billing-form" method="post">
                         <h3 class="mb-4 billing-heading">Proposez votre prix maximum pour obtenir cet objet :</h3>
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="price">Prix d'enchère minimum : <span><?=$prixObjet?> euros</span></label>                          
+                                </div>
+                            </div>
                         <div class="row align-items-end">
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="lastname">Prix</label>
+                                    <label for="price">Prix</label>
                                     <input type="number" name="Prix-max" class="form-control" placeholder="">
                                 </div>
                             </div>
@@ -216,7 +234,7 @@ while ($product = mysqli_fetch_assoc($result)) {
                         
                              <div class="col-md-12">
                                 <p><button type="submit" name="button1" class="btn btn-primary py-3 px-4">Envoyez votre offre</button></p>
-
+                                <span><?=$informations?></span>
                             </div>
                                
                             </div>

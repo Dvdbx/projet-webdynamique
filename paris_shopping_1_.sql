@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 09 déc. 2021 à 19:44
+-- Généré le : ven. 10 déc. 2021 à 18:04
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -102,6 +102,32 @@ INSERT INTO `ajoutpanier` (`idObjet`, `idPanier`, `quantite`, `nombreEnchere`, `
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `meilleuroffre`
+--
+
+DROP TABLE IF EXISTS `meilleuroffre`;
+CREATE TABLE IF NOT EXISTS `meilleuroffre` (
+  `idMeilleurOffre` int(11) NOT NULL AUTO_INCREMENT,
+  `dateExpEnchere` date NOT NULL,
+  `prix1` int(11) NOT NULL,
+  `prix2` int(11) NOT NULL,
+  `idObjet` int(11) NOT NULL,
+  `idAcheteur` int(11) NOT NULL,
+  PRIMARY KEY (`idMeilleurOffre`),
+  KEY `idObjet` (`idObjet`),
+  KEY `idAcheteur` (`idAcheteur`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `meilleuroffre`
+--
+
+INSERT INTO `meilleuroffre` (`idMeilleurOffre`, `dateExpEnchere`, `prix1`, `prix2`, `idObjet`, `idAcheteur`) VALUES
+(2, '2021-12-08', 32, 30, 5, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `objet`
 --
 
@@ -152,21 +178,21 @@ DROP TABLE IF EXISTS `paiement`;
 CREATE TABLE IF NOT EXISTS `paiement` (
   `idPaiement` int(11) NOT NULL AUTO_INCREMENT,
   `typeCarte` varchar(255) NOT NULL,
-  `numPaiement` int(11) NOT NULL,
   `nomPaiement` varchar(255) NOT NULL,
   `dateExpiration` date NOT NULL,
   `codeSecurite` int(11) NOT NULL,
   `idAcheteur` int(11) NOT NULL,
+  `numPaiement` int(100) NOT NULL,
   PRIMARY KEY (`idPaiement`),
   KEY `idAcheteur` (`idAcheteur`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `paiement`
 --
 
-INSERT INTO `paiement` (`idPaiement`, `typeCarte`, `numPaiement`, `nomPaiement`, `dateExpiration`, `codeSecurite`, `idAcheteur`) VALUES
-(1, 'MasterCard', 123456, 'moi', '2021-12-09', 123, 1);
+INSERT INTO `paiement` (`idPaiement`, `typeCarte`, `nomPaiement`, `dateExpiration`, `codeSecurite`, `idAcheteur`, `numPaiement`) VALUES
+(2, 'MasterCard', 'moi', '2021-12-09', 123, 1, 1234567891);
 
 -- --------------------------------------------------------
 
@@ -188,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `panier` (
 --
 
 INSERT INTO `panier` (`idPanier`, `idAcheteur`, `prixPanier`) VALUES
-(1, 1, 60);
+(1, 1, 0);
 
 -- --------------------------------------------------------
 
