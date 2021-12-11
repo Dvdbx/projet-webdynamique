@@ -47,54 +47,6 @@ $infoBancaires ="";
 
 
 
-//on detecte quel utilisateur est connecte automatiquement
-
-$connecte=0;
-$visiteur="";
-$user="";
-
-$sql1 = "SELECT * FROM admin WHERE connexion = '1'";
-$sql2 = "SELECT * FROM acheteur WHERE connexion = '1'";
-$sql3 = "SELECT * FROM vendeur WHERE connexion = '1'";
-$result1 = mysqli_query($db_handle, $sql1);
-$result2 = mysqli_query($db_handle, $sql2);
-$result3 = mysqli_query($db_handle, $sql3);
-
-if(mysqli_num_rows($result1) != 0)
-{
- $visiteur="admin";
- $user = mysqli_fetch_assoc($result1);
-}
-if(mysqli_num_rows($result2) != 0)
-{
- $visiteur="acheteur";
- $user = mysqli_fetch_assoc($result2);
-
-}
-if(mysqli_num_rows($result3) != 0)
-{
- $visiteur="vendeur";
- $user = mysqli_fetch_assoc($result3);
-
-}
-else{
-
-}
-
-$sql4 = "SELECT * FROM objet";
-$result4 = mysqli_query($db_handle, $sql4);
-
-while ($product = mysqli_fetch_assoc($result4)) { 
-$products[] = $product; 
-} 
-
-$sql5 = "SELECT * FROM vendeur";
-$result5 = mysqli_query($db_handle, $sql5);
-
-while ($vendeur = mysqli_fetch_assoc($result5)) { 
-$vendeurs[] = $vendeur; 
-} 
-
 
 
 
@@ -461,8 +413,55 @@ else
    
 }
 
+} 
 
 
+//on detecte quel utilisateur est connecte automatiquement
+
+$connecte=0;
+$visiteur="";
+$user="";
+
+$sql1 = "SELECT * FROM admin WHERE connexion = '1'";
+$sql2 = "SELECT * FROM acheteur WHERE connexion = '1'";
+$sql3 = "SELECT * FROM vendeur WHERE connexion = '1'";
+$result1 = mysqli_query($db_handle, $sql1);
+$result2 = mysqli_query($db_handle, $sql2);
+$result3 = mysqli_query($db_handle, $sql3);
+
+if(mysqli_num_rows($result1) != 0)
+{
+ $visiteur="admin";
+ $user = mysqli_fetch_assoc($result1);
+}
+if(mysqli_num_rows($result2) != 0)
+{
+ $visiteur="acheteur";
+ $user = mysqli_fetch_assoc($result2);
+
+}
+if(mysqli_num_rows($result3) != 0)
+{
+ $visiteur="vendeur";
+ $user = mysqli_fetch_assoc($result3);
+
+}
+else{
+
+}
+
+$sql4 = "SELECT * FROM objet";
+$result4 = mysqli_query($db_handle, $sql4);
+
+while ($product = mysqli_fetch_assoc($result4)) { 
+$products[] = $product; 
+} 
+
+$sql5 = "SELECT * FROM vendeur";
+$result5 = mysqli_query($db_handle, $sql5);
+
+while ($vendeur = mysqli_fetch_assoc($result5)) { 
+$vendeurs[] = $vendeur; 
 } 
     
 
