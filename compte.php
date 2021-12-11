@@ -917,14 +917,15 @@ data-stellar-background-ratio="0.5">
                         <h3 class="mb-4 billing-heading">Nouvelles offres</h3>
 
                         <?php
-                        $vendeur = $user['idVendeur'];
+                         $vendeur = $user['idVendeur'];
                         $sql6 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete, O.categorie FROM transaction T, objet O WHERE T.validation = '1' AND O.idVendeur = '$vendeur' AND T.idObjet = O.idObjet";
-                        $result6 = mysqli_query($db_handle, $sql6);
-                        while ($notif = mysqli_fetch_assoc($result6)) { 
-                            $notifs[] = $notif; 
-                        } 
+                        $result6 = mysqli_query($db_handle, $sql6);?>
+                        
+                        <?php if(mysqli_num_rows($result6) != 0):?>
 
-                        ?>
+                        <?php while ($notif = mysqli_fetch_assoc($result6)) { 
+                            $notifs[] = $notif; 
+                        } ?>
                         <?php foreach($notifs as $notif) : ?>
 
                         <div class="row mt-5 pt-3 d-flex">
@@ -988,7 +989,11 @@ data-stellar-background-ratio="0.5">
 <p><button type="submit" name="refuser" class="btn btn-primary ml-3 py-3 px-4 mt-4">Refuser</button></p>
 
 </form>
-<?php endforeach ?>            
+<?php endforeach ?>   
+<?php endif ?> 
+<?php if(mysqli_num_rows($result6) == 0):?>
+    <p> Pas de nouvelles offres </p>
+<?php endif ?> 
                             </div>  
                       </div>  
                 </div>
@@ -1065,12 +1070,13 @@ data-stellar-background-ratio="0.5">
                         <?php
                         $acheteur = $user['idAcheteur'];
                         $sql6 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete, O.categorie FROM transaction T, objet O WHERE T.validation = '0' AND T.idAcheteur = '$acheteur' AND T.idObjet = O.idObjet";
-                        $result6 = mysqli_query($db_handle, $sql6);
-                        while ($notif = mysqli_fetch_assoc($result6)) { 
-                            $notifs[] = $notif; 
-                        } 
+                         $result6 = mysqli_query($db_handle, $sql6);?>
+                        
+                        <?php if(mysqli_num_rows($result) != 0):?>
 
-                        ?>
+                        <?php while ($notif = mysqli_fetch_assoc($result6)) { 
+                            $notifs[] = $notif; 
+                        }?>
                         <?php foreach($notifs as $notif) : ?>
 
                         <div class="row mt-5 pt-3 d-flex">
@@ -1102,6 +1108,10 @@ data-stellar-background-ratio="0.5">
 
 </form>
 <?php endforeach ?>
+<?php endif ?>
+<?php if(mysqli_num_rows($result6) == 0):?>
+    <p> Pas de nouvelles transactions </p>
+<?php endif ?>
                    
                             </div>
                         </div>
