@@ -56,9 +56,9 @@ for ($i=0; $i<4; $i++) {
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="accueil.html">Alcool <span>store</span></a>
+            <a class="navbar-brand" href="accueil.php">Alcool <span>store</span></a>
             <div class="order-lg-last btn-group">
-                <a href="panier.html" class="btn-cart dropdown-toggle dropdown-toggle-split">
+                <a href="panier.php" class="btn-cart dropdown-toggle dropdown-toggle-split">
                     <span class="fa fa-shopping-bag"></span>
                     <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
                 </a>
@@ -70,10 +70,10 @@ for ($i=0; $i<4; $i++) {
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="accueil.html" class="nav-link">Accueil</a></li>
+                    <li class="nav-item"><a href="accueil.php" class="nav-link">Accueil</a></li>
                     <li class="nav-item"><a href="parcourir.php" class="nav-link">Tout parcourir</a></li>
-                    <li class="nav-item	"><a href="notifications.html" class="nav-link">Notifications</a></li>
-                    <li class="nav-item"><a href="login.html" class="nav-link">Votre compte</a></li>
+                    <li class="nav-item	"><a href="notifications.php" class="nav-link">Notifications</a></li>
+                    <li class="nav-item"><a href="login.php" class="nav-link">Votre compte</a></li>
                 </ul>
             </div>
         </div>
@@ -217,10 +217,10 @@ for ($i=0; $i<4; $i++) {
                             style="background-image:url(images/<?php echo $product['photo1']; ?>)">
                             <div class="desc">
                                 <p class="meta-prod d-flex">
-                                    <a href="panier.html" class="d-flex align-items-center justify-content-center"><span
+                                    <a href="panier.php" class="d-flex align-items-center justify-content-center"><span
                                             class="fa fa-shopping-bag"></span></a>
 
-                                    <a href="product.html"
+                                    <a href="product.php"
                                         class="d-flex align-items-center justify-content-center"><span
                                             class="fa fa-eye"></span></a>
                                 </p>
@@ -241,7 +241,7 @@ for ($i=0; $i<4; $i++) {
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <a href="product.html" class="btn btn-primary d-block">Voir tous les produits<span
+                    <a href="product.php" class="btn btn-primary d-block">Voir tous les produits<span
                             class="fa fa-long-arrow-right"></span></a>
                 </div>
             </div>
@@ -253,7 +253,7 @@ for ($i=0; $i<4; $i++) {
             <div class="row mb-5">
                 <div class="col-sm-12 col-md">
                     <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2 logo"><a href="accueil.html">Alcool <span>Store</span></a></h2>
+                        <h2 class="ftco-heading-2 logo"><a href="accueil.php">Alcool <span>Store</span></a></h2>
                         <p>La philosophie d'Alcool Store est de promouvoir nos clients, pas nous-mêmes. Nous saurons
                             vous aider à trouver la bouteille qui répond à vos désirs.</p>
 

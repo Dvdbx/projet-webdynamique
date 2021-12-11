@@ -56,9 +56,9 @@ else{echo"db not found";}
     
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="accueil.html">Alcool <span>store</span></a>
+            <a class="navbar-brand" href="accueil.php">Alcool <span>store</span></a>
             <div class="order-lg-last btn-group">
-                <a href="panier.html" class="btn-cart dropdown-toggle dropdown-toggle-split">
+                <a href="panier.php" class="btn-cart dropdown-toggle dropdown-toggle-split">
                     <span class="fa fa-shopping-bag"></span>
                     <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
                 </a>
@@ -70,10 +70,10 @@ else{echo"db not found";}
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="accueil.html" class="nav-link">Accueil</a></li>
+                    <li class="nav-item"><a href="accueil.php" class="nav-link">Accueil</a></li>
                     <li class="nav-item"><a href="parcourir.php" class="nav-link">Tout parcourir</a></li>
-                    <li class="nav-item	"><a href="notifications.html" class="nav-link">Notifications</a></li>
-                    <li class="nav-item"><a href="login.html" class="nav-link">Votre compte</a></li>
+                    <li class="nav-item	"><a href="notifications.php" class="nav-link">Notifications</a></li>
+                    <li class="nav-item"><a href="login.php" class="nav-link">Votre compte</a></li>
                 </ul>
             </div>
         </div>
@@ -85,7 +85,7 @@ else{echo"db not found";}
         <div class="container">
             <div class="row no-gutters slider-text align-items-end justify-content-center">
                 <div class="col-md-9 ftco-animate mb-5 text-center">
-                    <p class="breadcrumbs mb-0"><span class="mr-2"><a href="accueil.html">Accueil <i
+                    <p class="breadcrumbs mb-0"><span class="mr-2"><a href="accueil.php">Accueil <i
                                     class="fa fa-chevron-right"></i></a></span> <span><a href="parcourir.php">Parcourir <i
                                     class="fa fa-chevron-right"></i></a></span> <span>Produits <i
                                 class="fa fa-chevron-right"></i></span></p>
