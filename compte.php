@@ -1021,7 +1021,8 @@ data-stellar-background-ratio="0.5">
               <?php echo $infoBancaires?></p>
               <p><strong>Type de carte :&emsp;</strong><?php echo$card ?></p>
               <p><strong>Numéro de la carte :&emsp;</strong>
-              <?php 
+              <?php if($numCarte!=""){
+
                 for ($i = 0; $i<= strlen($numCarte)-3 ; $i++)
                 {
                     echo " * ";
@@ -1029,6 +1030,7 @@ data-stellar-background-ratio="0.5">
                 echo $numCarte[strlen($numCarte)-2];
                 echo " ";
                 echo $numCarte[strlen($numCarte)-1];
+                }
               
               ?></p>
               <p><strong>Nom sur la carte :&emsp;</strong><?php echo$nomCarte ?></p>
