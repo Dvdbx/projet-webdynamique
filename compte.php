@@ -46,9 +46,221 @@ $codeSecurite ="";
 $infoBancaires ="";
 
 
+//données acheteur inscription
+$idAcheteur="";
+$idPanier="";
+
+//on detecte quel utilisateur est connecte automatiquement
+$connecte=0;
+$visiteur="";
+$user="";
+
+if($db_found)
+{
+    //si passe par formulaire d'inscription
+ 
+if (isset($_POST["button1"])){
+
+        $sql = "INSERT INTO acheteur(nomAcheteur, prenomAcheteur, adresseAcheteur, emailAcheteur, connexion) VALUES('$nomac', '$prenomac', '$adresseac', '$emailac','1')";
+        $result = mysqli_query($db_handle, $sql);
+
+        $sql ="SELECT*FROM acheteur WHERE connexion LIKE '1'";
+        $result = mysqli_query($db_handle, $sql);
+        $user = mysqli_fetch_assoc($result);
+        $idAcheteur= $user['idAcheteur'];
+        
+        $sql = "INSERT INTO panier(idAcheteur, prixPanier) VALUES('$idAcheteur', '0')";
+        $result = mysqli_query($db_handle, $sql);
+
+        $sql ="SELECT*FROM panier where idAcheteur = '$idAcheteur'";
+        $result = mysqli_query($db_handle, $sql);
+        $user = mysqli_fetch_assoc($result);
+        $idPanier= $user['idPanier'];
+
+        $sql = "UPDATE acheteur SET idPanier = $idPanier WHERE idAcheteur = $idAcheteur";
+        $result = mysqli_query($db_handle, $sql);
 
 
+} 
 
+if (isset($_POST["button2"])) {
+	
+      
+        $sql = "INSERT INTO vendeur(pseudoVendeur, emailVendeur, nomVendeur, photoVendeur, fondVendeur, idAdmin, connexion) VALUES('$pseudove', '$emailve', '$nomve', '$photove', '$fondve', '1', '1')";
+ $result = mysqli_query($db_handle, $sql);
+
+}
+
+//si passe par formulaire de connexion
+
+if (isset($_POST["button3"])){echo"oui";
+
+    //acheteur
+
+if(isset($_POST['login']) && isset($_POST['password']))
+{
+    // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
+    // pour éliminer toute attaque de type injection SQL et XSS
+    $username = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['login'])); 
+    $password = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['password']));
+    
+    if($username !== "" && $password !== "")
+    {
+        $requete = "SELECT count(*) FROM acheteur where 
+              emailAcheteur = '".$username."' and nomAcheteur = '".$password."' ";
+        $exec_requete = mysqli_query($db_handle,$requete);
+        $reponse      = mysqli_fetch_array($exec_requete);
+        $count = $reponse['count(*)'];
+        if($count!=0) // nom d'utilisateur et mot de passe correctes
+        {
+           $_SESSION['login'] = $username;
+           echo"utilisateur et mot de passe correctes";
+
+           //on connecte l'utilisateur
+           $sql = "UPDATE acheteur SET connexion = '1' WHERE emailAcheteur = '".$username."' and nomAcheteur = '".$password."'";
+           $result = mysqli_query($db_handle, $sql);
+
+        }
+        else
+        {
+           echo"utilisateur ou mot de passe incorrect";
+        }
+    }
+    else
+    {
+       echo"utilisateur ou mot de passe vide";
+    }
+}
+else
+{
+   
+}
+   //vendeur
+
+    
+if(isset($_POST['pseudo']) && isset($_POST['email']))
+{
+    // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
+    // pour éliminer toute attaque de type injection SQL et XSS
+    $username = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['pseudo'])); 
+    $password = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['email']));
+    
+    if($username !== "" && $password !== "")
+    {
+        $requete = "SELECT count(*) FROM vendeur where 
+              pseudoVendeur = '".$username."' and emailVendeur = '".$password."' ";
+        $exec_requete = mysqli_query($db_handle,$requete);
+        $reponse      = mysqli_fetch_array($exec_requete);
+        $count = $reponse['count(*)'];
+        if($count!=0) // nom d'utilisateur et mot de passe correctes
+        {
+           $_SESSION['pseudo'] = $username;
+           echo"utilisateur et mot de passe correctes";
+
+           //on connecte l'utilisateur
+           $sql = "UPDATE vendeur SET connexion = '1' WHERE pseudoVendeur = '".$username."' and emailVendeur = '".$password."'";
+           $result = mysqli_query($db_handle, $sql);
+
+        }
+        else
+        {
+           echo"utilisateur ou mot de passe incorrect";
+        }
+    }
+    else
+    {
+       echo"utilisateur ou mot de passe vide";
+    }
+}
+else
+{
+   
+}
+
+// admin
+
+if(isset($_POST['pseudoAdmin']) && isset($_POST['mdpAdmin']))
+{
+    // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
+    // pour éliminer toute attaque de type injection SQL et XSS
+    $username = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['pseudoAdmin'])); 
+    $password = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['mdpAdmin']));
+    
+    if($username !== "" && $password !== "")
+    {
+        $requete = "SELECT count(*) FROM admin where 
+              pseudoAdmin = '".$username."' and mdpAdmin = '".$password."' ";
+        $exec_requete = mysqli_query($db_handle,$requete);
+        $reponse      = mysqli_fetch_array($exec_requete);
+        $count = $reponse['count(*)'];
+        if($count!=0) // nom d'utilisateur et mot de passe correctes
+        {
+           $_SESSION['pseudoAdmin'] = $username;
+           echo"utilisateur et mot de passe correctes";
+
+           //on connecte l'utilisateur
+           $sql = "UPDATE admin SET connexion = '1' WHERE pseudoAdmin = '".$username."' and mdpAdmin = '".$password."'";
+           $result = mysqli_query($db_handle, $sql);
+
+        }
+        else
+        {
+           echo"utilisateur ou mot de passe incorrect";
+        }
+    }
+    else
+    {
+       echo"utilisateur ou mot de passe vide";
+    }
+}
+else
+{
+   
+}
+
+}
+
+$sql1 = "SELECT * FROM admin WHERE connexion = '1'";
+$sql2 = "SELECT * FROM acheteur WHERE connexion = '1'";
+$sql3 = "SELECT * FROM vendeur WHERE connexion = '1'";
+$result1 = mysqli_query($db_handle, $sql1);
+$result2 = mysqli_query($db_handle, $sql2);
+$result3 = mysqli_query($db_handle, $sql3);
+
+if(mysqli_num_rows($result1) != 0)
+{
+ $visiteur="admin";
+ $user = mysqli_fetch_assoc($result1);
+}
+if(mysqli_num_rows($result2) != 0)
+{
+ $visiteur="acheteur";
+ $user = mysqli_fetch_assoc($result2);
+
+}
+if(mysqli_num_rows($result3) != 0)
+{
+ $visiteur="vendeur";
+ $user = mysqli_fetch_assoc($result3);
+
+}
+else{
+
+}
+
+$sql4 = "SELECT * FROM objet";
+$result4 = mysqli_query($db_handle, $sql4);
+
+while ($product = mysqli_fetch_assoc($result4)) { 
+$products[] = $product; 
+} 
+
+$sql5 = "SELECT * FROM vendeur";
+$result5 = mysqli_query($db_handle, $sql5);
+
+while ($vendeur = mysqli_fetch_assoc($result5)) { 
+$vendeurs[] = $vendeur; 
+} 
 
 if($db_found)
 {
@@ -115,13 +327,30 @@ if (isset($_POST["button5"])){
     $supression = mysqli_query($db_handle, $supprimer);
 
 } 
-
+/*
 //si passe par formulaire d'inscription
-    
+ 
 if (isset($_POST["button1"])){
 
-        $sql = "INSERT INTO acheteur(nomAcheteur, prenomAcheteur, adresseAcheteur, emailAcheteur) VALUES('$nomac', '$prenomac', '$adresseac', '$emailac')";
- $result = mysqli_query($db_handle, $sql);
+        $sql = "INSERT INTO acheteur(nomAcheteur, prenomAcheteur, adresseAcheteur, emailAcheteur, connexion) VALUES('$nomac', '$prenomac', '$adresseac', '$emailac','1')";
+        $result = mysqli_query($db_handle, $sql);
+
+        $sql ="SELECT*FROM acheteur WHERE connexion LIKE '1'";
+        $result = mysqli_query($db_handle, $sql);
+        $user = mysqli_fetch_assoc($result);
+        $idAcheteur= $user['idAcheteur'];
+        
+        $sql = "INSERT INTO panier(idAcheteur, prixPanier) VALUES('$idAcheteur', '0')";
+        $result = mysqli_query($db_handle, $sql);
+
+        $sql ="SELECT*FROM panier where idAcheteur = '$idAcheteur'";
+        $result = mysqli_query($db_handle, $sql);
+        $user = mysqli_fetch_assoc($result);
+        $idPanier= $user['idPanier'];
+
+        $sql = "UPDATE acheteur SET idPanier = $idPanier WHERE idAcheteur = $idAcheteur";
+        $result = mysqli_query($db_handle, $sql);
+
 
 } 
 
@@ -176,7 +405,7 @@ if(isset($_POST['login']) && isset($_POST['password']))
 else
 {
    
-}
+}*/
 }
 
 //si clic bouton mettre en vente produit de la page vendeur
@@ -332,7 +561,7 @@ if (isset($_POST["button9"])){
 
     //vendeur
 
-    
+/*    
 if(isset($_POST['pseudo']) && isset($_POST['email']))
 {
     // on applique les deux fonctions mysqli_real_escape_string et htmlspecialchars
@@ -411,59 +640,10 @@ if(isset($_POST['pseudoAdmin']) && isset($_POST['mdpAdmin']))
 else
 {
    
-}
+}*/
 
 } 
 
-
-//on detecte quel utilisateur est connecte automatiquement
-
-$connecte=0;
-$visiteur="";
-$user="";
-
-$sql1 = "SELECT * FROM admin WHERE connexion = '1'";
-$sql2 = "SELECT * FROM acheteur WHERE connexion = '1'";
-$sql3 = "SELECT * FROM vendeur WHERE connexion = '1'";
-$result1 = mysqli_query($db_handle, $sql1);
-$result2 = mysqli_query($db_handle, $sql2);
-$result3 = mysqli_query($db_handle, $sql3);
-
-if(mysqli_num_rows($result1) != 0)
-{
- $visiteur="admin";
- $user = mysqli_fetch_assoc($result1);
-}
-if(mysqli_num_rows($result2) != 0)
-{
- $visiteur="acheteur";
- $user = mysqli_fetch_assoc($result2);
-
-}
-if(mysqli_num_rows($result3) != 0)
-{
- $visiteur="vendeur";
- $user = mysqli_fetch_assoc($result3);
-
-}
-else{
-
-}
-
-$sql4 = "SELECT * FROM objet";
-$result4 = mysqli_query($db_handle, $sql4);
-
-while ($product = mysqli_fetch_assoc($result4)) { 
-$products[] = $product; 
-} 
-
-$sql5 = "SELECT * FROM vendeur";
-$result5 = mysqli_query($db_handle, $sql5);
-
-while ($vendeur = mysqli_fetch_assoc($result5)) { 
-$vendeurs[] = $vendeur; 
-} 
-    
 
 //on cherche les coordonnées bancaires de l'acheteur connecté
 if($db_found)
@@ -495,7 +675,6 @@ if($db_found)
         }
     }
 }
-
 
 ?>
 
@@ -552,7 +731,7 @@ data-stellar-background-ratio="0.5">
             <p class="breadcrumbs mb-0"><span class="mr-2"><a href="accueil.php">Accueil <i
                 class="fa fa-chevron-right"></i></a></span> <span>Votre compte <i
                     class="fa fa-chevron-right"></i></span></p>
-                    <h2 class="mb-0 bread">Bonjour <?php if($visiteur=="admin"){echo $user['pseudoAdmin'];}if($visiteur=="acheteur"){echo $user['nomAcheteur'];}if($visiteur=="vendeur"){echo $user['nomVendeur'];} ?></h2>
+                    <h2 class="mb-0 bread">Bonjour <?php if($visiteur=="admin"){echo $user['pseudoAdmin'];}if($visiteur=="acheteur"){echo $user['prenomAcheteur'];}if($visiteur=="vendeur"){echo $user['pseudoVendeur'];} ?></h2>
                 </div>
             </div>
         </div>
