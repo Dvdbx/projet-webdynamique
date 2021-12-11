@@ -46,6 +46,7 @@ $codeSecurite ="";
 $infoBancaires ="";
 
 
+
 //on detecte quel utilisateur est connecte automatiquement
 
 $connecte=0;
@@ -99,6 +100,47 @@ $vendeurs[] = $vendeur;
 
 if($db_found)
 {
+
+    if(isset($_POST["accepter"]))
+    {
+        $id = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST["id"])); 
+        $sql3 = "DELETE FROM objet WHERE idObjet = '$id'";
+        $result3 = mysqli_query($db_handle, $sql3);
+        $sql4 = "DELETE FROM transaction WHERE idObjet = '$id'";
+        $result4 = mysqli_query($db_handle, $sql4);
+    
+    }
+    
+    
+    if(isset($_POST["refuser"]))
+    {
+        $id = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST["id"])); 
+    
+        $sql2 = "SELECT DISTINCT nombreTransaction FROM transaction WHERE idObjet = '$id'";
+        $result2 = mysqli_query($db_handle, $sql2);
+        $trans = mysqli_fetch_array($result2);
+        echo $trans[0];    
+        $trans[0] = $trans[0] + 1 ;
+    
+        $sql3 = "UPDATE transaction SET nombreTransaction = '$trans[0]' WHERE idObjet = '$id'";
+        $result3 = mysqli_query($db_handle, $sql3);
+        $sql3 = "UPDATE transaction SET validation = '0' WHERE idObjet = '$id'";
+        $result3 = mysqli_query($db_handle, $sql3);
+    
+    }
+
+    if(isset($_POST["nvoffre"]))
+    {
+        $offre = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST["offre"])); 
+        $id = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['id'])); 
+    
+        $sql3 = "UPDATE transaction SET validation = '1' WHERE idObjet = '$id'";
+        $result3 = mysqli_query($db_handle, $sql3);
+        $sql4 = "UPDATE transaction SET prixEnchere = '$offre' WHERE idObjet = '$id'";
+        $result4 = mysqli_query($db_handle, $sql4);
+    
+    }
+    
 
 //si clic bouton supression vendeur / interface admin
 
@@ -325,7 +367,6 @@ if (isset($_POST["button9"])){
     $res = mysqli_fetch_array($result0);                               
     $nb = $res[0]+1;
 
-    //On cherche la reduction appliquée
     $sql = "UPDATE transaction SET prixEnchere = '$prix' WHERE idObjet = '$id' AND idAcheteur = '$iduser'";
     $sql1 = "UPDATE transaction SET nombreTransaction = '$nb' WHERE idObjet = '$id' AND idAcheteur = '$iduser'";
     $sql2 = "UPDATE transaction SET validation = '1' WHERE idObjet = '$id' AND idAcheteur = '$iduser'";
@@ -420,21 +461,6 @@ else
    
 }
 
-
-
-if(isset($_POST['accepter']))
-{
-    $sql3 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete FROM objet O, ajoutpanier A WHERE A.idPanier = $idPanier AND O.idObjet = A.idObjet";
-
-
-}
-
-
-if(isset($_POST['refuser']))
-{
-
-
-}
 
 
 } 
@@ -763,16 +789,14 @@ data-stellar-background-ratio="0.5">
                         </div>
                       </div>
 
-                      <?php endforeach ?>
-
                       <div class="row md-4 d-flex">
                       <div class="col-md-2">
 
                       <form action="compte.php" method="post" class="text-align-center">
 
-<input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
+<input class="hidden" type="text" value="<?php echo $notif['idObjet']; ?>" name="id">
 
-<p><button type="submit" name="button6" class="btn btn-primary ml-3 py-3 px-4 mt-4">Accepter</button></p>
+<p><button type="submit" name="accepter" class="btn btn-primary ml-3 py-3 px-4 mt-4">Accepter</button></p>
 
 </form>
 
@@ -781,12 +805,12 @@ data-stellar-background-ratio="0.5">
 
                             <form action="compte.php" method="post" class="text-align-center">
 
-<input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
+<input class="hidden" type="text" value="<?php echo $notif['idObjet']; ?>" name="id">
 
-<p><button type="submit" name="button6" class="btn btn-primary ml-3 py-3 px-4 mt-4">Refuser</button></p>
+<p><button type="submit" name="refuser" class="btn btn-primary ml-3 py-3 px-4 mt-4">Refuser</button></p>
 
 </form>
-                                
+<?php endforeach ?>            
                             </div>  
                       </div>  
                 </div>
@@ -853,6 +877,61 @@ data-stellar-background-ratio="0.5">
       </div>
   </div>
 </section>
+
+<section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 ftco-animate">
+                        <h3 class="mb-4 billing-heading">Vos transactions</h3>
+
+                        <?php
+                        $acheteur = $user['idAcheteur'];
+                        $sql6 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete, O.categorie FROM transaction T, objet O WHERE T.validation = '0' AND T.idAcheteur = '$acheteur' AND T.idObjet = O.idObjet";
+                        $result6 = mysqli_query($db_handle, $sql6);
+                        while ($notif = mysqli_fetch_assoc($result6)) { 
+                            $notifs[] = $notif; 
+                        } 
+
+                        ?>
+                        <?php foreach($notifs as $notif) : ?>
+
+                        <div class="row mt-5 pt-3 d-flex">
+                        <div class="col-md-5 d-flex">
+                            <div class="cart-detail cart-total p-3 p-md-4">
+                            <div class="product ftco-animate">
+                                <div class="img d-flex align-items-center justify-content-center"
+                                    style="background-image:url(images/<?php echo $notif['photo1']; ?>)">
+
+                                </div>
+                                <div class="text text-center" >
+                                    <span class="sale" style="background-color:<?php if($notif['rarete']=="hautDeGamme"){echo "#b7472a";}if($notif['rarete']=="rare"){echo "#fe9801";}if($notif['rarete']=="regulier"){echo "#01d28e";} ?>"><?php if($notif['rarete']=="hautDeGamme"){echo "Haut de gamme";}if($notif['rarete']=="rare"){echo "Rare";}if($notif['rarete']=="regulier"){echo "Régulier";}; ?></span>
+                                    <span class="category"><?php echo $notif['categorie']; ?></span>
+                                    <h2><?php echo $notif['nomObjet']; ?></h2>
+                                    <p class="mb-0"> <span
+                                            class="price"><?php echo $notif['prixObjet']; ?>€</span></p>
+                                </div>
+                            </div>
+                            <form action="compte.php" method="post" class="text-align-center">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="volume">Faire une nouvelle offre ?</label>
+                                    <input type="text" class="form-control" placeholder="" name="offre">
+                                </div>
+                            </div>
+                            <input class="hidden" type="text" value="<?php echo $notif['idObjet']; ?>" name="id">
+<p><button type="submit" name="nvoffre" class="btn btn-primary ml-3 py-3 px-4 mt-4">Envoyer</button></p>
+
+</form>
+<?php endforeach ?>
+                   
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 <?php endif ?>
 

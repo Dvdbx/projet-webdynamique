@@ -14,9 +14,46 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="style.css" />
 
+    <script src="form.js" type="text/javascript" defer></script>
+
 </head>
 
 <body>
+
+<?php
+if(isset($_POST['mailform']))
+{
+$email = isset($_POST["email"])? $_POST["email"] : "";
+$total = isset($_POST["total"])? $_POST["total"] : "";
+
+$header="MIME-Version: 1.0\r\n";
+$header.='From:"Alcoolstore.fr" <alcoolstoreparis@gmail.com>'."\n";
+$header.='Content-Type:text/html; charset="uft-8"'."\n";
+$header.='Content-Transfer-Encoding: 8bit';
+
+$message='
+<html>
+	<body>
+		<div>
+			Nous vous confirmons que votre commande a bien été prise en compte ! 
+            <br/><br/>
+            Montant de votre facture : ';
+            $message.=$total;
+            $message.=
+            ' €
+            <br/><br/>
+            Nous vous remercions de votre achat sur le site de Alcool Store.
+            <br/><br/>
+            A bientôt !
+		</div>
+	</body>
+</html>
+';
+
+mail("$email", "Reçu de votre commande", $message, $header);
+}
+?>
+
 
 <?php
 
@@ -306,7 +343,7 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" value=1 class="mr-2" name="checkbox">I have read and accept the terms and conditions</label>
+                                            <label><input type="checkbox" value=1 class="mr-2" name="checkbox">J'ai lu et accepté les termes et les conditions</label>
                                         </div>
                                     </div>
                                 </div>
@@ -317,6 +354,21 @@
                                 <span><?=$paiement?></span>
                             </div>
                         </div>
+
+                        <div class="row mt-2 ml-3 d-flex">
+                            <div class="col-md-2">
+                                
+                        <form method="post" action="checkout.php" id="form_envoi">
+
+<input class="hidden" type="text" value="<?= $emailAcheteur ?>" name="email" id="">
+<input class="hidden" type="text" value="<?= $total ?>" name="total" id="">
+<p><button type="submit" name="mailform" class="btn btn-primary py-3 px-4">Recevoir un reçu par mail</button></p>
+
+</form>
+
+                         </div>
+                        </div>
+
 
                         <!--
                          <div class="col-md-6 d-flex">
