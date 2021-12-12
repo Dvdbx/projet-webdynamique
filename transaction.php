@@ -24,9 +24,12 @@ if($db_found)
     if (isset($_POST["button"])) {
 
         $id = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['id'])); 
-        echo $id;
         $sql2 = "INSERT INTO transaction(idObjet, idAcheteur, prixEnchere, nombreTransaction, validation) VALUES('$id', '$idUser', '0', '0', '0')";
         $result2 = mysqli_query($db_handle, $sql2);
+
+        $req = "SELECT * FROM objet WHERE idObjet = '$id'";
+        $res = mysqli_query($db_handle, $req);
+        $product = mysqli_fetch_assoc($res);
 
     }    
 
@@ -102,9 +105,9 @@ if($db_found)
                 <div class="col-xl-10 ftco-animate">
                 <h3 class="mb-4 billing-heading">Infos</h3>
 
-                   <p>Prix du vendeur : </p>
-                   <p>Montant de l'enchère : </p>
-                   <p>Nombre de transactions : </p>
+                   <p>Prix du vendeur : <?php echo $product['prixObjet'] ?></p>
+                   <p>Montant de l'enchère : ..€</p>
+                   <p>Nombre de transactions : 0</p>
                    <h3 class="mb-4 billing-heading">Combien souhaitez-vous proposer ?</h3>
 
                     <form action="compte.php" class="billing-form" method="post">
