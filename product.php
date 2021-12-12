@@ -214,7 +214,9 @@ else{/*echo"db not found";*/}
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js+popper.min.js+bootstrap.min.js.pagespeed.jc.j8jkLwyN3s.js"></script>
-   
+    <script>eval(mod_pagespeed_EkNsNuAH7z);</script>
+    <script>eval(mod_pagespeed_MUKbCx0zLD);</script>
+    <script>eval(mod_pagespeed_FeCx2cZWCK);</script>
     <script
         src="js/jquery.easing.1.3.js+jquery.waypoints.min.js+jquery.stellar.min.js+owl.carousel.min.js.pagespeed.jc.qRFk3bnuu9.js"></script>
     <script>eval(mod_pagespeed_28_LPaQVu7);</script>
@@ -265,6 +267,19 @@ else{/*echo"db not found";*/}
 
         });
     </script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+    </script>
+    <script defer
+        src="https://static.cloudflareinsights.com/beacon.min.js/v64f9daad31f64f81be21cbef6184a5e31634941392597"
+        integrity="sha512-gV/bogrUTVP2N3IzTDKzgP0Js1gg4fbwtYB6ftgLbKQu/V8yH2+lrKCfKHelh4SO3DPzKj4/glTO+tNJGDnb0A=="
+        data-cf-beacon='{"rayId":"6b88908e1a0dedb7","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.11.0","si":100}'
+        crossorigin="anonymous"></script>
 
 </body>
 

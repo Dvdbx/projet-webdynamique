@@ -87,7 +87,7 @@ function affiche_bloc_vendeur(radio,id) {
                     <li class="nav-item"><a href="accueil.php" class="nav-link">Accueil</a></li>
                     <li class="nav-item"><a href="parcourir.php" class="nav-link">Tout parcourir</a></li>
                     <li class="nav-item	"><a href="notifications.php" class="nav-link">Notifications</a></li>
-                    <li class="nav-item"><a href="login.php" class="nav-link">Votre compte</a></li>
+                    <li class="nav-item"><a href="compte.php" class="nav-link">Votre compte</a></li>
                 </ul>
             </div>
         </div>

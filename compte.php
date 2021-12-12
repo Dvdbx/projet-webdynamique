@@ -61,7 +61,7 @@ if($db_found)
  
 if (isset($_POST["button1"])){
 
-        $sql = "INSERT INTO acheteur(nomAcheteur, prenomAcheteur, adresseAcheteur, emailAcheteur, connexion) VALUES('$nomac', '$prenomac', '$adresseac', '$emailac','1')";
+        $sql = "INSERT INTO acheteur(idPanier, nomAcheteur, prenomAcheteur, adresseAcheteur, emailAcheteur, connexion) VALUES('0','$nomac', '$prenomac', '$adresseac', '$emailac','1')";
         $result = mysqli_query($db_handle, $sql);
 
         $sql ="SELECT*FROM acheteur WHERE connexion LIKE '1'";
@@ -77,7 +77,7 @@ if (isset($_POST["button1"])){
         $user = mysqli_fetch_assoc($result);
         $idPanier= $user['idPanier'];
 
-        $sql = "UPDATE acheteur SET idPanier = $idPanier WHERE idAcheteur = $idAcheteur";
+        $sql = "UPDATE acheteur SET idPanier = '$idPanier' WHERE idAcheteur = '$idAcheteur'";
         $result = mysqli_query($db_handle, $sql);
 
 
