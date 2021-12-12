@@ -47,7 +47,6 @@ while ($product = mysqli_fetch_assoc($result)) {
             <div class="order-lg-last btn-group">
                 <a href="panier.php" class="btn-cart dropdown-toggle dropdown-toggle-split">
                     <span class="fa fa-shopping-bag"></span>
-                    <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
                 </a>
 
             </div>

@@ -60,7 +60,6 @@ for ($i=0; $i<4; $i++) {
             <div class="order-lg-last btn-group">
                 <a href="panier.php" class="btn-cart dropdown-toggle dropdown-toggle-split">
                     <span class="fa fa-shopping-bag"></span>
-                    <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
                 </a>
 
             </div>
@@ -217,12 +216,14 @@ for ($i=0; $i<4; $i++) {
                             style="background-image:url(images/<?php echo $product['photo1']; ?>)">
                             <div class="desc">
                                 <p class="meta-prod d-flex">
-                                    <a href="panier.php" class="d-flex align-items-center justify-content-center"><span
-                                            class="fa fa-shopping-bag"></span></a>
+                                     <form action="product.php" method="post" class="text-align-center">
 
-                                    <a href="product.php"
-                                        class="d-flex align-items-center justify-content-center"><span
-                                            class="fa fa-eye"></span></a>
+                                            
+                                            <input class="hidden" type="text" value="<?php echo $product['idObjet']; ?>" name="id">
+                                            <button type="submit" name="button1" class="btn btn-primary py-3 px-3" style="margin-left:40%;"><a class="d-flex align-items-center justify-content-center"><span
+                                                    class="fa fa-eye"></span></a></button>
+
+                                        </form>
                                 </p>
                             </div>
                         </div>
@@ -241,7 +242,7 @@ for ($i=0; $i<4; $i++) {
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <a href="product.php" class="btn btn-primary d-block">Voir tous les produits<span
+                    <a href="parcourir.php" class="btn btn-primary d-block">Voir tous les produits<span
                             class="fa fa-long-arrow-right"></span></a>
                 </div>
             </div>
@@ -338,18 +339,9 @@ for ($i=0; $i<4; $i++) {
     <script>eval(mod_pagespeed_4xnO8OMtgk);</script>
     <script>eval(mod_pagespeed_138dmePAkq);</script>
 
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-23581568-13');
-    </script>
-    <script defer
-        src="https://static.cloudflareinsights.com/beacon.min.js/v64f9daad31f64f81be21cbef6184a5e31634941392597"
-        integrity="sha512-gV/bogrUTVP2N3IzTDKzgP0Js1gg4fbwtYB6ftgLbKQu/V8yH2+lrKCfKHelh4SO3DPzKj4/glTO+tNJGDnb0A=="
-        data-cf-beacon='{"rayId":"6b9001c46a653ae3","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.11.0","si":100}'
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+    <script>eval(mod_pagespeed_aVJ4gRg5hC);</script>
+    
 </body>
 
 </html>

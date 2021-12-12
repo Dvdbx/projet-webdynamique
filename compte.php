@@ -93,7 +93,7 @@ if (isset($_POST["button2"])) {
 
 //si passe par formulaire de connexion
 
-if (isset($_POST["button3"])){echo"oui";
+if (isset($_POST["button3"])){//echo"oui";
 
     //acheteur
 
@@ -114,7 +114,7 @@ if(isset($_POST['login']) && isset($_POST['password']))
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
            $_SESSION['login'] = $username;
-           echo"utilisateur et mot de passe correctes";
+           //echo"utilisateur et mot de passe correctes";
 
            //on connecte l'utilisateur
            $sql = "UPDATE acheteur SET connexion = '1' WHERE emailAcheteur = '".$username."' and nomAcheteur = '".$password."'";
@@ -123,12 +123,12 @@ if(isset($_POST['login']) && isset($_POST['password']))
         }
         else
         {
-           echo"utilisateur ou mot de passe incorrect";
+           //echo"utilisateur ou mot de passe incorrect";
         }
     }
     else
     {
-       echo"utilisateur ou mot de passe vide";
+       //echo"utilisateur ou mot de passe vide";
     }
 }
 else
@@ -155,7 +155,7 @@ if(isset($_POST['pseudo']) && isset($_POST['email']))
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
            $_SESSION['pseudo'] = $username;
-           echo"utilisateur et mot de passe correctes";
+          // echo"utilisateur et mot de passe correctes";
 
            //on connecte l'utilisateur
            $sql = "UPDATE vendeur SET connexion = '1' WHERE pseudoVendeur = '".$username."' and emailVendeur = '".$password."'";
@@ -164,12 +164,12 @@ if(isset($_POST['pseudo']) && isset($_POST['email']))
         }
         else
         {
-           echo"utilisateur ou mot de passe incorrect";
+           //echo"utilisateur ou mot de passe incorrect";
         }
     }
     else
     {
-       echo"utilisateur ou mot de passe vide";
+       //echo"utilisateur ou mot de passe vide";
     }
 }
 else
@@ -196,7 +196,7 @@ if(isset($_POST['pseudoAdmin']) && isset($_POST['mdpAdmin']))
         if($count!=0) // nom d'utilisateur et mot de passe correctes
         {
            $_SESSION['pseudoAdmin'] = $username;
-           echo"utilisateur et mot de passe correctes";
+           //echo"utilisateur et mot de passe correctes";
 
            //on connecte l'utilisateur
            $sql = "UPDATE admin SET connexion = '1' WHERE pseudoAdmin = '".$username."' and mdpAdmin = '".$password."'";
@@ -205,12 +205,12 @@ if(isset($_POST['pseudoAdmin']) && isset($_POST['mdpAdmin']))
         }
         else
         {
-           echo"utilisateur ou mot de passe incorrect";
+           //echo"utilisateur ou mot de passe incorrect";
         }
     }
     else
     {
-       echo"utilisateur ou mot de passe vide";
+       //echo"utilisateur ou mot de passe vide";
     }
 }
 else
@@ -283,7 +283,7 @@ if($db_found)
         $sql2 = "SELECT DISTINCT nombreTransaction FROM transaction WHERE idObjet = '$id'";
         $result2 = mysqli_query($db_handle, $sql2);
         $trans = mysqli_fetch_array($result2);
-        echo $trans[0];    
+        //echo $trans[0];    
         $trans[0] = $trans[0] + 1 ;
     
         $sql3 = "UPDATE transaction SET nombreTransaction = '$trans[0]' WHERE idObjet = '$id'";
@@ -539,9 +539,9 @@ if (isset($_POST["button9"])){
     $prix = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['prix'])); 
     $id = mysqli_real_escape_string($db_handle,htmlspecialchars($_POST['id'])); 
     $iduser = $user['idAcheteur'];
-    echo $prix;
-    echo $id;
-    echo $iduser;
+    //echo $prix;
+    //echo $id;
+    //echo $iduser;
 
     $sql0 = "SELECT DISTINCT nombreTransaction FROM transaction WHERE idObjet = '$id' AND idAcheteur = '$iduser'";
     $result0 = mysqli_query($db_handle, $sql0);
@@ -703,7 +703,6 @@ if($db_found)
             <div class="order-lg-last btn-group">
                 <a href="panier.php" class="btn-cart dropdown-toggle dropdown-toggle-split">
                     <span class="fa fa-shopping-bag"></span>
-                    <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
                 </a>
 
             </div>
@@ -1045,28 +1044,6 @@ data-stellar-background-ratio="0.5">
               ?></p>
               <p><strong>Nom sur la carte :&emsp;</strong><?php echo$nomCarte ?></p>
               <p><strong>Date d'expiration :&emsp;</strong><?php echo$dateExp ?></p>
-              <!--<p><strong>Nom :&emsp;</strong><?php echo$codeSecurite ?></p>-->
-
-              <!--
-              <h3 class="mb-4 mt-4 billing-heading">Avez-vous accepté notre clause ?</h3>
-
-              <form action="check.php" class="billing-form">
-
-              <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value="" class="mr-2"> I have read and accept
-                                                the terms and conditions</label>
-                                        </div>
-                                    </div>
-                </div>
-
-                <div class="col-md-12">
-                                <p><button type="submit" class="btn btn-primary py-3 px-4">Enregistrer</button></p>
-
-                            </div>
-               </form>
-            -->
 
           </div>
       </div>
@@ -1298,7 +1275,6 @@ data-stellar-background-ratio="0.5">
             
         </div>
 
-        <!--<section class="ftco-section">-->
     <div class="container">
 
         <div class="row justify-content-center pb-5">
@@ -1428,21 +1404,7 @@ data-stellar-background-ratio="0.5">
     <script>eval(mod_pagespeed_4xnO8OMtgk);</script>
     <script>eval(mod_pagespeed_138dmePAkq);</script>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-    <script>eval(mod_pagespeed_aVJ4gRg5hC);</script>
-
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-23581568-13');
-    </script>
-    <script defer
-    src="https://static.cloudflareinsights.com/beacon.min.js/v64f9daad31f64f81be21cbef6184a5e31634941392597"
-    integrity="sha512-gV/bogrUTVP2N3IzTDKzgP0Js1gg4fbwtYB6ftgLbKQu/V8yH2+lrKCfKHelh4SO3DPzKj4/glTO+tNJGDnb0A=="
-    data-cf-beacon='{"rayId":"6b88a3864c2e3b91","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.11.0","si":100}'
-    crossorigin="anonymous"></script>
+    
 </body>
 
 </html>

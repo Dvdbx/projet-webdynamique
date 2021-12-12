@@ -72,7 +72,6 @@ while ($product = mysqli_fetch_assoc($result3)) {
             <div class="order-lg-last btn-group">
                 <a href="panier.php" class="btn-cart dropdown-toggle dropdown-toggle-split">
                     <span class="fa fa-shopping-bag"></span>
-                    <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
                 </a>
 
             </div>
@@ -134,10 +133,7 @@ while ($product = mysqli_fetch_assoc($result3)) {
 
                             <tr class="alert" role="alert">
                                 <td>
-                                    <label class="checkbox-wrap checkbox-primary">
-                                        <input type="checkbox" checked>
-                                        <span class="checkmark"></span>
-                                    </label>
+                                  
                                 </td>
                                 <td>
                                     <div class="img"
@@ -161,11 +157,11 @@ while ($product = mysqli_fetch_assoc($result3)) {
 
                                      <?php $total = $total + $product['prixObjet']*$qteact[0] ?>
 
-                                <td>
+                                <!--<td>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true"><i class="fa fa-close"></i></span>
                                     </button>
-                                </td>
+                                </td>-->
                             </tr>
 
                             <?php endforeach ?>
@@ -190,19 +186,6 @@ while ($product = mysqli_fetch_assoc($result3)) {
                 <div class="col col-lg-5 col-md-6 mt-5 cart-wrap">
                     <div class="cart-total mb-3">
                         <h3>Total du panier</h3>
-                        <p class="d-flex">
-                            <span>Sous-total</span>
-                            <span><?php echo $prix['prixPanier'] ?>€</span>
-                        </p>
-                        <p class="d-flex">
-                            <span>Livraison</span>
-                            <span>0.00€</span>
-                        </p>
-                        <p class="d-flex">
-                            <span>Remise</span>
-                            <span>0.00€</span>
-                        </p>
-                        <hr>
                         <p class="d-flex total-price">
                             <span>Total</span>
                             <span><?php echo $prix['prixPanier'] ?>€</span>
@@ -252,22 +235,10 @@ while ($product = mysqli_fetch_assoc($result3)) {
     <script>eval(mod_pagespeed_Ma0$sNGcVa);</script>
     <script>eval(mod_pagespeed_4xnO8OMtgk);</script>
     <script>eval(mod_pagespeed_138dmePAkq);</script>
-    
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-    <script>eval(mod_pagespeed_aVJ4gRg5hC);</script>
-
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-23581568-13');
-    </script>
-    <script defer
-        src="https://static.cloudflareinsights.com/beacon.min.js/v64f9daad31f64f81be21cbef6184a5e31634941392597"
-        integrity="sha512-gV/bogrUTVP2N3IzTDKzgP0Js1gg4fbwtYB6ftgLbKQu/V8yH2+lrKCfKHelh4SO3DPzKj4/glTO+tNJGDnb0A=="
-        data-cf-beacon='{"rayId":"6b889a67d957082c","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.11.0","si":100}'
-        crossorigin="anonymous"></script>
+    <script>eval(mod_pagespeed_aVJ4gRg5hC);</script>ipt>
+    
 </body>
 
 </html>
