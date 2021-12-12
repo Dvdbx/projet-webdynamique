@@ -1061,7 +1061,7 @@ data-stellar-background-ratio="0.5">
                         $sql6 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete, O.categorie FROM transaction T, objet O WHERE T.validation = '0' AND T.idAcheteur = '$acheteur' AND T.idObjet = O.idObjet";
                          $result6 = mysqli_query($db_handle, $sql6);?>
                         
-                        <?php if(mysqli_num_rows($result) != 0):?>
+                        <?php if(mysqli_num_rows($result6) != 0):?>
 
                         <?php while ($notif = mysqli_fetch_assoc($result6)) { 
                             $notifs[] = $notif; 
