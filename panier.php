@@ -39,10 +39,6 @@ if($db_found)
 $sql3 = "SELECT DISTINCT O.idObjet, O.nomObjet, O.prixObjet, O.photo1, O.typeAchat, O.rarete FROM objet O, ajoutpanier A WHERE A.idPanier = $idPanier AND O.idObjet = A.idObjet";
 $result3 = mysqli_query($db_handle, $sql3);
 
-while ($product = mysqli_fetch_assoc($result3)) { 
-    $products[] = $product; 
-} 
-
 
 ?>
 
@@ -122,6 +118,12 @@ while ($product = mysqli_fetch_assoc($result3)) {
                         </thead>
                         <tbody>
 
+                        <?php if(mysqli_num_rows($result3) != 0):?>
+
+                            <?php   while ($product = mysqli_fetch_assoc($result3)) { 
+                               $products[] = $product; 
+                            } ?>
+
                         <?php foreach($products as $product) : ?>
 
                             <?php                          
@@ -165,6 +167,7 @@ while ($product = mysqli_fetch_assoc($result3)) {
                             </tr>
 
                             <?php endforeach ?>
+                            <?php endif?>
                            
                         </tbody>
                     </table>
