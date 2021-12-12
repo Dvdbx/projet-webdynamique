@@ -4,7 +4,7 @@ $database = "paris shopping";
 //identifier votre serveur (localhost), utlisateur (root), mot de passe ("")
 $db_handle = mysqli_connect('localhost', 'root', '');
 $db_found = mysqli_select_db($db_handle, $database);
-$inThePocket = $_GET['zizi'];
+$inThePocket = $_GET['filtre'];
 
 if($db_found)
 {
@@ -217,12 +217,12 @@ while ($product = mysqli_fetch_assoc($result)) {
                         <div class="categories">
                             <h3>Types de produits</h3>
                             <ul class="p-0">
-                                <li><a href="parcourir-filtre.php?zizi=6">Brandy <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=7">Gin <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=8">Rhum <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=9">Tequila <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=10">Vodka <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=11">Whiskey <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=6">Brandy <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=7">Gin <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=8">Rhum <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=9">Tequila <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=10">Vodka <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=11">Whiskey <span class="fa fa-chevron-right"></span></a></li>
         
         
                             </ul>
@@ -232,9 +232,9 @@ while ($product = mysqli_fetch_assoc($result)) {
                         <div class="categories">
                             <h3>Type d'achat</h3>
                             <ul class="p-0">
-                                <li><a href="parcourir-filtre.php?zizi=0">Achat immédiat <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=1">Transaction vendeur-client <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=2">Meilleur offre <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=0">Achat immédiat <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=1">Transaction vendeur-client <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=2">Meilleur offre <span class="fa fa-chevron-right"></span></a></li>
         
                             </ul>
                         </div>
@@ -243,9 +243,9 @@ while ($product = mysqli_fetch_assoc($result)) {
                         <div class="categories">
                             <h3>Rareté</h3>
                             <ul class="p-0">
-                                <li><a href="parcourir-filtre.php?zizi=3">Articles réguliers <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=4">Articles hauts de gamme <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="parcourir-filtre.php?zizi=5">Articles rares <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=3">Articles réguliers <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=4">Articles hauts de gamme <span class="fa fa-chevron-right"></span></a></li>
+                                <li><a href="parcourir-filtre.php?filtre=5">Articles rares <span class="fa fa-chevron-right"></span></a></li>
         
                             </ul>
                         </div>
